@@ -1,0 +1,163 @@
+# Website Project Rules
+
+This website project should follow the patterns, conventions, and design system established in the Angel Tree Tracker application located at `/Users/mary/Documents/github/angel-tree-tracker`.
+
+## Technology Stack
+
+Reference `/Users/mary/Documents/github/angel-tree-tracker/package.json` for the exact technology stack and versions. The application uses:
+
+- **Frontend Framework**: React with TypeScript
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS with shadcn/ui components
+- **Backend/Database**: Supabase (if backend functionality is needed)
+- **State Management**: TanStack Query (React Query)
+- **Routing**: React Router DOM
+- **Form Handling**: React Hook Form with Zod validation
+- **UI Components**: shadcn/ui (Radix UI primitives)
+- **Icons**: Lucide React
+- **Date Handling**: date-fns
+- **Notifications**: Sonner
+
+Always check the application's `package.json` for specific versions and dependencies.
+
+## Project Structure
+
+Follow the directory structure from `/Users/mary/Documents/github/angel-tree-tracker/src/`. Reference the actual directory structure in the application to see the exact organization of:
+- Components (ui, shared, feature-specific)
+- Pages
+- Hooks
+- Contexts
+- Utilities (lib/)
+- Integrations (supabase, etc.)
+- Assets
+- Configuration files
+
+## Design System
+
+### Color Palette
+
+Reference `/Users/mary/Documents/github/angel-tree-tracker/src/index.css` for the complete color system. The design system uses CSS variables defined in the `:root` and `.dark` selectors. All colors are defined in HSL format using CSS variables.
+
+**Always check the application's `index.css` file for:**
+- Current color values (background, foreground, primary, secondary, etc.)
+- Light and dark mode color definitions
+- CSS variable naming conventions
+- Border radius values
+
+### Typography
+
+Reference `/Users/mary/Documents/github/angel-tree-tracker/src/index.css` for typography definitions. The file contains:
+- Font family definitions (sans-serif and serif)
+- Typography hierarchy (H1, H2, H3, H4, body, small)
+- Font sizes, line heights, and weights
+- Typography utility classes
+
+### Border Radius and Spacing
+
+Reference `/Users/mary/Documents/github/angel-tree-tracker/tailwind.config.ts` and `src/index.css` for:
+- Border radius values and CSS variables
+- Spacing scale
+- Any custom design tokens
+
+## Code Conventions
+
+### TypeScript Configuration
+
+Reference `/Users/mary/Documents/github/angel-tree-tracker/tsconfig.json` and related TypeScript config files for:
+- Path alias configuration (`@/*` mapping)
+- Compiler options and strict mode settings
+- Type checking rules
+
+### Component Patterns
+
+Reference actual component files in `/Users/mary/Documents/github/angel-tree-tracker/src/components/` to understand:
+1. **Component Structure**: How components are organized, exported, and structured
+2. **Styling Patterns**: How Tailwind classes and `cn()` utility are used
+3. **Form Handling**: See form components for React Hook Form + Zod patterns
+4. **Data Fetching**: Reference hooks in `src/hooks/` for TanStack Query patterns
+5. **Supabase Integration**: Check `src/integrations/supabase/` for client setup patterns
+
+### File Naming
+
+Follow the naming conventions used in the application. Check the actual file names in `/Users/mary/Documents/github/angel-tree-tracker/src/` to see the pattern.
+
+### Import Organization
+
+Reference component files in the application to see the import organization pattern. Generally:
+- React and React-related imports first
+- Third-party libraries
+- Internal imports using `@/` alias
+- Relative imports last
+
+## shadcn/ui Components
+
+Reference `/Users/mary/Documents/github/angel-tree-tracker/src/components/ui/` to see:
+- Available shadcn/ui components
+- How components are structured and used
+- Component props and patterns
+
+Check `/Users/mary/Documents/github/angel-tree-tracker/components.json` for shadcn/ui configuration.
+
+## Routing
+
+Reference `/Users/mary/Documents/github/angel-tree-tracker/src/App.tsx` for routing patterns:
+- How routes are defined
+- Route structure and organization
+- Dynamic route parameters
+- Route component patterns
+
+## State Management
+
+Reference the application for state management patterns:
+- **Server State**: Check `src/hooks/` for TanStack Query usage patterns
+- **Global State**: Reference `src/contexts/` for React Context patterns (e.g., AuthContext)
+- **Form State**: See form components for React Hook Form patterns
+- **Client State**: Check component files for useState/useReducer usage
+
+## Styling Guidelines
+
+1. **Use Tailwind utilities** for most styling
+2. **Reference CSS variables** from the application's `index.css` for colors and theming
+3. **Use `cn()` utility** from `@/lib/utils` (reference the application's `src/lib/utils.ts`)
+4. **Follow design system** - reference the application's `index.css` and `tailwind.config.ts`
+5. **Responsive design**: Check the application for Tailwind breakpoint usage patterns
+6. **Dark mode**: Reference the application's dark mode implementation in `index.css`
+
+## Build Configuration
+
+Reference `/Users/mary/Documents/github/angel-tree-tracker/vite.config.ts` for:
+- Vite plugin configuration
+- Path alias setup
+- Development server configuration
+- Build settings
+
+## Development Workflow
+
+Reference `/Users/mary/Documents/github/angel-tree-tracker/package.json` for available scripts and commands.
+
+## Key Principles
+
+1. **Consistency**: Match patterns, structure, and design from the application
+2. **Reference First**: Always check the application files before making assumptions
+3. **Accessibility**: Follow patterns from the application (Radix UI components handle this)
+4. **Performance**: Reference the application for React Query, code splitting, and optimization patterns
+5. **Type Safety**: Use TypeScript throughout, reference Supabase types from the application if using database
+6. **User Experience**: Follow UX patterns from the application for similar interactions
+
+## When in Doubt
+
+**Always reference the actual application files at `/Users/mary/Documents/github/angel-tree-tracker`:**
+
+- Check `package.json` for dependencies and versions
+- Reference `src/index.css` for design system (colors, typography, CSS variables)
+- Check `tailwind.config.ts` for Tailwind configuration
+- Look at `src/components/` for component patterns and structure
+- Review `src/hooks/` for data fetching patterns
+- Check `src/contexts/` for state management patterns
+- Reference `vite.config.ts` and `tsconfig.json` for build/TypeScript config
+- Look at `components.json` for shadcn/ui configuration
+- Review `src/App.tsx` for routing patterns
+- Check `src/lib/utils.ts` for utility functions
+
+**Never hardcode values that exist in the application - always reference the source files.**
+

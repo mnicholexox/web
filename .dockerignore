@@ -1,0 +1,10 @@
+node_modules
+dist
+.git
+.env
+.DS_Store
+*.log
+mockups
+mockups.bak
+generate-screenshots.js
+

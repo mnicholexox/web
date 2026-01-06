@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angel Tree Twin Lakes - Sponsor a Child</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-cream: #FDF9EE;
+            --card-cream: #F0E7D5;
+            --burgundy: #53161D;
+            --mocha: #4B3935;
+            --green: #6aa78a;
+        }
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: var(--bg-cream);
+            color: var(--mocha);
+        }
+        h1, h2, h3 {
+            font-family: 'Merriweather', serif;
+        }
+        .bulletin-card {
+            background: white;
+            border: 3px solid var(--burgundy);
+            border-radius: 8px;
+            box-shadow: 4px 4px 0 rgba(83, 22, 29, 0.2);
+        }
+        .bulletin-card-alt {
+            background: var(--card-cream);
+            border: 2px dashed var(--burgundy);
+            border-radius: 8px;
+        }
+        .btn-bulletin {
+            background: var(--burgundy);
+            color: white;
+            border-radius: 6px;
+            padding: 0.875rem 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            letter-spacing: 0.5px;
+            transition: all 0.2s;
+            box-shadow: 3px 3px 0 rgba(83, 22, 29, 0.3);
+        }
+        .btn-bulletin:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0 rgba(83, 22, 29, 0.3);
+        }
+        .section-padding {
+            padding: 5rem 0;
+        }
+        .pin {
+            width: 20px;
+            height: 20px;
+            background: var(--burgundy);
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            display: inline-block;
+            box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .step-box {
+            border-left: 4px solid var(--burgundy);
+            background: white;
+            padding-left: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-white border-b-4 border-[var(--burgundy)] sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-serif font-bold text-[var(--burgundy)]">ANGEL TREE TWIN LAKES</div>
+            <div class="flex gap-6">
+                <a href="#how-it-works" class="text-[var(--mocha)] font-semibold hover:text-[var(--burgundy)]">HOW IT WORKS</a>
+                <a href="#sponsor" class="text-[var(--mocha)] font-semibold hover:text-[var(--burgundy)]">SPONSOR</a>
+                <a href="#workshop" class="text-[var(--mocha)] font-semibold hover:text-[var(--burgundy)]">WORKSHOP</a>
+                <a href="#contact" class="text-[var(--mocha)] font-semibold hover:text-[var(--burgundy)]">CONTACT</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="section-padding bg-gradient-to-b from-[var(--bg-cream)] to-white">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <div class="bulletin-card p-10 mb-6 relative">
+                <div class="absolute -top-2 -left-2">
+                    <div class="pin"></div>
+                </div>
+                <h1 class="text-5xl md:text-6xl font-serif text-[var(--burgundy)] mb-4">HELP MAKE MAGIC HAPPEN!</h1>
+                <p class="text-xl text-[var(--mocha)] mb-6 font-semibold">Your Community Needs You This Holiday Season</p>
+                <p class="text-lg text-[var(--mocha)]/80 mb-8">
+                    Join your neighbors in bringing joy to children. Sponsor a child's wishlist or purchase gifts to help make their dreams come true.
+                </p>
+                <div class="flex gap-4 justify-center flex-wrap">
+                    <a href="#sponsor" class="btn-bulletin">SPONSOR A CHILD</a>
+                    <a href="#sponsor" class="btn-bulletin bg-[var(--mocha)] hover:bg-[var(--mocha)]/90">PURCHASE A GIFT</a>
+                    <a href="#contact" class="btn-bulletin bg-transparent border-3 border-[var(--burgundy)] text-[var(--burgundy)] hover:bg-[var(--burgundy)] hover:text-white">CONTACT COORDINATOR</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission -->
+    <section class="section-padding">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="bulletin-card-alt p-8 text-center">
+                <h2 class="text-3xl font-serif text-[var(--burgundy)] mb-4">OUR MISSION</h2>
+                <p class="text-lg text-[var(--mocha)]/80 leading-relaxed max-w-3xl mx-auto">
+                    Angel Tree Twin Lakes is a community-driven program that connects generous sponsors with children in need. We believe every child deserves a magical holiday, and together we make that happen. Your participation helps create moments of joy and wonder that last a lifetime.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="section-padding bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-4xl font-serif text-[var(--burgundy)] text-center mb-2">HOW IT WORKS</h2>
+            <p class="text-center text-[var(--mocha)]/70 mb-12 font-semibold">Simple Steps to Make a Difference</p>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="step-box py-6">
+                    <div class="flex items-center mb-3">
+                        <span class="text-3xl font-bold text-[var(--burgundy)] mr-3">1.</span>
+                        <h3 class="text-xl font-bold text-[var(--mocha)]">SPONSOR A CHILD</h3>
+                    </div>
+                    <p class="text-[var(--mocha)]/80">Browse children's wishlists and choose to sponsor a full wishlist for one child. You'll be their holiday hero!</p>
+                </div>
+                <div class="step-box py-6">
+                    <div class="flex items-center mb-3">
+                        <span class="text-3xl font-bold text-[var(--burgundy)] mr-3">2.</span>
+                        <h3 class="text-xl font-bold text-[var(--mocha)]">PURCHASE GIFTS</h3>
+                    </div>
+                    <p class="text-[var(--mocha)]/80">Buy the items from the wishlist. When you click "Purchase This Gift," you're donating to the program—not taking it home. You're giving the gift to a child in need.</p>
+                </div>
+                <div class="step-box py-6">
+                    <div class="flex items-center mb-3">
+                        <span class="text-3xl font-bold text-[var(--burgundy)] mr-3">3.</span>
+                        <h3 class="text-xl font-bold text-[var(--mocha)]">MARK AS PURCHASED</h3>
+                    </div>
+                    <p class="text-[var(--mocha)]/80">Update your progress in the app so coordinators know what's been purchased. Keep track in "My Wishlists."</p>
+                </div>
+                <div class="step-box py-6">
+                    <div class="flex items-center mb-3">
+                        <span class="text-3xl font-bold text-[var(--burgundy)] mr-3">4.</span>
+                        <h3 class="text-xl font-bold text-[var(--mocha)]">COORDINATOR DELIVERS</h3>
+                    </div>
+                    <p class="text-[var(--mocha)]/80">Coordinators collect, wrap, and deliver all gifts by the Gift Deadline. Your generosity reaches the children!</p>
+                </div>
+            </div>
+            <div class="mt-8 text-center">
+                <div class="bulletin-card-alt p-4 inline-block">
+                    <p class="text-sm font-semibold text-[var(--mocha)]">⚠️ IMPORTANT: All gifts must be purchased by the Gift Deadline set by your coordinator!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sponsor Info -->
+    <section id="sponsor" class="section-padding bg-[var(--card-cream)]/50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bulletin-card p-8">
+                    <h2 class="text-3xl font-serif text-[var(--burgundy)] mb-6">BECOME A SPONSOR</h2>
+                    <p class="mb-4 text-[var(--mocha)] font-semibold">As a sponsor, you can:</p>
+                    <ul class="space-y-3 mb-6 text-[var(--mocha)]/80">
+                        <li class="flex items-start">
+                            <span class="text-[var(--burgundy)] font-bold mr-2 text-xl">✓</span>
+                            <span><strong>Sponsor a full wishlist</strong> for one child—become their holiday hero!</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-[var(--burgundy)] font-bold mr-2 text-xl">✓</span>
+                            <span><strong>Purchase extra gifts</strong> to help fill gaps and ensure every child gets everything they need.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-[var(--burgundy)] font-bold mr-2 text-xl">✓</span>
+                            <span><strong>Track your purchases</strong> in "My Wishlists" to see your progress.</span>
+                        </li>
+                    </ul>
+                    <div class="bg-[var(--burgundy)]/10 p-4 rounded border-l-4 border-[var(--burgundy)]">
+                        <p class="text-sm text-[var(--mocha)] font-semibold">Remember: All gifts must be purchased by the Gift Deadline to ensure timely delivery!</p>
+                    </div>
+                </div>
+                <div class="bulletin-card p-8">
+                    <h2 class="text-3xl font-serif text-[var(--burgundy)] mb-6">TIMELINE & EXPECTATIONS</h2>
+                    <p class="mb-4 text-[var(--mocha)] font-semibold">Important dates to remember:</p>
+                    <ul class="space-y-3 text-[var(--mocha)]/80">
+                        <li class="flex items-start">
+                            <span class="text-[var(--burgundy)] font-bold mr-2 text-xl">📅</span>
+                            <span><strong>Gift Deadline:</strong> Set by your coordinator (typically early December). This is your deadline!</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-[var(--burgundy)] font-bold mr-2 text-xl">⏰</span>
+                            <span>Purchase and mark items as purchased as soon as possible—don't wait!</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-[var(--burgundy)] font-bold mr-2 text-xl">🎁</span>
+                            <span>Coordinators collect, wrap, and deliver before the holidays.</span>
+                        </li>
+                    </ul>
+                    <div class="mt-6 bg-[var(--green)]/20 p-4 rounded border-l-4 border-[var(--green)]">
+                        <p class="text-sm text-[var(--mocha)] font-semibold">💚 The sooner you purchase, the better! Coordinators need time to collect and wrap.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Coordinator Info -->
+    <section class="section-padding bg-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="bulletin-card p-10 text-center relative">
+                <div class="absolute -top-2 -right-2">
+                    <div class="pin"></div>
+                </div>
+                <h2 class="text-3xl font-serif text-[var(--burgundy)] mb-4">FOR COORDINATORS</h2>
+                <p class="mb-8 text-lg text-[var(--mocha)]/80 font-semibold">You're the backbone of our program! Here's what you do:</p>
+                <div class="grid md:grid-cols-3 gap-6 text-left">
+                    <div class="bulletin-card-alt p-6">
+                        <div class="text-4xl mb-3">📅</div>
+                        <h3 class="font-bold text-lg mb-2">SET GIFT DEADLINE</h3>
+                        <p class="text-sm text-[var(--mocha)]/70">Define the deadline for gift purchases in your area. Make it clear and visible!</p>
+                    </div>
+                    <div class="bulletin-card-alt p-6">
+                        <div class="text-4xl mb-3">👥</div>
+                        <h3 class="font-bold text-lg mb-2">ASSIGN SPONSORS</h3>
+                        <p class="text-sm text-[var(--mocha)]/70">Match sponsors with children and manage wishlist assignments. Keep everyone organized!</p>
+                    </div>
+                    <div class="bulletin-card-alt p-6">
+                        <div class="text-4xl mb-3">🎁</div>
+                        <h3 class="font-bold text-lg mb-2">FILL GAPS</h3>
+                        <p class="text-sm text-[var(--mocha)]/70">Identify and fill any gaps in wishlist coverage. Make sure every child gets everything!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Santa's Workshop -->
+    <section id="workshop" class="section-padding bg-[var(--card-cream)]/30">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-4xl font-serif text-[var(--burgundy)] text-center mb-2">SANTA'S WORKSHOP</h2>
+            <p class="text-center text-xl text-[var(--mocha)]/70 mb-12 font-semibold">Making the Magic</p>
+            
+            <div class="mb-12">
+                <h3 class="text-2xl font-serif text-[var(--burgundy)] mb-6 text-center">DOLLHOUSE WORKSHOP</h3>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bulletin-card p-6">
+                        <div class="bg-[var(--mocha)]/10 h-56 rounded mb-4 flex items-center justify-center text-[var(--mocha)]/40 font-bold border-2 border-dashed border-[var(--mocha)]/20">BEFORE PHOTO</div>
+                        <h4 class="font-bold text-lg mb-2">Restoration in Progress</h4>
+                        <p class="text-sm text-[var(--mocha)]/70">Our volunteers transform 3+ foot dollhouses into magical playspaces. Every detail matters!</p>
+                    </div>
+                    <div class="bulletin-card p-6">
+                        <div class="bg-[var(--mocha)]/10 h-56 rounded mb-4 flex items-center justify-center text-[var(--mocha)]/40 font-bold border-2 border-dashed border-[var(--mocha)]/20">PROGRESS PHOTO</div>
+                        <h4 class="font-bold text-lg mb-2">Careful Restoration</h4>
+                        <p class="text-sm text-[var(--mocha)]/70">With love and attention, we bring these treasures back to life, piece by piece.</p>
+                    </div>
+                    <div class="bulletin-card p-6">
+                        <div class="bg-[var(--green)]/20 h-56 rounded mb-4 flex items-center justify-center text-[var(--green)]/60 font-bold border-2 border-[var(--green)]">AFTER PHOTO</div>
+                        <h4 class="font-bold text-lg mb-2">Complete & Ready</h4>
+                        <p class="text-sm text-[var(--mocha)]/70">Beautifully restored dollhouses ready to create lasting memories for children.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-2xl font-serif text-[var(--burgundy)] mb-6 text-center">REPURPOSED GIFTS</h3>
+                <div class="grid md:grid-cols-4 gap-4">
+                    <div class="bulletin-card-alt p-5">
+                        <div class="bg-white h-44 rounded mb-3 flex items-center justify-center text-[var(--mocha)]/40 text-xs font-bold border border-dashed">BEFORE</div>
+                        <h4 class="font-bold mb-1">LEGOS</h4>
+                        <p class="text-xs text-[var(--mocha)]/70">Cleaned, sorted, and organized into sets.</p>
+                    </div>
+                    <div class="bulletin-card-alt p-5">
+                        <div class="bg-white h-44 rounded mb-3 flex items-center justify-center text-[var(--mocha)]/40 text-xs font-bold border border-dashed">BEFORE</div>
+                        <h4 class="font-bold mb-1">BOOKS</h4>
+                        <p class="text-xs text-[var(--mocha)]/70">Gently used books given new life.</p>
+                    </div>
+                    <div class="bulletin-card-alt p-5">
+                        <div class="bg-white h-44 rounded mb-3 flex items-center justify-center text-[var(--mocha)]/40 text-xs font-bold border border-dashed">BEFORE</div>
+                        <h4 class="font-bold mb-1">BOARD GAMES</h4>
+                        <p class="text-xs text-[var(--mocha)]/70">Complete sets ready for play.</p>
+                    </div>
+                    <div class="bulletin-card-alt p-5">
+                        <div class="bg-white h-44 rounded mb-3 flex items-center justify-center text-[var(--mocha)]/40 text-xs font-bold border border-dashed">BEFORE</div>
+                        <h4 class="font-bold mb-1">PLAY KITCHENS</h4>
+                        <p class="text-xs text-[var(--mocha)]/70">Restored and ready for imaginative play.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section-padding bg-white">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="bulletin-card p-10 text-center relative">
+                <div class="absolute -top-2 -left-2">
+                    <div class="pin"></div>
+                </div>
+                <h2 class="text-3xl font-serif text-[var(--burgundy)] mb-4">QUESTIONS OR NEED HELP?</h2>
+                <p class="mb-8 text-lg text-[var(--mocha)]/80 font-semibold">A coordinator is happy to assist you. Reach out anytime!</p>
+                <form class="space-y-5 text-left">
+                    <div>
+                        <label class="block text-sm font-bold mb-2 text-[var(--mocha)]">NAME</label>
+                        <input type="text" class="w-full px-4 py-3 rounded border-2 border-[var(--mocha)]/30 focus:outline-none focus:border-[var(--burgundy)]" placeholder="Your name">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold mb-2 text-[var(--mocha)]">EMAIL</label>
+                        <input type="email" class="w-full px-4 py-3 rounded border-2 border-[var(--mocha)]/30 focus:outline-none focus:border-[var(--burgundy)]" placeholder="your@email.com">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold mb-2 text-[var(--mocha)]">MESSAGE</label>
+                        <textarea rows="4" class="w-full px-4 py-3 rounded border-2 border-[var(--mocha)]/30 focus:outline-none focus:border-[var(--burgundy)]" placeholder="How can we help?"></textarea>
+                    </div>
+                    <button type="submit" class="btn-bulletin w-full">SEND MESSAGE</button>
+                </form>
+                <div class="mt-10 pt-8 border-t-2 border-[var(--mocha)]/30">
+                    <p class="text-sm font-semibold text-[var(--mocha)] mb-3">OR CONTACT US DIRECTLY:</p>
+                    <p class="text-sm text-[var(--mocha)]/80 font-semibold">📧 Email: coordinator@angeltreetwinlakes.org</p>
+                    <p class="text-sm text-[var(--mocha)]/80 font-semibold">📞 Phone: (555) 123-4567</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[var(--burgundy)] text-white py-10">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <p class="text-2xl font-serif font-bold mb-2">ANGEL TREE TWIN LAKES</p>
+            <p class="opacity-90 font-semibold">Making the magic happen, one wishlist at a time.</p>
+            <p class="text-sm opacity-70 mt-4">A Community-Driven Program</p>
+        </div>
+    </footer>
+</body>
+</html>
+
