@@ -1,6 +1,4 @@
-import { HeroBanner } from "@/components/HeroBanner";
-import { Mission } from "@/components/Mission";
-import { WhoJoyDropIsFor } from "@/components/WhoJoyDropIsFor";
+import { HeroBanner, Mission, WhoJoyDropIsFor } from "@/components/sections";
 
 /**
  * PAGE SECTIONS REFERENCE
@@ -9,21 +7,21 @@ import { WhoJoyDropIsFor } from "@/components/WhoJoyDropIsFor";
  * 
  * 1. Hero Banner Section
  *    - Component: HeroBanner
- *    - File: src/components/HeroBanner.tsx
+ *    - File: src/components/sections/hero/HeroBanner.tsx
  *    - ID: #hero-banner
  *    - Data attribute: data-section="hero-banner"
  *    - Description: Main hero section with background image and headline
  * 
  * 2. Mission Section
  *    - Component: Mission
- *    - File: src/components/Mission.tsx
+ *    - File: src/components/sections/mission/Mission.tsx
  *    - ID: #mission
  *    - Data attribute: data-section="mission"
  *    - Description: Mission statement with "Who Joy Drop Is For" and "Meeting Real Needs" content
  * 
  * 3. Who Joy Drop Is For Section
  *    - Component: WhoJoyDropIsFor
- *    - File: src/components/WhoJoyDropIsFor.tsx
+ *    - File: src/components/sections/roles/WhoJoyDropIsFor.tsx
  *    - ID: #who-joy-drop-is-for
  *    - Data attribute: data-section="who-joy-drop-is-for"
  *    - Description: Grid of role tiles (Sponsors, Donors, Volunteers, Our Commitment)
@@ -45,4 +43,3 @@ const Index = () => {
 };
 
 export default Index;
-
