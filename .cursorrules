@@ -2,6 +2,160 @@
 
 This website project should follow the patterns, conventions, and design system established in the Angel Tree Tracker application located at `/Users/mary/Documents/github/angel-tree-tracker`.
 
+## ⚠️ STRICT Project Structure Requirements
+
+**This project follows a strict folder structure. All new code MUST adhere to these rules.**
+
+### Directory Structure Overview
+
+```
+src/
+├── App.tsx                     # Root app with routing only
+├── main.tsx                    # Entry point
+├── index.css                   # Global styles & CSS variables
+│
+├── components/
+│   ├── index.ts                # Master barrel export
+│   │
+│   ├── layout/                 # Site-wide layout components
+│   │   ├── Header.tsx
+│   │   ├── Footer.tsx
+│   │   ├── PageWrapper.tsx
+│   │   └── index.ts
+│   │
+│   ├── sections/               # Page sections (FEATURE-ORGANIZED)
+│   │   ├── [section-name]/     # Each section gets its own folder
+│   │   │   ├── ComponentName.tsx
+│   │   │   ├── SubComponent.tsx  # Related sub-components
+│   │   │   └── index.ts          # Barrel export
+│   │   └── index.ts            # Re-exports all sections
+│   │
+│   ├── shared/                 # Reusable components across features
+│   │   └── index.ts
+│   │
+│   └── ui/                     # shadcn/ui components ONLY
+│       └── [component].tsx
+│
+├── hooks/                      # Custom React hooks
+│   └── index.ts
+│
+├── lib/                        # Utility functions
+│   └── utils.ts
+│
+├── pages/                      # Page components
+│   ├── [PageName].tsx
+│   └── index.ts
+│
+├── types/                      # TypeScript type definitions
+│   └── index.ts
+│
+├── constants/                  # App constants and configuration
+│   └── index.ts
+│
+├── contexts/                   # React Context providers (when needed)
+│   └── index.ts
+│
+└── integrations/               # External service integrations (when needed)
+    └── [service-name]/
+```
+
+### Section Component Rules
+
+**CRITICAL: All page sections MUST follow this pattern:**
+
+1. **Create a folder** for each section in `src/components/sections/`
+   - Use kebab-case for folder names: `hero/`, `mission/`, `about-us/`
+   
+2. **Each section folder MUST contain:**
+   - Main component file (PascalCase): `HeroBanner.tsx`
+   - Barrel export: `index.ts`
+   - Sub-components if needed: `RoleTile.tsx`, `FeatureCard.tsx`
+
+3. **Example section structure:**
+   ```
+   sections/
+   ├── hero/
+   │   ├── HeroBanner.tsx       # Main section component
+   │   ├── HeroContent.tsx      # Sub-component (if needed)
+   │   └── index.ts             # export { HeroBanner } from './HeroBanner';
+   │
+   ├── features/
+   │   ├── Features.tsx
+   │   ├── FeatureCard.tsx      # Extracted sub-component
+   │   └── index.ts
+   │
+   └── index.ts                 # Re-exports: export * from './hero'; etc.
+   ```
+
+4. **Barrel exports are MANDATORY:**
+   ```typescript
+   // sections/hero/index.ts
+   export { HeroBanner } from './HeroBanner';
+   
+   // sections/index.ts
+   export * from './hero';
+   export * from './mission';
+   export * from './features';
+   ```
+
+### Where to Put New Components
+
+| Component Type | Location | Example |
+|---------------|----------|---------|
+| Page section | `components/sections/[name]/` | Hero, Mission, Features |
+| Layout element | `components/layout/` | Header, Footer, Sidebar |
+| Reusable UI | `components/shared/` | LoadingSpinner, Modal |
+| shadcn/ui | `components/ui/` | Button, Card, Dialog |
+| Page | `pages/` | Index.tsx, About.tsx |
+
+### Import Conventions
+
+**Preferred import style using barrel exports:**
+```typescript
+// ✅ GOOD - Import from barrel exports
+import { HeroBanner, Mission, Features } from "@/components/sections";
+import { Header, Footer } from "@/components/layout";
+
+// ✅ ALSO GOOD - Import from specific section
+import { HeroBanner } from "@/components/sections/hero";
+
+// ❌ BAD - Direct file imports bypass barrel exports
+import { HeroBanner } from "@/components/sections/hero/HeroBanner";
+```
+
+### Adding New Sections Checklist
+
+When adding a new section, ALWAYS:
+
+1. [ ] Create folder: `src/components/sections/[section-name]/`
+2. [ ] Create main component: `[SectionName].tsx`
+3. [ ] Create barrel export: `index.ts` with exports
+4. [ ] Add to sections barrel: Update `src/components/sections/index.ts`
+5. [ ] Extract sub-components if component exceeds ~150 lines
+6. [ ] Import in page using barrel export
+
+### Adding New Pages Checklist
+
+When adding a new page, ALWAYS:
+
+1. [ ] Create page component: `src/pages/[PageName].tsx`
+2. [ ] Add to pages barrel: Update `src/pages/index.ts`
+3. [ ] Add route: Update `src/App.tsx` with new route
+4. [ ] Add route constant: Update `src/constants/index.ts` ROUTES object
+
+### File Naming Conventions
+
+| Type | Convention | Example |
+|------|------------|---------|
+| Components | PascalCase | `HeroBanner.tsx`, `FeatureCard.tsx` |
+| Folders | kebab-case | `hero/`, `call-to-action/` |
+| Hooks | camelCase with `use` prefix | `useScrollPosition.ts` |
+| Utilities | camelCase | `utils.ts`, `formatDate.ts` |
+| Types | camelCase or PascalCase | `types.ts`, `User.ts` |
+| Constants | camelCase (SCREAMING_SNAKE for values) | `routes.ts`, `ROUTES.HOME` |
+
+---
+
 ## Technology Stack
 
 Reference `/Users/mary/Documents/github/angel-tree-tracker/package.json` for the exact technology stack and versions. The application uses:
@@ -19,18 +173,6 @@ Reference `/Users/mary/Documents/github/angel-tree-tracker/package.json` for the
 - **Notifications**: Sonner
 
 Always check the application's `package.json` for specific versions and dependencies.
-
-## Project Structure
-
-Follow the directory structure from `/Users/mary/Documents/github/angel-tree-tracker/src/`. Reference the actual directory structure in the application to see the exact organization of:
-- Components (ui, shared, feature-specific)
-- Pages
-- Hooks
-- Contexts
-- Utilities (lib/)
-- Integrations (supabase, etc.)
-- Assets
-- Configuration files
 
 ## Design System
 
@@ -76,10 +218,6 @@ Reference actual component files in `/Users/mary/Documents/github/angel-tree-tra
 3. **Form Handling**: See form components for React Hook Form + Zod patterns
 4. **Data Fetching**: Reference hooks in `src/hooks/` for TanStack Query patterns
 5. **Supabase Integration**: Check `src/integrations/supabase/` for client setup patterns
-
-### File Naming
-
-Follow the naming conventions used in the application. Check the actual file names in `/Users/mary/Documents/github/angel-tree-tracker/src/` to see the pattern.
 
 ### Import Organization
 
@@ -160,4 +298,3 @@ Reference `/Users/mary/Documents/github/angel-tree-tracker/package.json` for ava
 - Check `src/lib/utils.ts` for utility functions
 
 **Never hardcode values that exist in the application - always reference the source files.**
-
