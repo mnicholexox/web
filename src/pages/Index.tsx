@@ -39,6 +39,13 @@ import { HeroBanner, WhatThisIsAbout, WhereTheHeartComesIn, Mission, WhoJoyDropI
  *    - ID: #who-joy-drop-is-for
  *    - Data attribute: data-section="who-joy-drop-is-for"
  *    - Description: Grid of role tiles (Sponsors, Donors, Volunteers, Our Commitment)
+ * 
+ * 6. How You Can Help Section
+ *    - Component: HowYouCanHelp
+ *    - File: src/components/sections/help/HowYouCanHelp.tsx
+ *    - ID: #how-you-can-help
+ *    - Data attribute: data-section="how-you-can-help"
+ *    - Description: Three action cards inviting participation (Sponsor, Donate, Volunteer)
  */
 
 const Index = () => {
