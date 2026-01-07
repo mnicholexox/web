@@ -1,4 +1,4 @@
-import { HeroBanner, WhatThisIsAbout, Mission, WhoJoyDropIsFor } from "@/components/sections";
+import { HeroBanner, WhatThisIsAbout, WhereTheHeartComesIn, Mission, WhoJoyDropIsFor, HowYouCanHelp } from "@/components/sections";
 
 /**
  * PAGE SECTIONS REFERENCE
@@ -19,14 +19,21 @@ import { HeroBanner, WhatThisIsAbout, Mission, WhoJoyDropIsFor } from "@/compone
  *    - Data attribute: data-section="what-this-is-about"
  *    - Description: Introduction to Joy Drop as a community-led holiday program
  * 
- * 3. Mission Section
+ * 3. Where the Heart Comes In Section
+ *    - Component: WhereTheHeartComesIn
+ *    - File: src/components/sections/heart/WhereTheHeartComesIn.tsx
+ *    - ID: #where-the-heart-comes-in
+ *    - Data attribute: data-section="where-the-heart-comes-in"
+ *    - Description: Purpose-driven editorial section about why Joy Drop exists and its values
+ * 
+ * 4. Mission Section
  *    - Component: Mission
  *    - File: src/components/sections/mission/Mission.tsx
  *    - ID: #mission
  *    - Data attribute: data-section="mission"
  *    - Description: Mission statement with "Who Joy Drop Is For" and "Meeting Real Needs" content
  * 
- * 4. Who Joy Drop Is For Section
+ * 5. Who Joy Drop Is For Section
  *    - Component: WhoJoyDropIsFor
  *    - File: src/components/sections/roles/WhoJoyDropIsFor.tsx
  *    - ID: #who-joy-drop-is-for
@@ -43,11 +50,22 @@ const Index = () => {
       {/* SECTION: What This Is All About */}
       <WhatThisIsAbout />
       
+      {/* SECTION: Where the Heart Comes In */}
+      <WhereTheHeartComesIn />
+      
       {/* SECTION: Mission */}
       <Mission />
       
       {/* SECTION: Who Joy Drop Is For */}
       <WhoJoyDropIsFor />
+      
+      {/* SECTION: How You Can Help */}
+      <HowYouCanHelp />
+      
+      {/* Closing Statement */}
+      <p className="text-center text-muted-foreground text-[0.8125rem] font-light tracking-wide py-16 md:py-20">
+        Support that carries children forward, long after the season passes.
+      </p>
     </main>
   );
 };

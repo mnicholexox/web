@@ -33,13 +33,6 @@ export const HeroBanner = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 md:gap-12 lg:gap-16 items-start">
           {/* Left Column - Identity Statement */}
           <div className="lg:col-span-5 space-y-4 md:space-y-5">
-            {/* Eyebrow label */}
-            <div>
-              <span className="text-xs md:text-sm font-sans uppercase tracking-[0.15em] text-white/80 drop-shadow-md">
-                WHAT THIS IS ALL ABOUT
-              </span>
-            </div>
-
             {/* Main headline with ribbon */}
             <div className="relative">
               {/* Decorative ribbon - height: 96-120px, width: 1100-1300px, opacity: 0.35-0.45, no border/shadow */}
@@ -60,15 +53,34 @@ export const HeroBanner = () => {
                 }}
               />
               <h1 
-                className="relative font-serif text-[28px] sm:text-[32px] md:text-4xl lg:text-5xl text-white leading-tight tracking-tight drop-shadow-lg"
+                className="relative font-serif text-white drop-shadow-lg text-left flex flex-col"
                 style={{
                   textShadow: '0 2px 4px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.2)',
                   maxWidth: '500px',
                 }}
               >
-                A community-led holiday program built to help children feel supported, confident, and cared for.
+                {/* Context line - 80% of primary */}
+                <span className="text-[24px] sm:text-[28px] md:text-[32px] lg:text-[40px] leading-tight tracking-tight">
+                  When a Community
+                </span>
+                {/* Primary headline - largest */}
+                <span className="text-[30px] sm:text-[35px] md:text-[40px] lg:text-[50px] leading-tight tracking-tight">
+                  Comes Together,
+                </span>
+                {/* Memorable finish - 90% with letter-spacing */}
+                <span className="text-[27px] sm:text-[31px] md:text-[36px] lg:text-[45px] leading-tight tracking-wide">
+                  Magic Happens
+                </span>
               </h1>
             </div>
+            
+            {/* CTA Button */}
+            <Button 
+              className="text-white font-semibold px-6 py-3 text-base md:text-lg shadow-lg hover:opacity-90 transition-opacity"
+              style={{ backgroundColor: '#a33d3f' }}
+            >
+              Learn How You Can Help
+            </Button>
           </div>
 
           {/* Right Column - Placeholder for "More Than Gifts" content */}

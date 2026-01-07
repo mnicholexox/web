@@ -24,7 +24,7 @@ export const Mission = () => {
               Meeting Real Needs
             </h2>
             <p className="text-foreground/80 max-w-2xl">
-              We step in knowing we don't always see what life looks like for these children the other days of the year. That's why essentials matter just as much as wishes.
+              We want to ensure children's needs are met on the other 364 days of the year. Toy donations help make that possible by freeing up our small budget for essentials like hygiene items, warm clothing, and properly fitting shoes — so children can feel prepared, included, and cared for all year long.
             </p>
           </div>
         </div>
