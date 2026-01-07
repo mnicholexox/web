@@ -1,4 +1,4 @@
-import { HeroBanner, Mission, WhoJoyDropIsFor } from "@/components/sections";
+import { HeroBanner, WhatThisIsAbout, Mission, WhoJoyDropIsFor } from "@/components/sections";
 
 /**
  * PAGE SECTIONS REFERENCE
@@ -12,14 +12,21 @@ import { HeroBanner, Mission, WhoJoyDropIsFor } from "@/components/sections";
  *    - Data attribute: data-section="hero-banner"
  *    - Description: Main hero section with background image and headline
  * 
- * 2. Mission Section
+ * 2. What This Is All About Section
+ *    - Component: WhatThisIsAbout
+ *    - File: src/components/sections/about/WhatThisIsAbout.tsx
+ *    - ID: #what-this-is-about
+ *    - Data attribute: data-section="what-this-is-about"
+ *    - Description: Introduction to Joy Drop as a community-led holiday program
+ * 
+ * 3. Mission Section
  *    - Component: Mission
  *    - File: src/components/sections/mission/Mission.tsx
  *    - ID: #mission
  *    - Data attribute: data-section="mission"
  *    - Description: Mission statement with "Who Joy Drop Is For" and "Meeting Real Needs" content
  * 
- * 3. Who Joy Drop Is For Section
+ * 4. Who Joy Drop Is For Section
  *    - Component: WhoJoyDropIsFor
  *    - File: src/components/sections/roles/WhoJoyDropIsFor.tsx
  *    - ID: #who-joy-drop-is-for
@@ -32,6 +39,9 @@ const Index = () => {
     <main className="min-h-screen">
       {/* SECTION: Hero Banner */}
       <HeroBanner />
+      
+      {/* SECTION: What This Is All About */}
+      <WhatThisIsAbout />
       
       {/* SECTION: Mission */}
       <Mission />

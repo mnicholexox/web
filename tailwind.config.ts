@@ -17,6 +17,9 @@ export default {
         sans: ['"DM Sans"', 'system-ui', 'sans-serif'],
         serif: ['"DM Serif Display"', 'Georgia', 'serif'],
       },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(ellipse at center, var(--tw-gradient-stops))',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

@@ -40,16 +40,35 @@ export const HeroBanner = () => {
               </span>
             </div>
 
-            {/* Main headline */}
-            <h1 
-              className="font-serif text-[28px] sm:text-[32px] md:text-4xl lg:text-5xl text-white leading-tight tracking-tight drop-shadow-lg"
-              style={{
-                textShadow: '0 2px 4px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.2)',
-                maxWidth: '500px',
-              }}
-            >
-              A community-led holiday program built to help children feel supported, confident, and cared for.
-            </h1>
+            {/* Main headline with ribbon */}
+            <div className="relative">
+              {/* Decorative ribbon - height: 96-120px, width: 1100-1300px, opacity: 0.35-0.45, no border/shadow */}
+              <img 
+                src="/ribbon.png" 
+                alt=""
+                aria-hidden="true"
+                className="absolute pointer-events-none h-[96px] md:h-[120px]"
+                style={{
+                  width: 'clamp(1100px, 100%, 1300px)',
+                  opacity: 0.4,
+                  top: '50%',
+                  left: '0',
+                  transform: 'translateY(-50%)',
+                  objectFit: 'cover',
+                  border: 'none',
+                  boxShadow: 'none',
+                }}
+              />
+              <h1 
+                className="relative font-serif text-[28px] sm:text-[32px] md:text-4xl lg:text-5xl text-white leading-tight tracking-tight drop-shadow-lg"
+                style={{
+                  textShadow: '0 2px 4px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.2)',
+                  maxWidth: '500px',
+                }}
+              >
+                A community-led holiday program built to help children feel supported, confident, and cared for.
+              </h1>
+            </div>
           </div>
 
           {/* Right Column - Placeholder for "More Than Gifts" content */}
