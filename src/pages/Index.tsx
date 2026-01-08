@@ -1,4 +1,4 @@
-import { HeroBanner, WhatThisIsAbout, WhereTheHeartComesIn, Mission, WhoJoyDropIsFor, HowYouCanHelp } from "@/components/sections";
+import { HeroBanner, WhatThisIsAbout, WhereTheHeartComesIn, Mission, WhoJoyDropIsFor, HowYouCanHelp, ContactSection } from "@/components/sections";
 
 /**
  * PAGE SECTIONS REFERENCE
@@ -46,6 +46,13 @@ import { HeroBanner, WhatThisIsAbout, WhereTheHeartComesIn, Mission, WhoJoyDropI
  *    - ID: #how-you-can-help
  *    - Data attribute: data-section="how-you-can-help"
  *    - Description: Three action cards inviting participation (Sponsor, Donate, Volunteer)
+ * 
+ * 7. Contact Section
+ *    - Component: ContactSection
+ *    - File: src/components/sections/contact/ContactSection.tsx
+ *    - ID: #contact
+ *    - Data attribute: data-section="contact"
+ *    - Description: Contact form for questions, volunteer interest, or general inquiries
  */
 
 const Index = () => {
@@ -68,6 +75,9 @@ const Index = () => {
       
       {/* SECTION: How You Can Help */}
       <HowYouCanHelp />
+      
+      {/* SECTION: Contact */}
+      <ContactSection />
       
       {/* Closing Statement */}
       <p className="text-center text-muted-foreground text-[0.8125rem] font-light tracking-wide py-16 md:py-20">

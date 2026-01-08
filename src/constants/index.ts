@@ -8,6 +8,7 @@
 export const ROUTES = {
   HOME: '/',
   SPONSOR_A_CHILD: '/sponsor-a-child',
+  MAKE_A_DONATION: '/make-a-donation',
   // Add more routes as pages are created
   // ABOUT: '/about',
   // CONTACT: '/contact',

@@ -3,6 +3,13 @@ import { ActionCard } from "./ActionCard";
 import { ROUTES } from "@/constants";
 
 export const HowYouCanHelp = () => {
+  const scrollToContact = () => {
+    const contactSection = document.getElementById("contact");
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const actions = [
     {
       number: "01",
@@ -26,10 +33,11 @@ export const HowYouCanHelp = () => {
           strokeWidth={1.5}
         />
       ),
-      title: "Make a Donation",
+      title: "Give What You Can",
       description:
         "Your contribution helps fill gaps, cover essentials, and ensure no child is left without a gift.",
-      ctaText: "Give What You Can",
+      ctaText: "Make a Donation",
+      to: ROUTES.MAKE_A_DONATION,
     },
     {
       number: "03",
@@ -43,6 +51,7 @@ export const HowYouCanHelp = () => {
       description:
         "Lend your time and talents to help prepare, wrap, and deliver gifts. Every helping hand matters.",
       ctaText: "Volunteer With Joy Drop",
+      onCtaClick: scrollToContact,
     },
   ];
 
@@ -89,6 +98,7 @@ export const HowYouCanHelp = () => {
               description={action.description}
               ctaText={action.ctaText}
               to={action.to}
+              onCtaClick={action.onCtaClick}
             />
           ))}
         </div>
