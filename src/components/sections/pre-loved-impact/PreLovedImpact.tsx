@@ -341,7 +341,7 @@ export const PreLovedImpact = () => {
     <section
       id="pre-loved-impact"
       data-section="pre-loved-impact"
-      className="relative w-full py-20 sm:py-28 overflow-hidden"
+      className="relative w-full pt-28 sm:pt-36 pb-20 sm:pb-28 overflow-hidden"
     >
       {/* Admin Pill */}
       {isAdmin && <AdminPill onLogout={disableAdmin} />}
@@ -383,12 +383,12 @@ export const PreLovedImpact = () => {
       <div className="relative z-10 max-w-[1200px] mx-auto px-6 md:px-8">
         {/* Section Header - Centered */}
         <div className="text-center mb-8 sm:mb-10">
-          <h2 className="font-serif text-[28px] sm:text-[36px] md:text-[42px] lg:text-5xl text-foreground leading-tight tracking-tight mb-4 sm:mb-6">
+          <h2 className="font-serif text-xl sm:text-2xl md:text-[28px] lg:text-[32px] text-foreground leading-tight tracking-tight mb-4">
             Your Pre-Loved Items Making an Impact
           </h2>
 
           {/* Subheadline */}
-          <p className="text-foreground/70 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+          <p className="text-foreground/60 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
             Every donated item is restored, matched, and delivered with care.
           </p>
         </div>
