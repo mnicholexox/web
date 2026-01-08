@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
-import SponsorAChild from "./pages/SponsorAChild";
+import Index from "./pages/Index.tsx";
+import SponsorAChild from "./pages/SponsorAChild.tsx";
 import { ROUTES } from "./constants";
 
 const App = () => (
