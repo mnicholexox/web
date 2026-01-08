@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ROUTES } from "@/constants";
@@ -13,22 +13,56 @@ import { ROUTES } from "@/constants";
 interface NavItem {
   label: string;
   href: string;
+  scrollTo?: string; // Optional section ID to scroll to
 }
 
 const navItems: NavItem[] = [
-  { label: "Home", href: ROUTES.HOME },
+  { label: "Ways to Help", href: ROUTES.HOME, scrollTo: "how-you-can-help" },
   { label: "FAQ", href: ROUTES.FAQ },
 ];
 
 export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
-  const isActive = (href: string) => {
+  const isActive = (href: string, scrollTo?: string) => {
+    // Scroll-to items are never shown as "active" in the traditional sense
+    if (scrollTo) return false;
     if (href === ROUTES.HOME) {
       return location.pathname === href;
     }
     return location.pathname.startsWith(href);
+  };
+
+  const handleNavClick = (
+    e: React.MouseEvent,
+    item: NavItem,
+    closeMobileMenu?: boolean
+  ) => {
+    if (closeMobileMenu) {
+      setMobileMenuOpen(false);
+    }
+
+    if (item.scrollTo) {
+      e.preventDefault();
+      
+      const scrollToSection = () => {
+        const section = document.getElementById(item.scrollTo!);
+        if (section) {
+          section.scrollIntoView({ behavior: "smooth" });
+        }
+      };
+
+      // If already on the homepage, just scroll
+      if (location.pathname === ROUTES.HOME) {
+        scrollToSection();
+      } else {
+        // Navigate to homepage first, then scroll after a brief delay
+        navigate(ROUTES.HOME);
+        setTimeout(scrollToSection, 100);
+      }
+    }
   };
 
   return (
@@ -47,11 +81,12 @@ export const Header = () => {
           <nav className="hidden md:flex items-center gap-1">
             {navItems.map((item) => (
               <Link
-                key={item.href}
+                key={item.label}
                 to={item.href}
+                onClick={(e) => handleNavClick(e, item)}
                 className={cn(
                   "px-4 py-2 rounded-lg text-sm font-medium transition-colors",
-                  isActive(item.href)
+                  isActive(item.href, item.scrollTo)
                     ? "text-primary bg-primary/10"
                     : "text-foreground/70 hover:text-foreground hover:bg-muted/50"
                 )}
@@ -87,12 +122,12 @@ export const Header = () => {
         <nav className="px-4 pb-4 pt-2 space-y-1 bg-background/95 backdrop-blur-md border-b border-border/50">
           {navItems.map((item) => (
             <Link
-              key={item.href}
+              key={item.label}
               to={item.href}
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => handleNavClick(e, item, true)}
               className={cn(
                 "block px-4 py-3 rounded-lg text-sm font-medium transition-colors",
-                isActive(item.href)
+                isActive(item.href, item.scrollTo)
                   ? "text-primary bg-primary/10"
                   : "text-foreground/70 hover:text-foreground hover:bg-muted/50"
               )}

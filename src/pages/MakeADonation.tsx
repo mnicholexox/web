@@ -59,17 +59,34 @@ const MakeADonation = () => {
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="max-w-[1200px] mx-auto px-6 md:px-8 pb-20 sm:pb-28">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-          
-          {/* Left Column - Donation Options */}
-          <div className="space-y-6">
-            {/* Donation Card */}
-            <div className="bg-card/60 rounded-2xl border border-border/20 p-6 sm:p-8">
-              <h2 className="font-serif text-xl sm:text-2xl text-foreground mb-2">
-                Every Amount Makes a Difference
-              </h2>
+      {/* Cash Donations Section */}
+      <section id="cash-donations" data-section="cash-donations" className="pb-20 sm:pb-28">
+        {/* Section Header */}
+        <div className="max-w-[1200px] mx-auto px-6 md:px-8 mb-12 sm:mb-16">
+          <div className="text-center">
+            {/* Eyebrow label */}
+            <span className="inline-block text-xs md:text-sm font-sans uppercase tracking-[0.2em] text-primary/60 mb-4">
+              Make a Difference
+            </span>
+
+            {/* Main headline */}
+            <h2 className="font-serif text-[28px] sm:text-[36px] md:text-[42px] lg:text-5xl text-foreground leading-tight tracking-tight">
+              Cash Donations
+            </h2>
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <div className="max-w-[1200px] mx-auto px-6 md:px-8">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+            
+            {/* Left Column - Donation Options */}
+            <div className="space-y-6">
+              {/* Donation Card */}
+              <div className="bg-card/60 rounded-2xl border border-border/20 p-6 sm:p-8">
+                <h3 className="font-serif text-xl sm:text-2xl text-foreground mb-2">
+                  Every Amount Makes a Difference
+                </h3>
               <p className="text-foreground/70 text-sm sm:text-[0.9375rem] leading-relaxed mb-6">
                 There's no minimum, no pressure — just the chance to help where it's needed most. 
                 Choose what feels right for you.
@@ -207,7 +224,8 @@ const MakeADonation = () => {
             </p>
           </div>
         </div>
-      </div>
+        </div>
+      </section>
 
       {/* Closing Statement */}
       <div className="border-t border-border/20">
