@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, ShieldCheck, Clock } from "lucide-react";
+import { ArrowRight, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants";
+import { NewsletterSignupModal } from "@/components/sections/newsletter";
 
 interface WishlistSelectionProps {
   /** Whether wishlists are currently available for selection */
@@ -9,6 +11,8 @@ interface WishlistSelectionProps {
 }
 
 export const WishlistSelection = ({ wishlistsAvailable = false }: WishlistSelectionProps) => {
+  const [isNewsletterModalOpen, setIsNewsletterModalOpen] = useState(false);
+
   return (
     <section className="w-full py-16 sm:py-20 md:py-24 bg-background">
       <div className="max-w-[1200px] mx-auto px-6 md:px-8">
@@ -69,57 +73,69 @@ export const WishlistSelection = ({ wishlistsAvailable = false }: WishlistSelect
 
           {/* Right Card: Call to Action or Coming Soon */}
           <div className="bg-card/60 rounded-2xl border border-border/20 p-6 sm:p-8 flex flex-col items-center justify-center text-center">
-            <h3 className="font-serif text-xl sm:text-2xl text-foreground mb-3">
-              Browse Available Wishlists
-            </h3>
-            
-            <p className="text-foreground/70 text-[0.9375rem] leading-relaxed mb-6">
-              {wishlistsAvailable 
-                ? "Invites are managed by your local coordinator."
-                : "When wishlists become available, you'll be able to browse and choose one to sponsor."
-              }
-            </p>
-
-            {/* Primary Button - disabled when wishlists not available */}
             {wishlistsAvailable ? (
-              <Button
-                asChild
-                className="bg-primary text-primary-foreground rounded-full px-6 sm:px-8 py-3 min-h-[44px] font-medium text-sm sm:text-[0.9375rem] transition-all duration-200 hover:scale-[1.03] hover:bg-primary/90 shadow-sm hover:shadow-md hover:shadow-primary/20 mb-4"
-              >
-                <Link to={ROUTES.SPONSOR_A_CHILD}>
-                  View Available Wishlists
-                  <ArrowRight className="w-4 h-4 ml-2" />
+              <>
+                <h3 className="font-serif text-xl sm:text-2xl text-foreground mb-3">
+                  Browse Available Wishlists
+                </h3>
+                
+                <p className="text-foreground/70 text-[0.9375rem] leading-relaxed mb-6">
+                  Invites are managed by your local coordinator.
+                </p>
+
+                <Button
+                  asChild
+                  className="bg-primary text-primary-foreground rounded-full px-6 sm:px-8 py-3 min-h-[44px] font-medium text-sm sm:text-[0.9375rem] transition-all duration-200 hover:scale-[1.03] hover:bg-primary/90 shadow-sm hover:shadow-md hover:shadow-primary/20 mb-4"
+                >
+                  <Link to={ROUTES.SPONSOR_A_CHILD}>
+                    View Available Wishlists
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Link>
+                </Button>
+
+                <Link 
+                  to={ROUTES.MAKE_A_DONATION}
+                  className="text-primary text-sm hover:underline underline-offset-4 transition-colors inline-flex items-center gap-1"
+                >
+                  Learn How Donations Help Fill the Gaps
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
-              </Button>
+              </>
             ) : (
-              <Button
-                disabled
-                className="bg-primary/50 text-primary-foreground rounded-full px-6 sm:px-8 py-3 min-h-[44px] font-medium text-sm sm:text-[0.9375rem] mb-4 cursor-not-allowed"
-              >
-                View Available Wishlists
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
-            )}
+              <>
+                <span className="inline-block text-xs md:text-sm font-sans uppercase tracking-[0.2em] text-primary/60 mb-3">
+                  Opening October 2026
+                </span>
+                <h3 className="font-serif text-xl sm:text-2xl text-foreground mb-3">
+                  Wishlist sponsorship will be available soon.
+                </h3>
+                
+                <button 
+                  onClick={() => setIsNewsletterModalOpen(true)}
+                  className="inline-flex items-center gap-2 text-primary hover:text-primary/80 text-sm font-medium transition-colors mb-6"
+                >
+                  Get notified when wishlists open
+                  <ArrowRight className="w-4 h-4" />
+                </button>
 
-            {/* Helper text when wishlists not available */}
-            {!wishlistsAvailable && (
-              <div className="flex items-center gap-2 text-muted-foreground text-sm mb-4">
-                <Clock className="w-4 h-4" />
-                <span>Wishlists will be available soon.</span>
-              </div>
+                <Link 
+                  to={ROUTES.MAKE_A_DONATION}
+                  className="text-muted-foreground text-sm hover:text-primary hover:underline underline-offset-4 transition-colors inline-flex items-center gap-1"
+                >
+                  Learn How Donations Help Fill the Gaps
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </>
             )}
-
-            {/* Secondary Link */}
-            <Link 
-              to={ROUTES.MAKE_A_DONATION}
-              className="text-primary text-sm hover:underline underline-offset-4 transition-colors inline-flex items-center gap-1"
-            >
-              Learn How Donations Help Fill the Gaps
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
           </div>
         </div>
       </div>
+
+      {/* Newsletter Signup Modal */}
+      <NewsletterSignupModal
+        open={isNewsletterModalOpen}
+        onOpenChange={setIsNewsletterModalOpen}
+      />
     </section>
   );
 };

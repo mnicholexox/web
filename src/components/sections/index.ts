@@ -10,4 +10,5 @@ export * from './cta';
 export * from './contact';
 export * from './faq';
 export * from './pre-loved-impact';
+export * from './newsletter';
 

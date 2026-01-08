@@ -19,31 +19,29 @@ export const StepCard = ({
   return (
     <div
       className={cn(
-        "flex flex-col items-center text-center px-4 sm:px-6 md:px-8",
+        "relative flex flex-col bg-card/50 rounded-2xl p-6 sm:p-7 transition-all duration-300 hover:bg-card/70",
         className
       )}
     >
-      {/* Soft circular icon container */}
-      <div className="relative mb-5 sm:mb-6">
-        {/* Subtle glow behind icon */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/8 to-accent/8 rounded-full blur-xl scale-150" />
-        <div className="relative flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-primary/5 to-accent/5 border border-primary/10">
+      {/* Step number in top corner */}
+      <span className="absolute top-5 right-5 text-[11px] sm:text-xs font-medium text-primary/40 tracking-wide">
+        {stepNumber}
+      </span>
+
+      {/* Icon at top */}
+      <div className="mb-5">
+        <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-primary/[0.06]">
           {icon}
         </div>
       </div>
 
-      {/* Step number */}
-      <span className="font-serif text-sm sm:text-base text-primary/50 tracking-wide mb-2">
-        Step {stepNumber}
-      </span>
-
       {/* Title */}
-      <h3 className="font-serif text-xl sm:text-2xl text-foreground mb-3 sm:mb-4">
+      <h3 className="font-sans font-semibold text-[17px] sm:text-lg text-foreground mb-2.5 leading-snug">
         {title}
       </h3>
 
       {/* Description */}
-      <p className="text-sm sm:text-[0.9375rem] text-foreground/70 leading-relaxed max-w-[280px]">
+      <p className="text-sm sm:text-[0.9375rem] text-foreground/60 leading-relaxed">
         {description}
       </p>
     </div>
