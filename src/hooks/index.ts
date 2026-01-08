@@ -5,6 +5,4 @@
  * Add exports here as hooks are created.
  */
 
-// Example: export { useScrollPosition } from './useScrollPosition';
-// Example: export { useMediaQuery } from './useMediaQuery';
-
+export { useAdminMode } from './useAdminMode';
