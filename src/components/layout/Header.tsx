@@ -17,8 +17,6 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { label: "Home", href: ROUTES.HOME },
-  { label: "Sponsor a Child", href: ROUTES.SPONSOR_A_CHILD },
-  { label: "Make a Donation", href: ROUTES.MAKE_A_DONATION },
   { label: "FAQ", href: ROUTES.FAQ },
 ];
 
