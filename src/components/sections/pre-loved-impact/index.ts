@@ -1,0 +1,1 @@
+export { PreLovedImpact } from './PreLovedImpact';

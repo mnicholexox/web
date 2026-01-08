@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants";
 import { cn } from "@/lib/utils";
+import { PreLovedImpact } from "@/components/sections";
 
 const MakeADonation = () => {
   const donationExamples = [
@@ -58,6 +59,9 @@ const MakeADonation = () => {
           </p>
         </div>
       </div>
+
+      {/* Pre-Loved Impact Section */}
+      <PreLovedImpact />
 
       {/* Cash Donations Section */}
       <section id="cash-donations" data-section="cash-donations" className="pb-20 sm:pb-28">
