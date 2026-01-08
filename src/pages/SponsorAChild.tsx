@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowLeft, ArrowRight, Gift, Heart, Sparkles, ShoppingBag, Star, CheckCircle2, Clock, Package, Info } from "lucide-react";
+import { ArrowLeft, ArrowRight, Gift, Heart, Sparkles, ShoppingBag, Star, CheckCircle2, Clock, Package } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants";
@@ -28,12 +28,6 @@ const SponsorAChild = () => {
       icon: <Package className="w-6 h-6 text-primary/70" strokeWidth={1.5} />,
       title: "Drop Off or Ship",
       description: "Bring wrapped gifts to our collection point or ship directly to our team.",
-    },
-    {
-      number: "04",
-      icon: <Sparkles className="w-6 h-6 text-primary/70" strokeWidth={1.5} />,
-      title: "Spread Joy",
-      description: "We ensure every gift reaches the right child, wrapped with care and love.",
     },
   ];
 
@@ -99,24 +93,61 @@ const SponsorAChild = () => {
         </Link>
       </div>
 
-      {/* Page Header */}
-      <div className="max-w-[1200px] mx-auto px-6 md:px-8 py-12 sm:py-16 md:py-20">
-        <div className="text-center max-w-2xl mx-auto">
-          {/* Main headline - single page-level title */}
-          <h1 className="font-serif text-[32px] sm:text-[42px] md:text-[48px] lg:text-[56px] text-foreground leading-tight tracking-tight mb-6">
-            Sponsor a Child
-          </h1>
-
-          {/* Subheadline */}
-          <p className="text-foreground/70 text-base sm:text-lg leading-relaxed max-w-xl mx-auto">
-            Choose a wishlist and bring joy to a child who needs it most. 
-            Every gift you give is a message of care that lasts far beyond the holiday season.
-          </p>
+      {/* Coming Soon Notice */}
+      {!wishlistsAvailable && (
+        <div 
+          className="relative overflow-hidden border-y border-primary/10"
+          style={{
+            background: 'linear-gradient(135deg, hsl(38 67% 97%) 0%, hsl(344 35% 95%) 50%, hsl(38 65% 95%) 100%)',
+          }}
+        >
+          {/* Subtle radial glow behind content */}
+          <div 
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: 'radial-gradient(ellipse 80% 60% at 50% 50%, hsl(344 35% 90% / 0.4) 0%, transparent 70%)',
+            }}
+          />
+          
+          {/* Decorative ribbon - entering from right, shortened and elegant */}
+          <img 
+            src="/ribbon.png" 
+            alt=""
+            aria-hidden="true"
+            className="absolute pointer-events-none hidden sm:block"
+            style={{
+              width: '320px',
+              height: 'auto',
+              opacity: 0.25,
+              top: '50%',
+              right: '-40px',
+              transform: 'translateY(-50%) rotate(-8deg)',
+              objectFit: 'contain',
+            }}
+          />
+          
+          <div className="relative z-10 max-w-[1200px] mx-auto px-6 md:px-8">
+            <div className="text-center py-12 sm:py-16 md:py-20 pb-14 sm:pb-20 md:pb-24">
+              <span className="inline-block text-xs md:text-sm font-sans uppercase tracking-[0.2em] text-primary/60 mb-4">
+                Opening October 2026
+              </span>
+              <h2 className="font-serif text-[24px] sm:text-[28px] md:text-[32px] text-foreground leading-tight tracking-tight mb-4">
+                Wishlist sponsorship will be available soon.
+              </h2>
+              <button 
+                onClick={() => setIsNewsletterModalOpen(true)}
+                className="inline-flex items-center gap-2 text-primary hover:text-primary/80 text-sm sm:text-base font-medium transition-colors"
+              >
+                Get notified when wishlists open
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* How It Works Section */}
-      <section className="pb-16 sm:pb-20">
+      <section className="pt-12 sm:pt-16 md:pt-20 pb-16 sm:pb-20">
         <div className="max-w-[1200px] mx-auto px-6 md:px-8">
           {/* Section Header */}
           <div className="text-center mb-10 sm:mb-14">
@@ -129,7 +160,7 @@ const SponsorAChild = () => {
           </div>
 
           {/* Steps Grid */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid sm:grid-cols-3 gap-6">
             {howItWorksSteps.map((step, index) => (
               <div
                 key={index}
@@ -167,132 +198,113 @@ const SponsorAChild = () => {
         </div>
       </section>
 
-      {/* Available Children Preview Section */}
-      <section className="py-16 sm:py-20 bg-muted/30">
-        <div className="max-w-[1200px] mx-auto px-6 md:px-8">
-          {wishlistsAvailable ? (
-            <>
-              {/* Section Header */}
-              <div className="text-center mb-10 sm:mb-14">
-                <span className="inline-block text-xs md:text-sm font-sans uppercase tracking-[0.2em] text-primary/60 mb-3">
-                  Preview
-                </span>
-                <h2 className="font-serif text-[24px] sm:text-[28px] md:text-[32px] text-foreground leading-tight tracking-tight mb-4">
-                  Children You Can Sponsor
-                </h2>
-                <p className="text-foreground/70 text-sm sm:text-base max-w-lg mx-auto leading-relaxed">
-                  Each child has a unique story and wishlist. When wishlists become available, 
-                  you'll be able to choose someone to support this holiday season.
-                </p>
-              </div>
-
-              {/* Child Cards Grid */}
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-                {sampleChildren.map((child, index) => (
-                  <div
-                    key={index}
-                    className={cn(
-                      "relative p-6 sm:p-8",
-                      "bg-background rounded-2xl",
-                      "border border-border/30",
-                      "transition-all duration-300",
-                      "hover:shadow-xl hover:shadow-primary/8",
-                      "hover:border-primary/30",
-                      "hover:-translate-y-1",
-                      "cursor-pointer group"
-                    )}
-                  >
-                    {/* Child Avatar/Initial */}
-                    <div className="flex items-start gap-4 mb-5">
-                      <div className={cn(
-                        "flex items-center justify-center",
-                        "w-14 h-14 rounded-full",
-                        "bg-gradient-to-br",
-                        child.color,
-                        "border border-primary/10"
-                      )}>
-                        <span className="font-serif text-2xl text-foreground/80">
-                          {child.initial}
-                        </span>
-                      </div>
-                      <div>
-                        <p className="font-medium text-foreground">Age {child.age}</p>
-                        <p className="text-sm text-muted-foreground">
-                          {child.itemsNeeded} items on wishlist
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Interests */}
-                    <div className="mb-5">
-                      <p className="text-xs uppercase tracking-wider text-muted-foreground mb-2">
-                        Interests
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {child.interests.map((interest, i) => (
-                          <span
-                            key={i}
-                            className="px-3 py-1 text-xs rounded-full bg-primary/8 text-foreground/80"
-                          >
-                            {interest}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* CTA */}
-                    <Button
-                      variant="outline"
-                      className={cn(
-                        "w-full mt-2",
-                        "rounded-full",
-                        "border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-200 group-hover:border-primary/50"
-                      )}
-                    >
-                      View Wishlist
-                    </Button>
-                  </div>
-                ))}
-              </div>
-
-              {/* View All CTA */}
-              <div className="text-center">
-                <Button
-                  className={cn(
-                    "rounded-full",
-                    "px-8 py-6",
-                    "font-medium text-base",
-                    "bg-primary text-primary-foreground transition-all duration-200 hover:scale-[1.02] hover:bg-primary/90 shadow-sm hover:shadow-md hover:shadow-primary/20"
-                  )}
-                >
-                  <Heart className="w-4 h-4 mr-2" strokeWidth={2} />
-                  Browse All Children
-                </Button>
-                <p className="text-muted-foreground text-sm mt-4">
-                  New children are added regularly as families are referred to our program.
-                </p>
-              </div>
-            </>
-          ) : (
-            /* Off-Season State */
-            <div className="text-center max-w-lg mx-auto py-8 sm:py-12">
-              <span className="inline-block text-xs md:text-sm font-sans uppercase tracking-[0.2em] text-primary/60 mb-4">
-                Opening October 2026
+      {/* Available Children Preview Section - Only shown when wishlists are available */}
+      {wishlistsAvailable && (
+        <section className="py-16 sm:py-20 bg-muted/30">
+          <div className="max-w-[1200px] mx-auto px-6 md:px-8">
+            {/* Section Header */}
+            <div className="text-center mb-10 sm:mb-14">
+              <span className="inline-block text-xs md:text-sm font-sans uppercase tracking-[0.2em] text-primary/60 mb-3">
+                Preview
               </span>
               <h2 className="font-serif text-[24px] sm:text-[28px] md:text-[32px] text-foreground leading-tight tracking-tight mb-4">
-                Wishlist sponsorship will be available soon.
+                Children You Can Sponsor
               </h2>
-              <button 
-                onClick={() => setIsNewsletterModalOpen(true)}
-                className="inline-flex items-center gap-2 text-primary hover:text-primary/80 text-sm sm:text-base font-medium transition-colors"
-              >
-                Get notified when wishlists open
-                <ArrowRight className="w-4 h-4" />
-              </button>
+              <p className="text-foreground/70 text-sm sm:text-base max-w-lg mx-auto leading-relaxed">
+                Each child has a unique story and wishlist. When wishlists become available, 
+                you'll be able to choose someone to support this holiday season.
+              </p>
             </div>
-          )}
-        </div>
-      </section>
+
+            {/* Child Cards Grid */}
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+              {sampleChildren.map((child, index) => (
+                <div
+                  key={index}
+                  className={cn(
+                    "relative p-6 sm:p-8",
+                    "bg-background rounded-2xl",
+                    "border border-border/30",
+                    "transition-all duration-300",
+                    "hover:shadow-xl hover:shadow-primary/8",
+                    "hover:border-primary/30",
+                    "hover:-translate-y-1",
+                    "cursor-pointer group"
+                  )}
+                >
+                  {/* Child Avatar/Initial */}
+                  <div className="flex items-start gap-4 mb-5">
+                    <div className={cn(
+                      "flex items-center justify-center",
+                      "w-14 h-14 rounded-full",
+                      "bg-gradient-to-br",
+                      child.color,
+                      "border border-primary/10"
+                    )}>
+                      <span className="font-serif text-2xl text-foreground/80">
+                        {child.initial}
+                      </span>
+                    </div>
+                    <div>
+                      <p className="font-medium text-foreground">Age {child.age}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {child.itemsNeeded} items on wishlist
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Interests */}
+                  <div className="mb-5">
+                    <p className="text-xs uppercase tracking-wider text-muted-foreground mb-2">
+                      Interests
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {child.interests.map((interest, i) => (
+                        <span
+                          key={i}
+                          className="px-3 py-1 text-xs rounded-full bg-primary/8 text-foreground/80"
+                        >
+                          {interest}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* CTA */}
+                  <Button
+                    variant="outline"
+                    className={cn(
+                      "w-full mt-2",
+                      "rounded-full",
+                      "border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-200 group-hover:border-primary/50"
+                    )}
+                  >
+                    View Wishlist
+                  </Button>
+                </div>
+              ))}
+            </div>
+
+            {/* View All CTA */}
+            <div className="text-center">
+              <Button
+                className={cn(
+                  "rounded-full",
+                  "px-8 py-6",
+                  "font-medium text-base",
+                  "bg-primary text-primary-foreground transition-all duration-200 hover:scale-[1.02] hover:bg-primary/90 shadow-sm hover:shadow-md hover:shadow-primary/20"
+                )}
+              >
+                <Heart className="w-4 h-4 mr-2" strokeWidth={2} />
+                Browse All Children
+              </Button>
+              <p className="text-muted-foreground text-sm mt-4">
+                New children are added regularly as families are referred to our program.
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* What You'll Provide Section */}
       <section className="py-16 sm:py-20">
@@ -344,7 +356,6 @@ const SponsorAChild = () => {
                 </h3>
                 <ul className="space-y-3">
                   {[
-                    "Spend approximately $75-150 on wishlist items",
                     "Shop at your convenience within the deadline",
                     "Wrap gifts with love (we provide tags!)",
                     "Drop off at our collection location",
@@ -410,10 +421,6 @@ const SponsorAChild = () => {
                 question: "What if I can't find an item on the wishlist?",
                 answer: "That's okay! Choose a similar alternative or reach out to us — we're happy to help find substitutes that the child will love.",
               },
-              {
-                question: "Can I include a personal note?",
-                answer: "Yes! We encourage sponsors to include a heartfelt card or note. It means so much to children knowing someone thought of them specifically.",
-              },
             ].map((faq, index) => (
               <div 
                 key={index}
@@ -437,41 +444,6 @@ const SponsorAChild = () => {
               View all frequently asked questions →
             </Link>
           </div>
-        </div>
-      </section>
-
-      {/* Final CTA Section */}
-      <section className="py-16 sm:py-20">
-        <div className="max-w-[600px] mx-auto px-6 md:px-8 text-center">
-          <h2 className="font-serif text-[24px] sm:text-[28px] md:text-[32px] text-foreground leading-tight tracking-tight mb-4">
-            Ready to Make a Difference?
-          </h2>
-          <p className="text-foreground/70 text-sm sm:text-base leading-relaxed mb-8 max-w-md mx-auto">
-            Every sponsored child is a reminder that they are seen, loved, and valued. 
-            Your generosity creates ripples of hope that extend far beyond the holiday season.
-          </p>
-          <Button
-            disabled={!wishlistsAvailable}
-            className={cn(
-              "rounded-full",
-              "px-10 py-6",
-              "font-medium text-base",
-              wishlistsAvailable
-                ? "bg-primary text-primary-foreground transition-all duration-200 hover:scale-[1.02] hover:bg-primary/90 shadow-sm hover:shadow-md hover:shadow-primary/20"
-                : "bg-primary/50 text-primary-foreground cursor-not-allowed"
-            )}
-          >
-            <Heart className="w-4 h-4 mr-2" strokeWidth={2} />
-            Choose a Child to Sponsor
-          </Button>
-
-          {/* Helper text when wishlists not available */}
-          {!wishlistsAvailable && (
-            <div className="flex items-center justify-center gap-2 text-muted-foreground text-sm mt-4">
-              <Info className="w-4 h-4" />
-              <span>Wishlists will be available soon.</span>
-            </div>
-          )}
         </div>
       </section>
 

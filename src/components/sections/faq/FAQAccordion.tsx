@@ -23,7 +23,7 @@ const faqItems: FAQItem[] = [
     icon: <Smartphone className="w-5 h-5" />,
     question: "How do I get access to the Joy Drop app?",
     answer:
-      "Once you've registered as a sponsor through our website, you'll receive an email invitation with instructions to download and access the Joy Drop app. The app is available for both iOS and Android devices, and your coordinator will help guide you through the setup process.",
+      "Contact an administrator to get access. You'll receive an email invitation with instructions to access the Joy Drop app.",
   },
   {
     id: "shipping",

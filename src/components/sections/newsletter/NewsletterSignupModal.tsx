@@ -139,8 +139,8 @@ export const NewsletterSignupModal = ({
     }
   };
 
-  const handleNotificationChange = (value: NotificationPreference) => {
-    setFormData((prev) => ({ ...prev, notificationPreference: value }));
+  const handleNotificationChange = (value: string) => {
+    setFormData((prev) => ({ ...prev, notificationPreference: value as NotificationPreference }));
     // Revalidate to update required fields
     setTimeout(() => validateForm(), 0);
   };
