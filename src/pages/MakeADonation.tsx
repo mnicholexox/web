@@ -42,11 +42,6 @@ const MakeADonation = () => {
       {/* Page Header */}
       <div className="max-w-[1200px] mx-auto px-6 md:px-8 py-12 sm:py-16 md:py-20">
         <div className="text-center max-w-2xl mx-auto">
-          {/* Eyebrow label */}
-          <span className="inline-block text-xs md:text-sm font-sans uppercase tracking-[0.2em] text-primary/60 mb-4">
-            Give What You Can
-          </span>
-
           {/* Main headline */}
           <h1 className="font-serif text-[32px] sm:text-[42px] md:text-[48px] lg:text-[56px] text-foreground leading-tight tracking-tight mb-6">
             Make a Donation
@@ -68,12 +63,6 @@ const MakeADonation = () => {
         {/* Section Header */}
         <div className="max-w-[1200px] mx-auto px-6 md:px-8 mb-12 sm:mb-16">
           <div className="text-center">
-            {/* Eyebrow label */}
-            <span className="inline-block text-xs md:text-sm font-sans uppercase tracking-[0.2em] text-primary/60 mb-4">
-              Make a Difference
-            </span>
-
-            {/* Main headline */}
             <h2 className="font-serif text-[28px] sm:text-[36px] md:text-[42px] lg:text-5xl text-foreground leading-tight tracking-tight">
               Cash Donations
             </h2>

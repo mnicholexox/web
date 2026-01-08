@@ -383,12 +383,6 @@ export const PreLovedImpact = () => {
       <div className="relative z-10 max-w-[1200px] mx-auto px-6 md:px-8">
         {/* Section Header - Centered */}
         <div className="text-center mb-8 sm:mb-10">
-          {/* Eyebrow label */}
-          <span className="inline-block text-xs md:text-sm font-sans uppercase tracking-[0.2em] text-primary/60 mb-4">
-            Pre-Loved Impact
-          </span>
-
-          {/* Main headline */}
           <h2 className="font-serif text-[28px] sm:text-[36px] md:text-[42px] lg:text-5xl text-foreground leading-tight tracking-tight mb-4 sm:mb-6">
             Your Pre-Loved Items Making an Impact
           </h2>
