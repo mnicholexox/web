@@ -1,4 +1,4 @@
-import { HeroBanner, WhatThisIsAbout, WhereTheHeartComesIn, Mission, WhoJoyDropIsFor, HowYouCanHelp, ContactSection } from "@/components/sections";
+import { HeroBanner, WhatThisIsAbout, WhereTheHeartComesIn, WhoJoyDropIsFor, HowYouCanHelp, ContactSection } from "@/components/sections";
 
 /**
  * PAGE SECTIONS REFERENCE
@@ -26,21 +26,14 @@ import { HeroBanner, WhatThisIsAbout, WhereTheHeartComesIn, Mission, WhoJoyDropI
  *    - Data attribute: data-section="where-the-heart-comes-in"
  *    - Description: Purpose-driven editorial section about why Joy Drop exists and its values
  * 
- * 4. Mission Section
- *    - Component: Mission
- *    - File: src/components/sections/mission/Mission.tsx
- *    - ID: #mission
- *    - Data attribute: data-section="mission"
- *    - Description: Mission statement with "Who Joy Drop Is For" and "Meeting Real Needs" content
- * 
- * 5. Who Joy Drop Is For Section
+ * 4. Who Joy Drop Is For Section
  *    - Component: WhoJoyDropIsFor
  *    - File: src/components/sections/roles/WhoJoyDropIsFor.tsx
  *    - ID: #who-joy-drop-is-for
  *    - Data attribute: data-section="who-joy-drop-is-for"
  *    - Description: Grid of role tiles (Sponsors, Donors, Volunteers, Our Commitment)
  * 
- * 6. How You Can Help Section
+ * 5. How You Can Help Section
  *    - Component: HowYouCanHelp
  *    - File: src/components/sections/help/HowYouCanHelp.tsx
  *    - ID: #how-you-can-help
@@ -66,10 +59,7 @@ const Index = () => {
       
       {/* SECTION: Where the Heart Comes In */}
       <WhereTheHeartComesIn />
-      
-      {/* SECTION: Mission */}
-      <Mission />
-      
+
       {/* SECTION: Who Joy Drop Is For */}
       <WhoJoyDropIsFor />
       
