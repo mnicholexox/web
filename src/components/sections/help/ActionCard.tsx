@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -8,6 +9,7 @@ export interface ActionCardProps {
   title: string;
   description: string;
   ctaText: string;
+  to?: string;
   onCtaClick?: () => void;
   className?: string;
 }
@@ -18,23 +20,25 @@ export const ActionCard = ({
   title,
   description,
   ctaText,
+  to,
   onCtaClick,
   className,
 }: ActionCardProps) => {
-  return (
-    <div
-      className={cn(
-        "relative flex flex-col items-center text-center",
-        "p-6 sm:p-8 md:p-10",
-        "bg-card/60 rounded-2xl",
-        "border border-border/20",
-        "transition-all duration-300",
-        "hover:shadow-lg hover:shadow-primary/5",
-        "hover:border-primary/20",
-        "hover:-translate-y-1",
-        className
-      )}
-    >
+  const cardClasses = cn(
+    "relative flex flex-col items-center text-center",
+    "p-6 sm:p-8 md:p-10",
+    "bg-card/60 rounded-2xl",
+    "border border-border/20",
+    "transition-all duration-300",
+    "hover:shadow-lg hover:shadow-primary/5",
+    "hover:border-primary/20",
+    "hover:-translate-y-1",
+    to && "cursor-pointer",
+    className
+  );
+
+  const cardContent = (
+    <>
       {/* Numbered indicator */}
       <span className="absolute top-4 left-4 sm:top-5 sm:left-5 font-serif text-[0.8125rem] text-primary/40 tracking-wide">
         {number}
@@ -59,22 +63,54 @@ export const ActionCard = ({
       </p>
 
       {/* CTA Button */}
-      <Button
-        onClick={onCtaClick}
-        className={cn(
-          "mt-auto",
-          "bg-primary text-primary-foreground",
-          "rounded-full",
-          "px-6 sm:px-8 py-3",
-          "min-h-[44px]",
-          "font-medium text-sm sm:text-[0.9375rem]",
-          "transition-all duration-200",
-          "hover:scale-[1.03] hover:bg-primary/90",
-          "shadow-sm hover:shadow-md hover:shadow-primary/20"
-        )}
-      >
-        {ctaText}
-      </Button>
+      {to ? (
+        <span
+          className={cn(
+            "mt-auto inline-flex items-center justify-center",
+            "bg-primary text-primary-foreground",
+            "rounded-full",
+            "px-6 sm:px-8 py-3",
+            "min-h-[44px]",
+            "font-medium text-sm sm:text-[0.9375rem]",
+            "transition-all duration-200",
+            "group-hover:scale-[1.03] group-hover:bg-primary/90",
+            "shadow-sm group-hover:shadow-md group-hover:shadow-primary/20"
+          )}
+        >
+          {ctaText}
+        </span>
+      ) : (
+        <Button
+          onClick={onCtaClick}
+          className={cn(
+            "mt-auto",
+            "bg-primary text-primary-foreground",
+            "rounded-full",
+            "px-6 sm:px-8 py-3",
+            "min-h-[44px]",
+            "font-medium text-sm sm:text-[0.9375rem]",
+            "transition-all duration-200",
+            "hover:scale-[1.03] hover:bg-primary/90",
+            "shadow-sm hover:shadow-md hover:shadow-primary/20"
+          )}
+        >
+          {ctaText}
+        </Button>
+      )}
+    </>
+  );
+
+  if (to) {
+    return (
+      <Link to={to} className={cn(cardClasses, "group")}>
+        {cardContent}
+      </Link>
+    );
+  }
+
+  return (
+    <div className={cardClasses}>
+      {cardContent}
     </div>
   );
 };

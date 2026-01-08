@@ -7,6 +7,7 @@
 // Route paths
 export const ROUTES = {
   HOME: '/',
+  SPONSOR_A_CHILD: '/sponsor-a-child',
   // Add more routes as pages are created
   // ABOUT: '/about',
   // CONTACT: '/contact',

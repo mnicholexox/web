@@ -1,5 +1,6 @@
 import { Gift, Heart, Users } from "lucide-react";
 import { ActionCard } from "./ActionCard";
+import { ROUTES } from "@/constants";
 
 export const HowYouCanHelp = () => {
   const actions = [
@@ -14,7 +15,8 @@ export const HowYouCanHelp = () => {
       title: "Sponsor a Child",
       description:
         "Choose a wishlist and bring joy to a child who needs it most. Every gift you give is a message of care.",
-      ctaText: "Find a Child to Sponsor",
+      ctaText: "Choose a Child",
+      to: ROUTES.SPONSOR_A_CHILD,
     },
     {
       number: "02",
@@ -27,7 +29,7 @@ export const HowYouCanHelp = () => {
       title: "Make a Donation",
       description:
         "Your contribution helps fill gaps, cover essentials, and ensure no child is left without a gift.",
-      ctaText: "Donate Today",
+      ctaText: "Give What You Can",
     },
     {
       number: "03",
@@ -37,10 +39,10 @@ export const HowYouCanHelp = () => {
           strokeWidth={1.5}
         />
       ),
-      title: "Volunteer With Us",
+      title: "Volunteer Your Time",
       description:
         "Lend your time and talents to help prepare, wrap, and deliver gifts. Every helping hand matters.",
-      ctaText: "Join Our Team",
+      ctaText: "Volunteer With Joy Drop",
     },
   ];
 
@@ -71,8 +73,8 @@ export const HowYouCanHelp = () => {
 
           {/* Subheadline */}
           <p className="text-foreground/70 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-            Every act of kindness creates a ripple. Choose the way that feels right to you — 
-            and know that your contribution makes a real difference.
+            Every act of kindness creates a ripple — and it starts with one simple step. 
+            Choose the way that feels right to you.
           </p>
         </div>
 
@@ -86,6 +88,7 @@ export const HowYouCanHelp = () => {
               title={action.title}
               description={action.description}
               ctaText={action.ctaText}
+              to={action.to}
             />
           ))}
         </div>
