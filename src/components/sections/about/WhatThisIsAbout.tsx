@@ -25,48 +25,44 @@ export const WhatThisIsAbout = () => {
         </div>
       </div>
 
-      {/* Decorative Ribbon Divider */}
-      <div className="relative max-w-6xl mx-auto px-6 md:px-8 mt-16 md:mt-24">
-        {/* Large decorative ribbon - centered, fixed size, above tiles */}
-        <div className="flex justify-center" style={{ marginBottom: '-48px' }}>
-          <img 
-            src="/ribbon.png" 
+      {/* Decorative Ribbon - Full width, outside container */}
+      <div className="relative w-full mt-16 md:mt-24">
+        {/* Large decorative ribbon - flowing from left edge of section */}
+        <div className="absolute left-0 top-0 w-full pointer-events-none hidden md:block" style={{ transform: 'translateY(-9%)' }}>
+          <img
+            src="/ribbon_3.png"
             alt=""
             aria-hidden="true"
-            className="pointer-events-none hidden md:block"
             style={{
-              width: '1200px',
-              height: '100px',
-              opacity: 0.4,
+              width: '55%',
+              height: 'auto',
+              minHeight: '120px',
+              opacity: 0.9,
               objectFit: 'contain',
-              border: 'none',
-              boxShadow: 'none',
-              position: 'relative',
-              zIndex: 0,
+              objectPosition: 'left center',
             }}
           />
-          {/* Mobile version - scaled down proportionally */}
-          <img 
-            src="/ribbon.png" 
+        </div>
+        {/* Mobile version */}
+        <div className="relative md:hidden px-6" style={{ marginBottom: '-20px' }}>
+          <img
+            src="/ribbon_3.png"
             alt=""
             aria-hidden="true"
-            className="pointer-events-none md:hidden"
+            className="pointer-events-none"
             style={{
               width: '100%',
-              maxWidth: '600px',
-              height: '60px',
-              opacity: 0.4,
+              height: 'auto',
+              minHeight: '80px',
+              opacity: 0.7,
               objectFit: 'contain',
-              border: 'none',
-              boxShadow: 'none',
-              position: 'relative',
-              zIndex: 0,
             }}
           />
         </div>
 
         {/* Impact Proof Points */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 relative z-10">
+        <div className="max-w-6xl mx-auto px-6 md:px-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 relative z-10">
           <DataTile 
             value="500+" 
             label="Children Served" 
@@ -84,6 +80,7 @@ export const WhatThisIsAbout = () => {
             label="Community Love" 
             imageSrc="/present-image.png"
           />
+          </div>
         </div>
       </div>
     </section>
