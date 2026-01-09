@@ -12,9 +12,7 @@ export const GiftBoxTile = ({ title, subtitle, description, className }: GiftBox
     <div
       className={cn(
         // Base structure
-        "relative flex flex-col items-center justify-end",
-        // Padding
-        "px-4 py-6 md:px-6 md:py-8",
+        "relative flex flex-col items-center justify-end overflow-hidden",
         // Match height with other tiles
         "min-h-[200px] md:min-h-[240px]",
         "text-center",
@@ -24,11 +22,11 @@ export const GiftBoxTile = ({ title, subtitle, description, className }: GiftBox
       )}
     >
       {/* Gift box image */}
-      <div className="relative flex-1 flex items-center justify-center w-full">
+      <div className="absolute inset-0 w-full h-full">
         <img
-          src="/present-image.png"
+          src="/gift2-icon.png"
           alt="Gift box with ribbon"
-          className="w-auto h-full max-h-[140px] md:max-h-[180px] object-contain drop-shadow-md"
+          className="w-full h-full object-cover"
         />
         
         {/* Text overlay on the gift box */}
