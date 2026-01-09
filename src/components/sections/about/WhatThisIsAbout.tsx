@@ -1,11 +1,12 @@
 import { DataTile } from './DataTile';
+import { GiftImageTile } from './GiftImageTile';
 
 export const WhatThisIsAbout = () => {
   return (
     <section 
       id="what-this-is-about"
       data-section="what-this-is-about"
-      className="w-full pt-20 md:pt-32 pb-12 md:pb-16 bg-card"
+      className="w-full pt-6 md:pt-10 pb-12 md:pb-16 bg-card"
     >
       {/* Editorial Headline Block */}
       <div className="max-w-5xl mx-auto px-6 md:px-8">
@@ -79,11 +80,7 @@ export const WhatThisIsAbout = () => {
               description="No overhead. No ambiguity."
               showDivider={false}
             />
-            <DataTile 
-              value="Every Donation" 
-              label="Hand-delivered" 
-              description="From a shared commitment to be of service, every year"
-            />
+            <GiftImageTile />
           </div>
         </div>
       </div>
