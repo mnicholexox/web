@@ -27,7 +27,7 @@ interface EditorialCalloutProps {
 /* Soft editorial callout block */
 const EditorialCallout = ({ title, children }: EditorialCalloutProps) => (
   <article 
-    className="relative pl-6 md:pl-7 py-6 md:py-8 pr-4 md:pr-6 rounded-sm"
+    className="relative pl-8 md:pl-10 py-6 md:py-8 pr-8 md:pr-10 rounded-sm"
     style={{
       background: 'linear-gradient(135deg, hsl(var(--primary) / 0.03) 0%, hsl(var(--accent) / 0.02) 100%)',
       borderLeft: '1px solid hsl(var(--primary) / 0.08)',
@@ -53,8 +53,8 @@ const EditorialCallout = ({ title, children }: EditorialCalloutProps) => (
         </h3>
       </div>
       
-      {/* Content with gentle left margin to align with heading text */}
-      <div className="pl-6">
+      {/* Content spanning full card width for expansive, editorial feel */}
+      <div>
         <p className="text-foreground/65 leading-[1.9] md:leading-[2] text-base md:text-[1.0625rem]">
           {children}
         </p>
@@ -68,7 +68,7 @@ export const WhereTheHeartComesIn = () => {
     <section 
       id="where-the-heart-comes-in"
       data-section="where-the-heart-comes-in"
-      className="w-full py-28 md:py-40 bg-background relative overflow-hidden"
+      className="w-full pt-16 md:pt-24 pb-28 md:pb-40 bg-background relative overflow-hidden"
     >
       {/* Subtle decorative background element */}
       <div 
@@ -78,9 +78,9 @@ export const WhereTheHeartComesIn = () => {
         }}
       />
       
-      <div className="max-w-4xl mx-auto px-6 md:px-8 lg:px-12 relative">
-        {/* Left-aligned editorial content with comfortable reading width */}
-        <div className="max-w-2xl space-y-10 md:space-y-12">
+      <div className="max-w-5xl mx-auto px-6 md:px-8 lg:px-12 relative">
+        {/* Left-aligned editorial content with expanded reading width (~1.5x original) */}
+        <div className="space-y-10 md:space-y-12">
           {/* Headline block */}
           <div className="space-y-6">
             {/* Eyebrow */}

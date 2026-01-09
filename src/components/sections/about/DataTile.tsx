@@ -3,74 +3,53 @@ import { cn } from "@/lib/utils";
 export interface DataTileProps {
   value: string;
   label: string;
+  description: string;
   className?: string;
 }
 
-export const DataTile = ({ value, label, className }: DataTileProps) => {
+export const DataTile = ({ value, label, description, className }: DataTileProps) => {
   return (
     <div
       className={cn(
-        // Base structure - matches ImageTile exactly
+        // Base structure
         "relative flex flex-col items-center justify-center",
-        // Consistent sizing across all tiles
-        "aspect-square",
-        // Padding - matches ImageTile
-        "p-8 md:p-10 lg:p-12",
-        // Border radius - matches ImageTile
-        "rounded-2xl",
+        // Padding
+        "px-6 py-8 md:px-8 md:py-10",
+        // Clean background with subtle shadow
+        "bg-background/80",
+        "rounded-xl",
+        // Subtle border and shadow
+        "border border-border/40",
+        "shadow-[0_2px_8px_rgba(0,0,0,0.04)]",
         "text-center",
-        "overflow-hidden",
         // Transitions
         "transition-all duration-300 ease-out",
         className
       )}
     >
-      {/* Gradient background layer - proportionate fade from top color to background */}
-      <div 
-        className="absolute inset-0 rounded-2xl"
-        style={{
-          background: "linear-gradient(to bottom, #d0b8a7 0%, #d0b8a7 10%, hsl(var(--background)) 100%)"
-        }}
-      />
-      
-      {/* Radial highlight behind content - anchors numeric values */}
-      <div 
-        className="absolute inset-0 rounded-2xl"
-        style={{
-          background: "radial-gradient(ellipse 70% 50% at 50% 45%, #d0b8a7 0%, rgba(208, 184, 167, 0.4) 60%, transparent 100%)"
-        }}
-      />
-      
-      {/* Top edge definition - clear horizontal line for grounded feel */}
-      <div 
-        className="absolute inset-x-2 top-0 h-px"
-        style={{
-          background: "linear-gradient(90deg, transparent 0%, hsl(var(--border) / 0.6) 15%, hsl(var(--border) / 0.7) 50%, hsl(var(--border) / 0.6) 85%, transparent 100%)"
-        }}
-      />
-      
-      {/* Side borders - maintain structure at top, soften toward bottom */}
-      <div 
-        className="absolute top-0 left-0 w-px h-full rounded-l-2xl"
-        style={{
-          background: "linear-gradient(to bottom, hsl(var(--border) / 0.55) 0%, hsl(var(--border) / 0.45) 60%, hsl(var(--border) / 0.2) 85%, transparent 100%)"
-        }}
-      />
-      <div 
-        className="absolute top-0 right-0 w-px h-full rounded-r-2xl"
-        style={{
-          background: "linear-gradient(to bottom, hsl(var(--border) / 0.55) 0%, hsl(var(--border) / 0.45) 60%, hsl(var(--border) / 0.2) 85%, transparent 100%)"
-        }}
-      />
-
-      {/* Numeric value - dominant visual focus */}
-      <span className="relative font-serif text-5xl md:text-6xl lg:text-7xl text-primary font-normal tracking-tight leading-none">
+      {/* Numeric value - large serif */}
+      <span className="font-serif text-4xl md:text-5xl lg:text-6xl text-[#55111c] font-normal tracking-tight leading-none">
         {value}
       </span>
       
-      {/* Supporting label - subdued and secondary */}
-      <span className="relative mt-5 md:mt-6 font-sans text-[10px] md:text-xs text-muted-foreground/70 uppercase tracking-[0.2em]">
-        {label}
+      {/* Primary label */}
+      {label && (
+        <span className="mt-3 md:mt-4 font-sans text-sm md:text-base text-[#55111c]">
+          {label}
+        </span>
+      )}
+      
+      {/* Horizontal divider */}
+      {label && (
+        <div className="w-full max-w-[80%] h-px bg-border/50 my-4 md:my-5" />
+      )}
+      
+      {/* Secondary description */}
+      <span className={cn(
+        "font-sans text-xs md:text-sm text-[#55111c] leading-relaxed",
+        !label && "mt-3 md:mt-4"
+      )}>
+        {description}
       </span>
     </div>
   );

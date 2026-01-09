@@ -1,19 +1,19 @@
 import { DataTile } from './DataTile';
-import { ImageTile } from './ImageTile';
+import { GiftBoxTile } from './GiftBoxTile';
 
 export const WhatThisIsAbout = () => {
   return (
     <section 
       id="what-this-is-about"
       data-section="what-this-is-about"
-      className="w-full py-20 md:py-32 bg-card"
+      className="w-full pt-20 md:pt-32 pb-12 md:pb-16 bg-card"
     >
       {/* Editorial Headline Block */}
       <div className="max-w-5xl mx-auto px-6 md:px-8">
         <div className="max-w-4xl">
           {/* Eyebrow */}
           <span className="inline-block text-[11px] md:text-xs font-sans uppercase tracking-[0.25em] text-muted-foreground/70 font-medium mb-6 md:mb-8">
-            Introducing Joy Drop
+            What This Is All About
           </span>
           
           {/* Primary Editorial Headline */}
@@ -63,23 +63,26 @@ export const WhatThisIsAbout = () => {
         {/* Impact Proof Points */}
         <div className="max-w-6xl mx-auto px-6 md:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 relative z-10">
-          <DataTile 
-            value="500+" 
-            label="Children Served" 
-          />
-          <DataTile 
-            value="200+" 
-            label="Volunteers" 
-          />
-          <DataTile 
-            value="$50K" 
-            label="Gifts Donated" 
-          />
-          <ImageTile 
-            value="100%" 
-            label="Community Love" 
-            imageSrc="/present-image.png"
-          />
+            <DataTile 
+              value="2022" 
+              label="" 
+              description="Started Sharing"
+            />
+            <DataTile 
+              value="232" 
+              label="Children supported" 
+              description="Wishlists Fulfilled with Care"
+            />
+            <DataTile 
+              value="$2,800" 
+              label="Donation Dollars Directed Toward Gifts & Essentials" 
+              description="No overhead. No ambiguity."
+            />
+            <GiftBoxTile 
+              title="Every Donation"
+              subtitle="Hand-delivered"
+              description="from a shared commitment to be of service, every year"
+            />
           </div>
         </div>
       </div>

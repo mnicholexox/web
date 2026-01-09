@@ -60,8 +60,8 @@ const Index = () => {
       {/* SECTION: Where the Heart Comes In */}
       <WhereTheHeartComesIn />
 
-      {/* SECTION: Who Joy Drop Is For */}
-      <WhoJoyDropIsFor />
+      {/* SECTION: Who Joy Drop Is For - HIDDEN */}
+      {/* <WhoJoyDropIsFor /> */}
       
       {/* SECTION: How You Can Help */}
       <HowYouCanHelp />
