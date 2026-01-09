@@ -1,5 +1,4 @@
 import { DataTile } from './DataTile';
-import { GiftBoxTile } from './GiftBoxTile';
 
 export const WhatThisIsAbout = () => {
   return (
@@ -34,13 +33,12 @@ export const WhatThisIsAbout = () => {
             alt=""
             aria-hidden="true"
             style={{
-              width: '55%',
+              width: '110%',
               height: 'auto',
-              minHeight: '120px',
+              minHeight: '240px',
               opacity: 0.9,
               objectFit: 'contain',
               objectPosition: 'left center',
-              transform: 'translateY(-60px)',
             }}
           />
         </div>
@@ -52,12 +50,11 @@ export const WhatThisIsAbout = () => {
             aria-hidden="true"
             className="pointer-events-none"
             style={{
-              width: '100%',
+              width: '200%',
               height: 'auto',
-              minHeight: '80px',
+              minHeight: '160px',
               opacity: 0.7,
               objectFit: 'contain',
-              transform: 'translateY(-60px)',
             }}
           />
         </div>
@@ -67,8 +64,9 @@ export const WhatThisIsAbout = () => {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 relative z-10">
             <DataTile 
               value="2022" 
-              label="" 
-              description="Started Sharing"
+              label="Started Gifting" 
+              description=""
+              showDivider={false}
             />
             <DataTile 
               value="232" 
@@ -77,12 +75,14 @@ export const WhatThisIsAbout = () => {
             />
             <DataTile 
               value="$2,800" 
-              label="Donation Dollars Directed Toward Gifts & Essentials" 
+              label="Directed entirely toward gifts and essentials" 
+              description="No overhead. No ambiguity."
+              showDivider={false}
             />
-            <GiftBoxTile 
-              title="Every Donation"
-              subtitle="Hand-delivered"
-              description="from a shared commitment to be of service, every year"
+            <DataTile 
+              value="Every Donation" 
+              label="Hand-delivered" 
+              description="From a shared commitment to be of service, every year"
             />
           </div>
         </div>

@@ -5,9 +5,10 @@ export interface DataTileProps {
   label: string;
   description: string;
   className?: string;
+  showDivider?: boolean;
 }
 
-export const DataTile = ({ value, label, description, className }: DataTileProps) => {
+export const DataTile = ({ value, label, description, className, showDivider = true }: DataTileProps) => {
   return (
     <div
       className={cn(
@@ -40,13 +41,13 @@ export const DataTile = ({ value, label, description, className }: DataTileProps
       )}
       
       {/* Horizontal divider */}
-      {label && (
+      {label && showDivider && (
         <div className="w-full max-w-[80%] h-px bg-border/50 my-4 md:my-5" />
       )}
       
       {/* Secondary description */}
       <span className={cn(
-        "font-sans text-xs md:text-sm text-[#55111c] leading-relaxed",
+        "font-sans text-xs md:text-sm text-muted-foreground leading-relaxed",
         !label && "mt-3 md:mt-4"
       )}>
         {description}
