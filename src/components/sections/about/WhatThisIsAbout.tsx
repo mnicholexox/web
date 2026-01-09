@@ -34,7 +34,7 @@ export const WhatThisIsAbout = () => {
             alt=""
             aria-hidden="true"
             style={{
-              width: '110%',
+              width: '75%',
               height: 'auto',
               minHeight: '240px',
               opacity: 0.9,

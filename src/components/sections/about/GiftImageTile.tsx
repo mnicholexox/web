@@ -20,7 +20,7 @@ export const GiftImageTile = ({ className }: GiftImageTileProps) => {
       <div className="relative flex items-center justify-center h-full w-full">
         {/* Subtle grounding shadow - soft ellipse beneath the gift for natural depth */}
         <div 
-          className="absolute bottom-1 left-1/2 -translate-x-1/2 w-[50%] h-[6px] rounded-[50%] bg-foreground/[0.05] blur-[4px]"
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[60%] h-[8px] rounded-[50%] bg-foreground/[0.06] blur-[6px]"
           aria-hidden="true"
         />
         
@@ -33,21 +33,21 @@ export const GiftImageTile = ({ className }: GiftImageTileProps) => {
 
         {/* Text overlay - centered on top of the gift image, shifted down */}
         <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4 pt-10 md:pt-14">
-          {/* Headline - largest, bold serif */}
-          <p className="font-serif text-2xl md:text-3xl lg:text-4xl font-bold text-[#55111c] leading-tight tracking-tight">
+          {/* Headline */}
+          <p className="font-serif text-base md:text-lg lg:text-xl font-semibold text-[#55111c] leading-tight">
             Every Donation
           </p>
           
-          {/* Sub-headline - prominent but smaller */}
-          <p className="font-serif text-lg md:text-xl lg:text-2xl font-semibold text-[#55111c] mt-1 md:mt-2 leading-tight">
+          {/* Sub-headline */}
+          <p className="font-serif text-base md:text-lg lg:text-xl font-semibold text-[#55111c] leading-tight">
             Hand Delivered
           </p>
           
           {/* Supporting text - smallest, muted */}
           <p className="font-sans text-xs md:text-sm text-[#55111c]/70 mt-2 md:mt-3 leading-relaxed">
-            From a shared<br />
-            commitment to be<br />
-            of service, every year
+            From a Shared<br />
+            Commitment to be<br />
+            of Service, Every Year
           </p>
         </div>
       </div>
