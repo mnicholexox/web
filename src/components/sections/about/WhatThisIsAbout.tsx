@@ -40,6 +40,7 @@ export const WhatThisIsAbout = () => {
               opacity: 0.9,
               objectFit: 'contain',
               objectPosition: 'left center',
+              transform: 'translateY(-60px)',
             }}
           />
         </div>
@@ -56,6 +57,7 @@ export const WhatThisIsAbout = () => {
               minHeight: '80px',
               opacity: 0.7,
               objectFit: 'contain',
+              transform: 'translateY(-60px)',
             }}
           />
         </div>
@@ -76,7 +78,6 @@ export const WhatThisIsAbout = () => {
             <DataTile 
               value="$2,800" 
               label="Donation Dollars Directed Toward Gifts & Essentials" 
-              description="No overhead. No ambiguity."
             />
             <GiftBoxTile 
               title="Every Donation"
