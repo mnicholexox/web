@@ -22,7 +22,7 @@ export const HowYouCanHelp = () => {
       title: "Sponsor a Child",
       description:
         "Choose a wishlist and bring joy to a child who needs it most. Every gift you give is a message of care.",
-      ctaText: "Choose a Child",
+      ctaText: "Choose a Wishlist",
       to: ROUTES.SPONSOR_A_CHILD,
     },
     {
@@ -37,7 +37,7 @@ export const HowYouCanHelp = () => {
       description:
         "Your contribution helps fill gaps, cover essentials, and ensure no child is left without a gift.",
       ctaText: "Make a Donation",
-      to: ROUTES.MAKE_A_DONATION,
+      to: `${ROUTES.MAKE_A_DONATION}#cash-donations`,
     },
     {
       number: "03",

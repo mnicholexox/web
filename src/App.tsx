@@ -3,11 +3,12 @@ import Index from "./pages/Index.tsx";
 import SponsorAChild from "./pages/SponsorAChild.tsx";
 import MakeADonation from "./pages/MakeADonation.tsx";
 import FAQ from "./pages/FAQ.tsx";
-import { Header } from "./components/layout";
+import { Header, ScrollToTop } from "./components/layout";
 import { ROUTES } from "./constants";
 
 const App = () => (
   <BrowserRouter>
+    <ScrollToTop />
     <Header />
     <Routes>
       <Route path={ROUTES.HOME} element={<Index />} />

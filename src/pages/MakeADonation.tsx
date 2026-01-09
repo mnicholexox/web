@@ -1,11 +1,31 @@
+import { useEffect } from "react";
 import { ArrowLeft, Heart, Gift, Sparkles, ShieldCheck } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants";
 import { cn } from "@/lib/utils";
 import { PreLovedImpact } from "@/components/sections";
 
 const MakeADonation = () => {
+  const location = useLocation();
+
+  // Scroll to hash anchor on page load, accounting for fixed header
+  useEffect(() => {
+    if (location.hash) {
+      const element = document.getElementById(location.hash.slice(1));
+      if (element) {
+        // Small delay to ensure the page has rendered
+        setTimeout(() => {
+          const headerHeight = 64; // h-16 = 64px fixed header
+          const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+          window.scrollTo({
+            top: elementPosition - headerHeight,
+            behavior: "smooth"
+          });
+        }, 100);
+      }
+    }
+  }, [location.hash]);
   const donationExamples = [
     {
       icon: <Gift className="w-5 h-5 text-primary/70" strokeWidth={1.5} />,
