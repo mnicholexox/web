@@ -132,18 +132,18 @@ const SponsorAChild = () => {
           <div className="relative z-10 max-w-[1200px] mx-auto px-6 md:px-8">
             <div className="text-center py-12 sm:py-16 md:py-20 pb-14 sm:pb-20 md:pb-24">
               <span className="inline-block text-xs md:text-sm font-sans uppercase tracking-[0.2em] text-primary/60 mb-4">
-                Opening October 2026
+                Opening November 2026
               </span>
               <h2 className="font-serif text-[24px] sm:text-[28px] md:text-[32px] text-foreground leading-tight tracking-tight mb-4">
                 Wishlist sponsorship will be available soon.
               </h2>
-              <button 
+              <Button 
                 onClick={() => setIsNewsletterModalOpen(true)}
-                className="inline-flex items-center gap-2 text-primary hover:text-primary/80 text-sm sm:text-base font-medium transition-colors"
+                className="bg-primary text-primary-foreground rounded-full px-6 sm:px-8 py-3 min-h-[44px] font-medium text-sm sm:text-[0.9375rem] transition-all duration-200 hover:scale-[1.03] hover:bg-primary/90 shadow-sm hover:shadow-md hover:shadow-primary/20"
               >
                 Get notified when wishlists open
-                <ArrowRight className="w-4 h-4" />
-              </button>
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
             </div>
           </div>
         </div>
@@ -372,45 +372,51 @@ const SponsorAChild = () => {
                 giving them a complete holiday experience.
               </p>
 
-              {/* Gift Categories */}
-              <div className="space-y-5">
-                {giftCategories.map((category, index) => (
-                  <div 
-                    key={index}
-                    className="flex gap-4 items-start p-5 rounded-2xl bg-card/30"
-                  >
-                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/6 flex items-center justify-center">
-                      {category.icon}
+              {/* Gift Categories - Single Card */}
+              <div className="p-6 sm:p-8 rounded-2xl bg-card/40 border border-border/20">
+                <div className="space-y-4">
+                  {giftCategories.map((category, index) => (
+                    <div 
+                      key={index}
+                      className={cn(
+                        "flex gap-4 items-start",
+                        index !== giftCategories.length - 1 && "pb-4 border-b border-border/15"
+                      )}
+                    >
+                      <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/8 flex items-center justify-center">
+                        {category.icon}
+                      </div>
+                      <div className="pt-0.5">
+                        <h3 className="font-medium text-foreground text-sm sm:text-[0.9375rem] mb-1.5">
+                          {category.title}
+                        </h3>
+                        <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
+                          {category.description}
+                        </p>
+                      </div>
                     </div>
-                    <div className="pt-0.5">
-                      <h3 className="font-medium text-foreground text-sm sm:text-[0.9375rem] mb-1.5">
-                        {category.title}
-                      </h3>
-                      <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
-                        {category.description}
-                      </p>
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
 
             {/* Right Column - Reassurance Cards */}
-            <div className="space-y-5">
-              {/* Timeline Note */}
-              <div className="relative">
-                {/* Decorative image overlapping top edge */}
+            <div>
+              {/* Decorative image above the card */}
+              <div className="flex justify-center">
                 <img 
                   src="/sponsorship-icon.png" 
                   alt=""
                   aria-hidden="true"
-                  className="absolute left-1/2 -translate-x-1/2 -top-10 w-20 h-20 object-contain pointer-events-none opacity-90 drop-shadow-sm"
+                  className="w-80 h-80 object-contain pointer-events-none opacity-90 drop-shadow-sm"
                   style={{
                     filter: 'saturate(0.9) brightness(1.02)',
                   }}
                 />
-                
-                <div className="flex gap-5 items-start pt-12 pb-5 px-5 sm:pt-14 sm:pb-6 sm:px-6 rounded-2xl bg-card/50">
+              </div>
+              
+              {/* Timeline Note */}
+              <div className="flex gap-5 items-start pt-5 pb-5 px-5 sm:pt-6 sm:pb-6 sm:px-6 rounded-2xl bg-card/50 -mt-16">
                   <div className="flex-shrink-0 w-10 h-10 rounded-full bg-muted/80 flex items-center justify-center">
                     <Clock className="w-5 h-5 text-foreground/40" strokeWidth={1.5} />
                   </div>
@@ -423,7 +429,6 @@ const SponsorAChild = () => {
                       December 10th to ensure timely delivery to families.
                     </p>
                   </div>
-                </div>
               </div>
 
               {/* Gentle Note */}

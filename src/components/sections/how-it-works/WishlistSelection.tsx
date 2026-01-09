@@ -110,13 +110,13 @@ export const WishlistSelection = ({ wishlistsAvailable = false }: WishlistSelect
                   Wishlist sponsorship will be available soon.
                 </h3>
                 
-                <button 
+                <Button 
                   onClick={() => setIsNewsletterModalOpen(true)}
-                  className="inline-flex items-center gap-2 text-primary hover:text-primary/80 text-sm font-medium transition-colors mb-6"
+                  className="bg-primary text-primary-foreground rounded-full px-6 sm:px-8 py-3 min-h-[44px] font-medium text-sm sm:text-[0.9375rem] transition-all duration-200 hover:scale-[1.03] hover:bg-primary/90 shadow-sm hover:shadow-md hover:shadow-primary/20 mb-6"
                 >
                   Get notified when wishlists open
-                  <ArrowRight className="w-4 h-4" />
-                </button>
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
 
                 <Link 
                   to={ROUTES.MAKE_A_DONATION}
