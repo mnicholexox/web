@@ -68,7 +68,7 @@ export const WhereTheHeartComesIn = () => {
     <section 
       id="where-the-heart-comes-in"
       data-section="where-the-heart-comes-in"
-      className="w-full pt-16 md:pt-24 pb-28 md:pb-40 bg-background relative overflow-hidden"
+      className="w-full pt-16 md:pt-24 pb-16 md:pb-20 bg-background relative overflow-hidden"
     >
       {/* Subtle decorative background element */}
       <div 

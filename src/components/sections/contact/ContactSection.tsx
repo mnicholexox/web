@@ -29,8 +29,13 @@ export const ContactSection = () => {
     <section
       id="contact"
       data-section="contact"
-      className="relative w-full py-20 sm:py-24 md:py-32 bg-muted/30 overflow-hidden"
+      className="relative w-full pt-4 sm:pt-6 md:pt-8 pb-20 sm:pb-24 md:pb-32 bg-muted/30 overflow-hidden"
     >
+      {/* Divider */}
+      <div className="max-w-[200px] mx-auto mb-10 sm:mb-12 md:mb-16">
+        <div className="h-px bg-border/60" />
+      </div>
+
       {/* Soft background decoration */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/3 -left-24 w-48 h-48 bg-primary/3 rounded-full blur-3xl" />

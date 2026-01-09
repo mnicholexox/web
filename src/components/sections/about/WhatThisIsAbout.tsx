@@ -62,7 +62,7 @@ export const WhatThisIsAbout = () => {
 
         {/* Impact Proof Points */}
         <div className="max-w-6xl mx-auto px-6 md:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 relative z-10">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 relative z-10 items-end">
             <DataTile 
               value="2022" 
               label="Started Gifting" 

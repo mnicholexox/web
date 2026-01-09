@@ -12,10 +12,12 @@ export const DataTile = ({ value, label, description, className, showDivider = t
   return (
     <div
       className={cn(
-        // Base structure
-        "relative flex flex-col items-center justify-center",
-        // Padding
-        "px-6 py-8 md:px-8 md:py-10",
+        // Base structure - fixed height (1.5x shorter than gift tile)
+        // Gift tile: 200px/260px/300px → Data tile: 133px/173px/200px
+        "relative flex flex-col items-center justify-start",
+        "h-[133px] md:h-[173px] lg:h-[200px]",
+        // Padding - more top padding to position numbers consistently
+        "px-4 pt-6 pb-4 md:px-6 md:pt-8 md:pb-6",
         // Clean background with subtle shadow
         "bg-background/80",
         "rounded-xl",
@@ -42,7 +44,7 @@ export const DataTile = ({ value, label, description, className, showDivider = t
       
       {/* Horizontal divider */}
       {label && showDivider && (
-        <div className="w-full max-w-[80%] h-px bg-border/50 my-4 md:my-5" />
+        <div className="w-full max-w-[80%] h-px bg-border/50 my-0.5" />
       )}
       
       {/* Secondary description */}

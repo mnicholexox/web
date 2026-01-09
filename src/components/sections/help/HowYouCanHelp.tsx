@@ -59,7 +59,7 @@ export const HowYouCanHelp = () => {
     <section 
       id="how-you-can-help"
       data-section="how-you-can-help"
-      className="relative w-full py-20 sm:py-24 md:py-32 bg-background overflow-hidden"
+      className="relative w-full pt-12 sm:pt-16 md:pt-20 pb-20 sm:pb-24 md:pb-32 bg-background overflow-hidden"
     >
       {/* Subtle background decoration */}
       <div className="absolute inset-0 pointer-events-none">
