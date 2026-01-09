@@ -1,17 +1,15 @@
 import { useState } from "react";
-import { ArrowLeft, ArrowRight, Gift, Heart, Sparkles, Star, Clock, ClipboardList } from "lucide-react";
+import { ArrowLeft, ArrowRight, Gift, Heart, Sparkles, Star, Clock, ClipboardList, ShoppingBag } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants";
 import { cn } from "@/lib/utils";
 import { NewsletterSignupModal } from "@/components/sections/newsletter";
-import { Step02FulfillIllustration, Step03DropIllustration } from "@/components/sections/how-it-works";
 
 const SponsorAChild = () => {
   // TODO: This would come from your data source (API, context, etc.)
   const wishlistsAvailable = false;
   const [isNewsletterModalOpen, setIsNewsletterModalOpen] = useState(false);
-  // Step 01 and 03 use standard icon cards
   const step01 = {
     number: "01",
     icon: <ClipboardList className="w-6 h-6 text-primary/70" strokeWidth={1.5} />,
@@ -19,17 +17,16 @@ const SponsorAChild = () => {
     description: "After receiving an invite to the Joy Drop app, browse children's wishlists and select the one(s) you're ready to fulfill.",
   };
 
-  // Step 02 uses illustrated card design
   const step02 = {
     number: "02",
-    stepLabel: "Fulfill",
+    icon: <ShoppingBag className="w-6 h-6 text-primary/70" strokeWidth={1.5} />,
     title: "Fulfill",
     description: "Easily find wishlist items in the app, shop online if you prefer, and mark each item as purchased.",
   };
 
   const step03 = {
     number: "03",
-    stepLabel: "Drop",
+    icon: <Gift className="w-6 h-6 text-primary/70" strokeWidth={1.5} />,
     title: "Drop",
     description: "Don't have time to wrap? Simply drop off your items, and our volunteers will wrap, prepare, and deliver each gift with care.",
   };
@@ -189,10 +186,10 @@ const SponsorAChild = () => {
               </p>
             </div>
 
-            {/* Step 02 - Illustrated card with refined design */}
+            {/* Step 02 */}
             <div
               className={cn(
-                "relative flex flex-col items-center text-center p-6 sm:p-8",
+                "relative p-6 sm:p-8",
                 "bg-card/60 rounded-2xl",
                 "border border-border/20",
                 "transition-all duration-300",
@@ -200,26 +197,24 @@ const SponsorAChild = () => {
                 "hover:border-primary/20"
               )}
             >
-              {/* Illustration at top, centered */}
-              <div className="mb-5 flex items-center justify-center min-h-[100px]">
-                <Step02FulfillIllustration />
+              <span className="absolute top-4 right-4 font-serif text-[0.8125rem] text-primary/30 tracking-wide">
+                {step02.number}
+              </span>
+              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary/8 mb-4">
+                {step02.icon}
               </div>
-
-              {/* Title - serif font */}
-              <h3 className="font-serif text-[19px] sm:text-[21px] text-foreground mb-3 leading-snug tracking-tight">
+              <h3 className="font-serif text-lg sm:text-xl text-foreground mb-2">
                 {step02.title}
               </h3>
-
-              {/* Description */}
-              <p className="text-sm text-foreground/70 leading-relaxed max-w-[280px]">
+              <p className="text-sm text-foreground/70 leading-relaxed">
                 {step02.description}
               </p>
             </div>
 
-            {/* Step 03 - Illustrated card with hands holding gift */}
+            {/* Step 03 */}
             <div
               className={cn(
-                "relative flex flex-col items-center text-center p-6 sm:p-8",
+                "relative p-6 sm:p-8",
                 "bg-card/60 rounded-2xl",
                 "border border-border/20",
                 "transition-all duration-300",
@@ -227,18 +222,16 @@ const SponsorAChild = () => {
                 "hover:border-primary/20"
               )}
             >
-              {/* Illustration at top, centered */}
-              <div className="mb-5 flex items-center justify-center min-h-[100px]">
-                <Step03DropIllustration />
+              <span className="absolute top-4 right-4 font-serif text-[0.8125rem] text-primary/30 tracking-wide">
+                {step03.number}
+              </span>
+              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary/8 mb-4">
+                {step03.icon}
               </div>
-
-              {/* Title - serif font */}
-              <h3 className="font-serif text-[19px] sm:text-[21px] text-foreground mb-3 leading-snug tracking-tight">
+              <h3 className="font-serif text-lg sm:text-xl text-foreground mb-2">
                 {step03.title}
               </h3>
-
-              {/* Description */}
-              <p className="text-sm text-foreground/70 leading-relaxed max-w-[280px]">
+              <p className="text-sm text-foreground/70 leading-relaxed">
                 {step03.description}
               </p>
             </div>
