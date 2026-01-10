@@ -96,7 +96,7 @@ export const LadiesCraftCrewCard = ({ isAdmin = false }: LadiesCraftCrewCardProp
     >
       {/* Location Tag */}
       <span className="inline-block self-start text-[10px] md:text-[11px] font-sans uppercase tracking-[0.15em] text-primary/50 mb-2">
-        Hoschton
+        Twin Lakes, Hoschton, GA
       </span>
 
       {/* Title */}
