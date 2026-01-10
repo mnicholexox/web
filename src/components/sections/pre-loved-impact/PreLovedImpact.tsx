@@ -8,6 +8,7 @@ import {
   removeThumbnailImage,
   StoredImage,
 } from "@/lib/adminStorage";
+import legoSetsImage from "@/components/sections/mission/LEGO Sets.png";
 
 /* Decorative divider with sparkles */
 const SparklesDivider = () => (
@@ -38,6 +39,7 @@ interface CategoryThumbnail {
   label: string;
   bgColor: string;
   icon: string;
+  defaultImage?: string;
 }
 
 interface CategoryThumbnailImageProps {
@@ -121,6 +123,12 @@ const CategoryThumbnailImage = ({
               </button>
             )}
           </>
+        ) : thumbnail.defaultImage ? (
+          <img
+            src={thumbnail.defaultImage}
+            alt={thumbnail.label}
+            className="w-full h-full object-cover"
+          />
         ) : (
           <span className="text-4xl">{thumbnail.icon}</span>
         )}
@@ -256,21 +264,8 @@ export const PreLovedImpact = () => {
     },
   ];
 
-  const thumbnailsData: CategoryThumbnail[] = [
-    {
-      id: "lego-sets",
-      label: "LEGO Sets",
-      bgColor:
-        "linear-gradient(135deg, hsl(45 80% 90%) 0%, hsl(35 70% 85%) 100%)",
-      icon: "🧱",
-    },
-    {
-      id: "dolls-figures",
-      label: "Dolls & Figures",
-      bgColor:
-        "linear-gradient(135deg, hsl(330 60% 92%) 0%, hsl(340 50% 88%) 100%)",
-      icon: "🪆",
-    },
+  // Regular category thumbnails (first row)
+  const regularThumbnailsData: CategoryThumbnail[] = [
     {
       id: "board-games",
       label: "Board Games",
@@ -298,6 +293,25 @@ export const PreLovedImpact = () => {
       bgColor:
         "linear-gradient(135deg, hsl(25 60% 90%) 0%, hsl(35 50% 85%) 100%)",
       icon: "🧸",
+    },
+  ];
+
+  // "Needed" category thumbnails (second row with special styling)
+  const neededThumbnailsData: CategoryThumbnail[] = [
+    {
+      id: "lego-sets",
+      label: "LEGO Sets",
+      bgColor:
+        "linear-gradient(135deg, hsl(45 80% 90%) 0%, hsl(35 70% 85%) 100%)",
+      icon: "🧱",
+      defaultImage: legoSetsImage,
+    },
+    {
+      id: "dolls-figures",
+      label: "Barbie & Our Generation Dolls",
+      bgColor:
+        "linear-gradient(135deg, hsl(330 60% 92%) 0%, hsl(340 50% 88%) 100%)",
+      icon: "🪆",
     },
   ];
 
@@ -389,7 +403,7 @@ export const PreLovedImpact = () => {
 
             {/* Thumbnails Grid - First row: 4 columns */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              {thumbnailsData.slice(0, 4).map((thumbnail) => (
+              {regularThumbnailsData.map((thumbnail) => (
                 <div key={thumbnail.id} className="flex flex-col">
                   <CategoryThumbnailImage
                     thumbnail={thumbnail}
@@ -409,17 +423,34 @@ export const PreLovedImpact = () => {
               ))}
             </div>
 
-            {/* Thumbnails Grid - Second row: 2 items centered */}
-            <div className="flex justify-center gap-3 mt-3">
-              {thumbnailsData.slice(4).map((thumbnail) => (
-                <div key={thumbnail.id} className="flex flex-col w-[calc(25%-6px)]">
-                  <CategoryThumbnailImage
-                    thumbnail={thumbnail}
-                    isAdmin={isAdmin}
-                    uploadedImage={uploadedThumbnails[thumbnail.id] || null}
-                    onUpload={handleThumbnailUpload}
-                    onRemove={handleThumbnailRemove}
-                  />
+            {/* "These items are needed" Header */}
+            <div className="mt-6 mb-3 text-center">
+              <span className="text-xs sm:text-sm font-medium text-primary/80 tracking-wide">
+                These items are needed.
+              </span>
+            </div>
+
+            {/* Thumbnails Grid - Second row: Needed items with special styling */}
+            <div className="flex justify-center gap-4">
+              {neededThumbnailsData.map((thumbnail) => (
+                <div key={thumbnail.id} className="flex flex-col w-[calc(25%-8px)]">
+                  {/* Wrapper with dashed border and glow */}
+                  <div
+                    className="rounded-xl p-1"
+                    style={{
+                      border: "2px dashed hsl(344 35% 65% / 0.5)",
+                      boxShadow:
+                        "0 0 12px hsl(344 35% 70% / 0.25), 0 0 4px hsl(344 35% 60% / 0.15)",
+                    }}
+                  >
+                    <CategoryThumbnailImage
+                      thumbnail={thumbnail}
+                      isAdmin={isAdmin}
+                      uploadedImage={uploadedThumbnails[thumbnail.id] || null}
+                      onUpload={handleThumbnailUpload}
+                      onRemove={handleThumbnailRemove}
+                    />
+                  </div>
                   {/* Category Label - Small Caps Serif Style */}
                   <span
                     className="mt-2 text-[10px] md:text-[11px] font-serif tracking-[0.08em] text-foreground/60 uppercase text-center"
