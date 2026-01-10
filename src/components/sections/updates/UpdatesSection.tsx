@@ -44,8 +44,27 @@ const SAMPLE_UPDATES = [
   {
     id: '2',
     date: '2025-11-28',
-    headline: 'Thank You to Our Volunteer Gift Wrappers',
-    blurb: 'A heartfelt thank you to the 24 volunteers who spent their Saturday wrapping gifts with care. Your attention to detail and loving touches made each present feel extra special.',
+    headline: 'Goal Reached: $800+ Raised. 8 out of 18 Children Supported This Season.',
+    fullContent: {
+      subheadline: 'Because of your generosity, the remaining 10 wishlists can now be fulfilled—meaning more children will feel warm, cared for, and confident this Christmas.',
+      paragraphs: [
+        'With just 8 days until Christmas, our community showed up in an incredible way. Thanks to your generosity, we raised over $800 to support the remaining Angel Tree children this season.',
+      ],
+      list: {
+        intro: 'Because of you, all 18 local children will receive:',
+        items: [
+          'Warm winter coats and seasonal accessories',
+          '2–3 versatile outfits for everyday wear',
+          'Properly fitting shoes',
+          'Essential hygiene items',
+        ],
+      },
+      closing: [
+        'And, if funds allow, a small toy to bring a little extra joy.',
+        'This support helps ensure every child feels warm, cared for, and confident during the winter months. We don\'t always know what these kids have access to during the other 364 days of the year—but today, we can rest a little easier knowing they\'re stocked with what they need for a while.',
+        'That peace of mind is something you made possible.',
+      ],
+    },
   },
   {
     id: '3',
