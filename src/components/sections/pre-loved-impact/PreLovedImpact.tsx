@@ -10,6 +10,8 @@ import {
 } from "@/lib/adminStorage";
 import legoSetsImage from "@/components/sections/mission/LEGO Sets.png";
 import dollsStuffiesImage from "@/components/sections/mission/Dolls and stuffies.png";
+import boardGamesImage from "@/components/sections/how-it-works/board games.png";
+import { CategoryThumbnailCarousel, CarouselSlide } from "./CategoryThumbnailCarousel";
 
 /* Decorative divider with sparkles */
 const SparklesDivider = () => (
@@ -265,7 +267,7 @@ export const PreLovedImpact = () => {
     },
   ];
 
-  // Regular category thumbnails (first row)
+  // Regular category thumbnails (first row - first 3 items)
   const regularThumbnailsData: CategoryThumbnail[] = [
     {
       id: "board-games",
@@ -287,6 +289,15 @@ export const PreLovedImpact = () => {
       bgColor:
         "linear-gradient(135deg, hsl(140 50% 90%) 0%, hsl(150 40% 85%) 100%)",
       icon: "✏️",
+    },
+  ];
+
+  // Carousel slides for the MISC category (4th item in first row)
+  const miscCarouselSlides: CarouselSlide[] = [
+    {
+      id: "board-games-carousel",
+      label: "Board Games",
+      image: boardGamesImage,
     },
     {
       id: "misc-items",
@@ -423,6 +434,8 @@ export const PreLovedImpact = () => {
                   </span>
                 </div>
               ))}
+              {/* MISC Carousel - 4th item */}
+              <CategoryThumbnailCarousel slides={miscCarouselSlides} />
             </div>
 
             {/* "These items are needed" Header */}
