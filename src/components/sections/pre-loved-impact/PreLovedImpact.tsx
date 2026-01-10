@@ -364,7 +364,7 @@ export const PreLovedImpact = () => {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
           {/* Frosted Glass Card Container - spans 3 columns */}
           <div
-            className="lg:col-span-3 rounded-2xl border border-white/40 p-6 sm:p-8 md:p-10"
+            className="lg:col-span-3 rounded-2xl border border-white/40 px-6 pt-6 sm:px-8 sm:pt-8 md:px-10 md:pt-10 pb-[11px]"
             style={{
               background:
                 "linear-gradient(135deg, hsl(0 0% 100% / 0.7) 0%, hsl(0 0% 100% / 0.5) 100%)",

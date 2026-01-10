@@ -8,19 +8,29 @@ import {
   CarouselImage,
 } from "@/lib/adminStorage";
 
-// Default placeholder images for the carousel
+// Import Ladies Craft Crew images
+import ladiesCraftCrew1 from "@/components/sections/mission/Ladies Craft Crew1.jpeg";
+import ladiesCraftCrew2 from "@/components/sections/mission/Ladies Craft Crew2.JPEG";
+import ladiesCraftCrew3 from "@/components/sections/mission/Ladies Craft Crew3.JPG";
+import ladiesCraftCrew4 from "@/components/sections/mission/Ladies Craft Crew4.JPG";
+
+// Default images for the carousel
 const defaultCarouselImages: CarouselImageItem[] = [
   {
-    src: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
-    alt: "Craft crew working on dollhouse restoration",
+    src: ladiesCraftCrew1,
+    alt: "Ladies Craft Crew working on crafts together",
   },
   {
-    src: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&h=300&fit=crop",
-    alt: "Volunteers painting and decorating toys",
+    src: ladiesCraftCrew2,
+    alt: "Ladies Craft Crew in matching pajamas by the fireplace",
   },
   {
-    src: "https://images.unsplash.com/photo-1452860606245-08befc0ff44b?w=400&h=300&fit=crop",
-    alt: "Restored play kitchen ready for a new home",
+    src: ladiesCraftCrew3,
+    alt: "Ladies Craft Crew assembling wooden houses",
+  },
+  {
+    src: ladiesCraftCrew4,
+    alt: "Ladies Craft Crew fun photoshoot with pumpkins",
   },
 ];
 

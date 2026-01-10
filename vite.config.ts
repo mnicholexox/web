@@ -6,6 +6,7 @@ import path from "path";
 export default defineConfig({
   root: process.cwd(), // Explicitly set root directory
   plugins: [react()],
+  assetsInclude: ["**/*.JPEG", "**/*.JPG"], // Handle uppercase image extensions
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
