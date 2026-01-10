@@ -43,7 +43,7 @@ const SAMPLE_UPDATES = [
   },
   {
     id: '2',
-    date: '2025-11-28',
+    date: '2025-12-18',
     headline: 'Goal Reached: $800+ Raised. 8 out of 18 Children Supported This Season.',
     fullContent: {
       subheadline: 'Because of your generosity, the remaining 10 wishlists can now be fulfilled—meaning more children will feel warm, cared for, and confident this Christmas.',

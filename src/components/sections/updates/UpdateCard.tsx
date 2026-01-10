@@ -415,7 +415,9 @@ export const UpdateCard = ({
  * Format a date string into a friendly, human-readable format
  */
 function formatDate(dateString: string): string {
-  const date = new Date(dateString);
+  // Parse date string (YYYY-MM-DD) to avoid timezone issues
+  const [year, month, day] = dateString.split('-').map(Number);
+  const date = new Date(year, month - 1, day);
   return date.toLocaleDateString('en-US', {
     month: 'long',
     day: 'numeric',
