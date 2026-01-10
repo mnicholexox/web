@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 
 interface UpdateCardProps {
   date: string;
@@ -19,6 +21,7 @@ interface UpdateCardProps {
   imageAlt?: string;
   href?: string;
   isHero?: boolean;
+  truncateAt?: string; // Text to truncate content at (for list items)
 }
 
 /**
@@ -39,16 +42,32 @@ export const UpdateCard = ({
   imageUrls,
   imageAlt,
   href,
-  isHero = false
+  isHero = false,
+  truncateAt
 }: UpdateCardProps) => {
   const CardWrapper = href ? 'a' : 'article';
   const cardProps = href ? { href, className: 'group block' } : { className: 'group' };
 
   const hasFullContent = !!fullContent;
   
+  // State for expanded content
+  const [isExpanded, setIsExpanded] = useState(false);
+  
+  // Determine if content should be truncated
+  const shouldTruncate = truncateAt && fullContent?.list?.items;
+  const truncateIndex = shouldTruncate 
+    ? fullContent.list.items.findIndex(item => item === truncateAt)
+    : -1;
+  const shouldShowTruncated = truncateIndex >= 0 && !isExpanded;
+  const displayedListItems = shouldShowTruncated
+    ? fullContent.list.items.slice(0, truncateIndex + 1) // Include the truncateAt item
+    : fullContent?.list?.items || [];
+  
   // Use imageUrls array if provided, otherwise fall back to single imageUrl
   const images = imageUrls && imageUrls.length > 0 ? imageUrls : (imageUrl ? [imageUrl] : []);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+  const [modalImageIndex, setModalImageIndex] = useState(0);
   
   const goToPrevious = (e?: React.MouseEvent) => {
     e?.stopPropagation();
@@ -63,6 +82,26 @@ export const UpdateCard = ({
   const goToSlide = (index: number, e?: React.MouseEvent) => {
     e?.stopPropagation();
     setCurrentImageIndex(index);
+  };
+
+  // Modal carousel controls
+  const goToPreviousModal = () => {
+    setModalImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  };
+  
+  const goToNextModal = () => {
+    setModalImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  };
+  
+  const goToSlideModal = (index: number) => {
+    setModalImageIndex(index);
+  };
+
+  const handleImageClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setModalImageIndex(currentImageIndex);
+    setIsImageModalOpen(true);
   };
 
   return (
@@ -107,9 +146,10 @@ export const UpdateCard = ({
                     {images.map((img, index) => (
                       <div
                         key={index}
-                        className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${
+                        className={`absolute inset-0 transition-opacity duration-500 ease-in-out cursor-pointer ${
                           index === currentImageIndex ? 'opacity-100' : 'opacity-0 pointer-events-none'
                         }`}
+                        onClick={handleImageClick}
                       >
                         <img
                           src={img}
@@ -156,7 +196,8 @@ export const UpdateCard = ({
                   <img
                     src={images[0]}
                     alt={imageAlt || headline}
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-contain cursor-pointer"
+                    onClick={handleImageClick}
                   />
                 )}
                 
@@ -227,7 +268,7 @@ export const UpdateCard = ({
                       </p>
                     )}
                     <ul className={`space-y-2 ${isHero ? 'pl-6 md:pl-8' : 'pl-5'}`}>
-                      {fullContent.list.items.map((item, index) => (
+                      {displayedListItems.map((item, index) => (
                         <li 
                           key={index}
                           className={`text-foreground/70 leading-relaxed ${
@@ -243,7 +284,7 @@ export const UpdateCard = ({
                 )}
 
                 {/* Closing paragraphs */}
-                {fullContent.closing?.map((paragraph, index) => (
+                {!shouldShowTruncated && fullContent.closing?.map((paragraph, index) => (
                   <p 
                     key={index}
                     className={`text-foreground/70 leading-relaxed ${
@@ -262,7 +303,7 @@ export const UpdateCard = ({
             )}
 
             {/* Subtle arrow affordance */}
-            {href && (
+            {href && !shouldShowTruncated && (
               <div className="flex items-center gap-2 text-primary/60 group-hover:text-primary transition-colors duration-200 mt-4">
                 <span className={`${isHero ? 'text-sm' : 'text-[0.8125rem]'} font-medium tracking-wide`}>Read more</span>
                 <ArrowRight 
@@ -271,9 +312,101 @@ export const UpdateCard = ({
                 />
               </div>
             )}
+            
+            {/* Read Entire Story button (when truncated) */}
+            {shouldShowTruncated && (
+              <div className="flex justify-end mt-6">
+                <Button
+                  size={isHero ? "lg" : "default"}
+                  className="group/btn text-white hover:opacity-90"
+                  style={{ backgroundColor: '#55111c' }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setIsExpanded(true);
+                    // Scroll to top of card to show full content
+                    const card = e.currentTarget.closest('article');
+                    if (card) {
+                      setTimeout(() => {
+                        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      }, 100);
+                    }
+                  }}
+                >
+                  <span>Read Entire Story</span>
+                  <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover/btn:translate-x-1" />
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </article>
+
+      {/* Image Enlargement Modal with Carousel */}
+      <Dialog open={isImageModalOpen} onOpenChange={setIsImageModalOpen}>
+        <DialogContent className="max-w-5xl w-[95vw] h-[90vh] p-0 border-none" style={{ backgroundColor: '#ded4d2' }}>
+          <div className="relative w-full h-full flex items-center justify-center">
+            {/* Carousel Images */}
+            {images.map((img, index) => (
+              <div
+                key={index}
+                className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ease-in-out ${
+                  index === modalImageIndex ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                }`}
+              >
+                <img
+                  src={img}
+                  alt={`${imageAlt || headline} - Image ${index + 1}`}
+                  className="max-w-full max-h-full object-contain"
+                />
+              </div>
+            ))}
+
+            {/* Navigation Arrows - only show if multiple images */}
+            {images.length > 1 && (
+              <>
+                <button
+                  onClick={goToPreviousModal}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm border border-white/50 flex items-center justify-center text-foreground/70 hover:bg-white hover:text-foreground transition-all shadow-lg z-20"
+                  aria-label="Previous image"
+                >
+                  <ChevronLeft className="w-6 h-6" strokeWidth={2} />
+                </button>
+                <button
+                  onClick={goToNextModal}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm border border-white/50 flex items-center justify-center text-foreground/70 hover:bg-white hover:text-foreground transition-all shadow-lg z-20"
+                  aria-label="Next image"
+                >
+                  <ChevronRight className="w-6 h-6" strokeWidth={2} />
+                </button>
+
+                {/* Dots Indicator */}
+                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
+                  {images.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => goToSlideModal(index)}
+                      className={`transition-all rounded-full ${
+                        index === modalImageIndex
+                          ? 'bg-white/90 w-3 h-3'
+                          : 'bg-white/50 hover:bg-white/70 w-2.5 h-2.5'
+                      }`}
+                      aria-label={`Go to slide ${index + 1}`}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
+
+            {/* Image Counter (if multiple images) */}
+            {images.length > 1 && (
+              <div className="absolute top-6 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-white/90 backdrop-blur-sm border border-white/50 text-foreground/70 text-sm font-medium z-20">
+                {modalImageIndex + 1} / {images.length}
+              </div>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </CardWrapper>
   );
 };

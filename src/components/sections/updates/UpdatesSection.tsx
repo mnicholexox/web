@@ -18,7 +18,7 @@ const SAMPLE_UPDATES = [
     headline: 'Every Checklist Fulfilled — Because Our Community Showed Up',
     imageUrls: [checklist1, checklist2, checklist3, checklist4, endOfYearSuccess],
     fullContent: {
-      subheadline: 'This holiday season, something truly special happened in Twin Lakes.',
+      subheadline: 'This holiday season, something truly special happened in Georgia.',
       paragraphs: [
         'Thanks to an incredible outpouring of generosity, all 18 children in our Angel Tree initiative had their wishlists fully completed. Every gift was thoughtfully purchased, wrapped, and hand-delivered directly to families—ensuring warmth, dignity, and care reached exactly where it was needed.',
       ],
@@ -109,6 +109,7 @@ export const UpdatesSection = () => {
                   imageUrl={update.imageUrl}
                   imageUrls={update.imageUrls}
                   isHero={isHero}
+                  truncateAt={isHero ? 'Special surprises that brought genuine joy' : undefined}
                 />
               </div>
             </div>
