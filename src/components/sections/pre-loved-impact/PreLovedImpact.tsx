@@ -94,7 +94,7 @@ const CategoryThumbnailImage = ({
   return (
     <div className="relative">
       <div
-        className="h-[140px] md:h-[150px] rounded-lg overflow-hidden border border-border/20 flex items-center justify-center relative group"
+        className="h-[100px] md:h-[110px] rounded-lg overflow-hidden border border-border/20 flex items-center justify-center relative group"
         style={{
           background: uploadedImage ? undefined : thumbnail.bgColor,
           boxShadow: "0 2px 8px hsl(344 35% 50% / 0.08)",
@@ -387,8 +387,8 @@ export const PreLovedImpact = () => {
               ))}
             </div>
 
-            {/* Thumbnails Row - 6 columns */}
-            <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
+            {/* Thumbnails Grid - 4 columns, 2 rows */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {thumbnailsData.map((thumbnail) => (
                 <div key={thumbnail.id} className="flex flex-col">
                   <CategoryThumbnailImage
