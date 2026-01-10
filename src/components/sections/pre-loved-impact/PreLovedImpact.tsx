@@ -11,6 +11,7 @@ import {
 import legoSetsImage from "@/components/sections/mission/LEGO Sets.png";
 import dollsStuffiesImage from "@/components/sections/mission/Dolls and stuffies.png";
 import boardGamesImage from "@/components/sections/how-it-works/board games.png";
+import makeupSetImage from "@/components/sections/how-it-works/Too-Faced-Gingerbread-Lane.JPG";
 import { CategoryThumbnailCarousel, CarouselSlide } from "./CategoryThumbnailCarousel";
 
 /* Decorative divider with sparkles */
@@ -298,6 +299,11 @@ export const PreLovedImpact = () => {
       id: "board-games-carousel",
       label: "Board Games",
       image: boardGamesImage,
+    },
+    {
+      id: "makeup-set",
+      label: "Makeup Set",
+      image: makeupSetImage,
     },
     {
       id: "misc-items",
