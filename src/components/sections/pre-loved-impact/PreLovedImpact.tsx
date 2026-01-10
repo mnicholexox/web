@@ -9,6 +9,7 @@ import {
   StoredImage,
 } from "@/lib/adminStorage";
 import legoSetsImage from "@/components/sections/mission/LEGO Sets.png";
+import dollsStuffiesImage from "@/components/sections/mission/Dolls and stuffies.png";
 
 /* Decorative divider with sparkles */
 const SparklesDivider = () => (
@@ -308,10 +309,11 @@ export const PreLovedImpact = () => {
     },
     {
       id: "dolls-figures",
-      label: "Barbie & Our Generation Dolls",
+      label: "Dolls & Stuffies",
       bgColor:
         "linear-gradient(135deg, hsl(330 60% 92%) 0%, hsl(340 50% 88%) 100%)",
       icon: "🪆",
+      defaultImage: dollsStuffiesImage,
     },
   ];
 
