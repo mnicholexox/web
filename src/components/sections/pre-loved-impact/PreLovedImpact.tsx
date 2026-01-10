@@ -161,29 +161,19 @@ const CategoryThumbnailImage = ({
   );
 };
 
-interface ImpactColumnProps {
+interface StatColumnProps {
   icon: React.ReactNode;
   title: string;
   value: string;
   label: string;
-  thumbnails: CategoryThumbnail[];
-  isAdmin: boolean;
-  uploadedImages: { [categoryId: string]: StoredImage | null };
-  onThumbnailUpload: (categoryId: string, file: File) => Promise<void>;
-  onThumbnailRemove: (categoryId: string) => void;
 }
 
-const ImpactColumn = ({
+const StatColumn = ({
   icon,
   title,
   value,
   label,
-  thumbnails,
-  isAdmin,
-  uploadedImages,
-  onThumbnailUpload,
-  onThumbnailRemove,
-}: ImpactColumnProps) => (
+}: StatColumnProps) => (
   <div className="flex flex-col items-center text-center">
     {/* Column Header with Icon */}
     <div className="flex items-center gap-2 mb-4">
@@ -199,31 +189,7 @@ const ImpactColumn = ({
     </div>
 
     {/* Label Under Number */}
-    <p className="text-sm text-muted-foreground font-medium mb-6">{label}</p>
-
-    {/* Two Thumbnails Side by Side */}
-    <div className="w-full">
-      <div className="grid grid-cols-2 gap-3">
-        {thumbnails.map((thumbnail) => (
-          <div key={thumbnail.id} className="flex flex-col">
-            <CategoryThumbnailImage
-              thumbnail={thumbnail}
-              isAdmin={isAdmin}
-              uploadedImage={uploadedImages[thumbnail.id] || null}
-              onUpload={onThumbnailUpload}
-              onRemove={onThumbnailRemove}
-            />
-            {/* Category Label - Small Caps Serif Style */}
-            <span
-              className="mt-2 text-[10px] md:text-[11px] font-serif tracking-[0.08em] text-foreground/60 uppercase"
-              style={{ fontVariant: "small-caps" }}
-            >
-              {thumbnail.label}
-            </span>
-          </div>
-        ))}
-      </div>
-    </div>
+    <p className="text-sm text-muted-foreground font-medium">{label}</p>
   </div>
 );
 
@@ -268,28 +234,12 @@ export const PreLovedImpact = () => {
     }));
   };
 
-  const impactData = [
+  const statsData = [
     {
       icon: <Package className="w-4 h-4 text-primary/70" strokeWidth={1.5} />,
       title: "Pre-Loved Items Collected",
       value: "6",
       label: "Items donated this season",
-      thumbnails: [
-        {
-          id: "lego-sets",
-          label: "LEGO Sets",
-          bgColor:
-            "linear-gradient(135deg, hsl(45 80% 90%) 0%, hsl(35 70% 85%) 100%)",
-          icon: "🧱",
-        },
-        {
-          id: "dolls-figures",
-          label: "Dolls & Figures",
-          bgColor:
-            "linear-gradient(135deg, hsl(330 60% 92%) 0%, hsl(340 50% 88%) 100%)",
-          icon: "🪆",
-        },
-      ],
     },
     // Hidden for now: Items Restored & Ready section
     // {
@@ -297,58 +247,57 @@ export const PreLovedImpact = () => {
     //   title: "Items Restored & Ready",
     //   value: "892",
     //   label: "Clean, wrapped & matched",
-    //   thumbnails: [
-    //     {
-    //       id: "board-games",
-    //       label: "Board Games",
-    //       bgColor:
-    //         "linear-gradient(135deg, hsl(200 60% 90%) 0%, hsl(210 50% 85%) 100%)",
-    //       icon: "🎲",
-    //     },
-    //     {
-    //       id: "art-coloring-1",
-    //       label: "Art & Coloring",
-    //       bgColor:
-    //         "linear-gradient(135deg, hsl(280 50% 92%) 0%, hsl(290 40% 88%) 100%)",
-    //       icon: "🎨",
-    //     },
-    //   ] as [CategoryThumbnail, CategoryThumbnail],
     // },
     {
       icon: <Clock className="w-4 h-4 text-primary/70" strokeWidth={1.5} />,
       title: "Still In Progress",
-      value: "342",
+      value: "4",
       label: "Being cleaned, refurbished, & wrapped with care",
-      thumbnails: [
-        {
-          id: "board-games",
-          label: "Board Games",
-          bgColor:
-            "linear-gradient(135deg, hsl(200 60% 90%) 0%, hsl(210 50% 85%) 100%)",
-          icon: "🎲",
-        },
-        {
-          id: "art-coloring-1",
-          label: "Art & Coloring",
-          bgColor:
-            "linear-gradient(135deg, hsl(280 50% 92%) 0%, hsl(290 40% 88%) 100%)",
-          icon: "🎨",
-        },
-        {
-          id: "art-coloring-2",
-          label: "Art & Coloring",
-          bgColor:
-            "linear-gradient(135deg, hsl(140 50% 90%) 0%, hsl(150 40% 85%) 100%)",
-          icon: "✏️",
-        },
-        {
-          id: "misc-items",
-          label: "Misc Items",
-          bgColor:
-            "linear-gradient(135deg, hsl(25 60% 90%) 0%, hsl(35 50% 85%) 100%)",
-          icon: "🧸",
-        },
-      ],
+    },
+  ];
+
+  const thumbnailsData: CategoryThumbnail[] = [
+    {
+      id: "lego-sets",
+      label: "LEGO Sets",
+      bgColor:
+        "linear-gradient(135deg, hsl(45 80% 90%) 0%, hsl(35 70% 85%) 100%)",
+      icon: "🧱",
+    },
+    {
+      id: "dolls-figures",
+      label: "Dolls & Figures",
+      bgColor:
+        "linear-gradient(135deg, hsl(330 60% 92%) 0%, hsl(340 50% 88%) 100%)",
+      icon: "🪆",
+    },
+    {
+      id: "board-games",
+      label: "Board Games",
+      bgColor:
+        "linear-gradient(135deg, hsl(200 60% 90%) 0%, hsl(210 50% 85%) 100%)",
+      icon: "🎲",
+    },
+    {
+      id: "art-coloring-1",
+      label: "Art & Coloring",
+      bgColor:
+        "linear-gradient(135deg, hsl(280 50% 92%) 0%, hsl(290 40% 88%) 100%)",
+      icon: "🎨",
+    },
+    {
+      id: "art-coloring-2",
+      label: "Art & Coloring",
+      bgColor:
+        "linear-gradient(135deg, hsl(140 50% 90%) 0%, hsl(150 40% 85%) 100%)",
+      icon: "✏️",
+    },
+    {
+      id: "misc-items",
+      label: "Misc Items",
+      bgColor:
+        "linear-gradient(135deg, hsl(25 60% 90%) 0%, hsl(35 50% 85%) 100%)",
+      icon: "🧸",
     },
   ];
 
@@ -425,21 +374,38 @@ export const PreLovedImpact = () => {
                 "0 8px 32px hsl(344 35% 50% / 0.08), 0 2px 8px hsl(0 0% 0% / 0.04)",
             }}
           >
-            {/* 3-Column Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 lg:gap-10">
-              {impactData.map((item, index) => (
-                <ImpactColumn
+            {/* Stats Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6 lg:gap-10 mb-8">
+              {statsData.map((item, index) => (
+                <StatColumn
                   key={index}
                   icon={item.icon}
                   title={item.title}
                   value={item.value}
                   label={item.label}
-                  thumbnails={item.thumbnails}
-                  isAdmin={isAdmin}
-                  uploadedImages={uploadedThumbnails}
-                  onThumbnailUpload={handleThumbnailUpload}
-                  onThumbnailRemove={handleThumbnailRemove}
                 />
+              ))}
+            </div>
+
+            {/* Thumbnails Row - 6 columns */}
+            <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
+              {thumbnailsData.map((thumbnail) => (
+                <div key={thumbnail.id} className="flex flex-col">
+                  <CategoryThumbnailImage
+                    thumbnail={thumbnail}
+                    isAdmin={isAdmin}
+                    uploadedImage={uploadedThumbnails[thumbnail.id] || null}
+                    onUpload={handleThumbnailUpload}
+                    onRemove={handleThumbnailRemove}
+                  />
+                  {/* Category Label - Small Caps Serif Style */}
+                  <span
+                    className="mt-2 text-[10px] md:text-[11px] font-serif tracking-[0.08em] text-foreground/60 uppercase text-center"
+                    style={{ fontVariant: "small-caps" }}
+                  >
+                    {thumbnail.label}
+                  </span>
+                </div>
               ))}
             </div>
           </div>
