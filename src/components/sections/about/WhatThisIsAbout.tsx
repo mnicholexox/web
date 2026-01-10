@@ -34,7 +34,7 @@ export const WhatThisIsAbout = () => {
             alt=""
             aria-hidden="true"
             style={{
-              width: '75%',
+              width: '60%',
               height: 'auto',
               minHeight: '240px',
               opacity: 0.9,
@@ -77,7 +77,7 @@ export const WhatThisIsAbout = () => {
             <DataTile 
               value="$2,800" 
               label="Directed entirely toward gifts and essentials" 
-              description="No overhead. No ambiguity."
+              description=""
               showDivider={false}
             />
             <GiftImageTile />
