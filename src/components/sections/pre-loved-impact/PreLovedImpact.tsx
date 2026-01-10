@@ -387,10 +387,32 @@ export const PreLovedImpact = () => {
               ))}
             </div>
 
-            {/* Thumbnails Grid - 4 columns, 2 rows */}
+            {/* Thumbnails Grid - First row: 4 columns */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              {thumbnailsData.map((thumbnail) => (
+              {thumbnailsData.slice(0, 4).map((thumbnail) => (
                 <div key={thumbnail.id} className="flex flex-col">
+                  <CategoryThumbnailImage
+                    thumbnail={thumbnail}
+                    isAdmin={isAdmin}
+                    uploadedImage={uploadedThumbnails[thumbnail.id] || null}
+                    onUpload={handleThumbnailUpload}
+                    onRemove={handleThumbnailRemove}
+                  />
+                  {/* Category Label - Small Caps Serif Style */}
+                  <span
+                    className="mt-2 text-[10px] md:text-[11px] font-serif tracking-[0.08em] text-foreground/60 uppercase text-center"
+                    style={{ fontVariant: "small-caps" }}
+                  >
+                    {thumbnail.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {/* Thumbnails Grid - Second row: 2 items centered */}
+            <div className="flex justify-center gap-3 mt-3">
+              {thumbnailsData.slice(4).map((thumbnail) => (
+                <div key={thumbnail.id} className="flex flex-col w-[calc(25%-6px)]">
                   <CategoryThumbnailImage
                     thumbnail={thumbnail}
                     isAdmin={isAdmin}
