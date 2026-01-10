@@ -166,7 +166,7 @@ interface ImpactColumnProps {
   title: string;
   value: string;
   label: string;
-  thumbnails: [CategoryThumbnail, CategoryThumbnail];
+  thumbnails: CategoryThumbnail[];
   isAdmin: boolean;
   uploadedImages: { [categoryId: string]: StoredImage | null };
   onThumbnailUpload: (categoryId: string, file: File) => Promise<void>;
@@ -272,7 +272,7 @@ export const PreLovedImpact = () => {
     {
       icon: <Package className="w-4 h-4 text-primary/70" strokeWidth={1.5} />,
       title: "Pre-Loved Items Collected",
-      value: "1,234",
+      value: "6",
       label: "Items donated this season",
       thumbnails: [
         {
@@ -289,13 +289,36 @@ export const PreLovedImpact = () => {
             "linear-gradient(135deg, hsl(330 60% 92%) 0%, hsl(340 50% 88%) 100%)",
           icon: "🪆",
         },
-      ] as [CategoryThumbnail, CategoryThumbnail],
+      ],
     },
+    // Hidden for now: Items Restored & Ready section
+    // {
+    //   icon: <RefreshCw className="w-4 h-4 text-primary/70" strokeWidth={1.5} />,
+    //   title: "Items Restored & Ready",
+    //   value: "892",
+    //   label: "Clean, wrapped & matched",
+    //   thumbnails: [
+    //     {
+    //       id: "board-games",
+    //       label: "Board Games",
+    //       bgColor:
+    //         "linear-gradient(135deg, hsl(200 60% 90%) 0%, hsl(210 50% 85%) 100%)",
+    //       icon: "🎲",
+    //     },
+    //     {
+    //       id: "art-coloring-1",
+    //       label: "Art & Coloring",
+    //       bgColor:
+    //         "linear-gradient(135deg, hsl(280 50% 92%) 0%, hsl(290 40% 88%) 100%)",
+    //       icon: "🎨",
+    //     },
+    //   ] as [CategoryThumbnail, CategoryThumbnail],
+    // },
     {
-      icon: <RefreshCw className="w-4 h-4 text-primary/70" strokeWidth={1.5} />,
-      title: "Items Restored & Ready",
-      value: "892",
-      label: "Clean, wrapped & matched",
+      icon: <Clock className="w-4 h-4 text-primary/70" strokeWidth={1.5} />,
+      title: "Still In Progress",
+      value: "342",
+      label: "Being cleaned, refurbished, & wrapped with care",
       thumbnails: [
         {
           id: "board-games",
@@ -311,14 +334,6 @@ export const PreLovedImpact = () => {
             "linear-gradient(135deg, hsl(280 50% 92%) 0%, hsl(290 40% 88%) 100%)",
           icon: "🎨",
         },
-      ] as [CategoryThumbnail, CategoryThumbnail],
-    },
-    {
-      icon: <Clock className="w-4 h-4 text-primary/70" strokeWidth={1.5} />,
-      title: "Still In Progress",
-      value: "342",
-      label: "Being prepared with care",
-      thumbnails: [
         {
           id: "art-coloring-2",
           label: "Art & Coloring",
@@ -333,7 +348,7 @@ export const PreLovedImpact = () => {
             "linear-gradient(135deg, hsl(25 60% 90%) 0%, hsl(35 50% 85%) 100%)",
           icon: "🧸",
         },
-      ] as [CategoryThumbnail, CategoryThumbnail],
+      ],
     },
   ];
 
