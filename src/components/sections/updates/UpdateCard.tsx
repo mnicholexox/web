@@ -1,4 +1,5 @@
-import { ArrowRight } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface UpdateCardProps {
   date: string;
@@ -14,6 +15,7 @@ interface UpdateCardProps {
     closing?: string[];
   };
   imageUrl?: string;
+  imageUrls?: string[];
   imageAlt?: string;
   href?: string;
   isHero?: boolean;
@@ -34,6 +36,7 @@ export const UpdateCard = ({
   blurb, 
   fullContent,
   imageUrl, 
+  imageUrls,
   imageAlt,
   href,
   isHero = false
@@ -42,6 +45,25 @@ export const UpdateCard = ({
   const cardProps = href ? { href, className: 'group block' } : { className: 'group' };
 
   const hasFullContent = !!fullContent;
+  
+  // Use imageUrls array if provided, otherwise fall back to single imageUrl
+  const images = imageUrls && imageUrls.length > 0 ? imageUrls : (imageUrl ? [imageUrl] : []);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  
+  const goToPrevious = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  };
+  
+  const goToNext = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  };
+  
+  const goToSlide = (index: number, e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setCurrentImageIndex(index);
+  };
 
   return (
     <CardWrapper {...cardProps}>
@@ -69,21 +91,75 @@ export const UpdateCard = ({
           }}
         />
 
-        <div className={`relative flex ${isHero ? 'flex-col lg:flex-row' : 'flex-col md:flex-row'}`}>
-          {/* Image Section (optional) */}
-          {imageUrl && (
-            <div className={`${isHero ? 'lg:w-96 xl:w-[28rem] h-64 lg:h-auto' : 'md:w-56 lg:w-64'} flex-shrink-0 overflow-hidden`}>
+        <div className={`relative flex ${isHero ? 'flex-col lg:flex-row items-start' : 'flex-col md:flex-row items-start'}`}>
+          {/* Image Section (optional) - supports carousel for hero cards */}
+          {images.length > 0 && (
+            <div className={`${isHero ? 'lg:w-96 xl:w-[28rem] h-96 lg:h-auto pt-8 md:pt-10 lg:pt-12' : 'md:w-56 lg:w-64 pt-6 md:pt-8'} flex-shrink-0 overflow-hidden`}>
               <div 
-                className={`${isHero ? 'h-64 lg:h-full min-h-[256px]' : 'h-48 md:h-full min-h-[180px]'} relative overflow-hidden`}
+                className={`${isHero ? 'h-96 lg:h-full min-h-[500px] lg:min-h-[600px]' : 'h-48 md:h-full min-h-[180px]'} relative overflow-hidden`}
                 style={{
                   background: 'linear-gradient(135deg, hsl(344 35% 92% / 0.5) 0%, hsl(38 67% 94% / 0.5) 100%)',
                 }}
               >
-                <img
-                  src={imageUrl}
-                  alt={imageAlt || headline}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
+                {/* Carousel for multiple images (hero cards) */}
+                {images.length > 1 ? (
+                  <>
+                    {images.map((img, index) => (
+                      <div
+                        key={index}
+                        className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${
+                          index === currentImageIndex ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                        }`}
+                      >
+                        <img
+                          src={img}
+                          alt={`${imageAlt || headline} - Image ${index + 1}`}
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+                    ))}
+                    
+                    {/* Navigation Arrows */}
+                    <button
+                      onClick={goToPrevious}
+                      className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm border border-white/50 flex items-center justify-center text-foreground/70 hover:bg-white hover:text-foreground transition-all shadow-lg opacity-70 md:opacity-0 md:group-hover:opacity-100 z-10"
+                      aria-label="Previous image"
+                    >
+                      <ChevronLeft className="w-5 h-5" strokeWidth={2} />
+                    </button>
+                    <button
+                      onClick={goToNext}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm border border-white/50 flex items-center justify-center text-foreground/70 hover:bg-white hover:text-foreground transition-all shadow-lg opacity-70 md:opacity-0 md:group-hover:opacity-100 z-10"
+                      aria-label="Next image"
+                    >
+                      <ChevronRight className="w-5 h-5" strokeWidth={2} />
+                    </button>
+                    
+                    {/* Dots Indicator */}
+                    <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10">
+                      {images.map((_, index) => (
+                        <button
+                          key={index}
+                          onClick={(e) => goToSlide(index, e)}
+                          className={`transition-all rounded-full ${
+                            index === currentImageIndex
+                              ? 'bg-white/90 w-2.5 h-2.5'
+                              : 'bg-white/50 hover:bg-white/70 w-2 h-2'
+                          }`}
+                          aria-label={`Go to slide ${index + 1}`}
+                        />
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  /* Single image */
+                  <img
+                    src={images[0]}
+                    alt={imageAlt || headline}
+                    className="w-full h-full object-contain"
+                  />
+                )}
+                
                 {/* Soft edge overlay for blending */}
                 <div 
                   className={`absolute inset-0 pointer-events-none ${isHero ? 'hidden lg:block' : 'hidden md:block'}`}

@@ -1,5 +1,12 @@
 import { UpdateCard } from './UpdateCard';
 
+// Import End of Year Announcement images for carousel
+import checklist1 from '@/components/sections/checklist1.png';
+import checklist2 from '@/components/sections/checklist2.png';
+import checklist3 from '@/components/sections/checklist3.png';
+import checklist4 from '@/components/sections/checklist4.png';
+import endOfYearSuccess from '@/components/sections/End of Year Success.png';
+
 /**
  * Sample updates data
  * In a real application, this would come from a CMS or database
@@ -7,9 +14,9 @@ import { UpdateCard } from './UpdateCard';
 const SAMPLE_UPDATES = [
   {
     id: '1',
-    date: '2025-12-15',
+    date: '2025-12-22',
     headline: 'Every Checklist Fulfilled — Because Our Community Showed Up',
-    imageUrl: '/placeholder-update-1.jpg',
+    imageUrls: [checklist1, checklist2, checklist3, checklist4, endOfYearSuccess],
     fullContent: {
       subheadline: 'This holiday season, something truly special happened in Twin Lakes.',
       paragraphs: [
@@ -100,6 +107,7 @@ export const UpdatesSection = () => {
                   blurb={update.blurb}
                   fullContent={update.fullContent}
                   imageUrl={update.imageUrl}
+                  imageUrls={update.imageUrls}
                   isHero={isHero}
                 />
               </div>
