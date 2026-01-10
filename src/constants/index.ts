@@ -10,6 +10,7 @@ export const ROUTES = {
   SPONSOR_A_CHILD: '/sponsor-a-child',
   MAKE_A_DONATION: '/make-a-donation',
   FAQ: '/faq',
+  UPDATES: '/updates',
   // Add more routes as pages are created
   // ABOUT: '/about',
   // CONTACT: '/contact',

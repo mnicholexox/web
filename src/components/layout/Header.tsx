@@ -20,6 +20,7 @@ const navItems: NavItem[] = [
   { label: "Home", href: ROUTES.HOME },
   { label: "Ways to Help", href: ROUTES.HOME, scrollTo: "how-you-can-help" },
   { label: "FAQ", href: ROUTES.FAQ },
+  { label: "News", href: ROUTES.UPDATES },
 ];
 
 export const Header = () => {
