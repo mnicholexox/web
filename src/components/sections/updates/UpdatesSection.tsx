@@ -8,9 +8,31 @@ const SAMPLE_UPDATES = [
   {
     id: '1',
     date: '2025-12-15',
-    headline: 'Our Biggest Season Yet: 89 Children Supported This Year',
-    blurb: 'Thanks to the incredible generosity of our community, we were able to fulfill wishlists for 89 children this holiday season — our largest year to date. Every child received something from their wishlist, plus essentials to start the new year feeling confident.',
+    headline: 'Every Checklist Fulfilled — Because Our Community Showed Up',
     imageUrl: '/placeholder-update-1.jpg',
+    fullContent: {
+      subheadline: 'This holiday season, something truly special happened in Twin Lakes.',
+      paragraphs: [
+        'Thanks to an incredible outpouring of generosity, all 18 children in our Angel Tree initiative had their wishlists fully completed. Every gift was thoughtfully purchased, wrapped, and hand-delivered directly to families—ensuring warmth, dignity, and care reached exactly where it was needed.',
+      ],
+      list: {
+        intro: 'Because of your support, children received:',
+        items: [
+          'Warm winter clothing and properly fitting shoes',
+          'Multiple versatile outfits for school and everyday life',
+          'Essential items like toiletries and winter accessories',
+          'Thoughtful toys, books, and creative activities',
+          'Special surprises that brought genuine joy',
+        ],
+      },
+      closing: [
+        'Many of these wishlists weren\'t about toys at all. They focused on necessities—jackets, shoes, and clothing that help children feel confident, comfortable, and cared for.',
+        'Seeing every checklist marked complete is a powerful reminder of what can happen when neighbors rally together.',
+        'This effort required countless hours of donating, shopping, organizing, wrapping, and delivering—and it was only possible because of the many residents who stepped up without hesitation.',
+        'To everyone who gave in any way: thank you. Your generosity turned need into relief, uncertainty into comfort, and wishlists into fulfilled promises.',
+        '💚 All gift checklists: fulfilled. Twin Lakes showed up—and made a lasting difference.',
+      ],
+    },
   },
   {
     id: '2',
@@ -62,15 +84,28 @@ export const UpdatesSection = () => {
     >
       {/* Update Cards List */}
       <div className="space-y-6 md:space-y-8">
-        {SAMPLE_UPDATES.map((update) => (
-          <UpdateCard
-            key={update.id}
-            date={update.date}
-            headline={update.headline}
-            blurb={update.blurb}
-            imageUrl={update.imageUrl}
-          />
-        ))}
+        {SAMPLE_UPDATES.map((update, index) => {
+          const isHero = index === 0;
+          return (
+            <div 
+              key={update.id} 
+              className={isHero ? 'mb-8 md:mb-12' : ''}
+            >
+              <div 
+                className={isHero ? 'w-[130%] -ml-[15%] md:w-[130%] md:-ml-[15%]' : ''}
+              >
+                <UpdateCard
+                  date={update.date}
+                  headline={update.headline}
+                  blurb={update.blurb}
+                  fullContent={update.fullContent}
+                  imageUrl={update.imageUrl}
+                  isHero={isHero}
+                />
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       {/* Gentle closing element */}
