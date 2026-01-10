@@ -12,6 +12,10 @@ import legoSetsImage from "@/components/sections/mission/LEGO Sets.png";
 import dollsStuffiesImage from "@/components/sections/mission/Dolls and stuffies.png";
 import boardGamesImage from "@/components/sections/how-it-works/board games.png";
 import makeupSetImage from "@/components/sections/how-it-works/Too-Faced-Gingerbread-Lane.JPG";
+import dollHouse1 from "@/components/sections/how-it-works/1.png";
+import dollHouse2 from "@/components/sections/how-it-works/2.png";
+import dollHouse3 from "@/components/sections/how-it-works/3.png";
+import miniAirHockeyImage from "@/components/sections/donated items 4.png";
 import { CategoryThumbnailCarousel, CarouselSlide } from "./CategoryThumbnailCarousel";
 
 /* Decorative divider with sparkles */
@@ -215,9 +219,7 @@ export const PreLovedImpact = () => {
   const allCategoryIds = [
     "lego-sets",
     "dolls-figures",
-    "board-games",
     "art-coloring-1",
-    "art-coloring-2",
     "misc-items",
   ];
 
@@ -268,28 +270,33 @@ export const PreLovedImpact = () => {
     },
   ];
 
-  // Regular category thumbnails (first row - first 3 items)
-  const regularThumbnailsData: CategoryThumbnail[] = [
+  // Doll Houses carousel slides (first item in first row)
+  const dollHousesCarouselSlides: CarouselSlide[] = [
     {
-      id: "board-games",
-      label: "Board Games",
-      bgColor:
-        "linear-gradient(135deg, hsl(200 60% 90%) 0%, hsl(210 50% 85%) 100%)",
-      icon: "🎲",
+      id: "doll-house-1",
+      label: "Doll Houses",
+      image: dollHouse1,
     },
+    {
+      id: "doll-house-2",
+      label: "Doll Houses",
+      image: dollHouse2,
+    },
+    {
+      id: "doll-house-3",
+      label: "Doll Houses",
+      image: dollHouse3,
+    },
+  ];
+
+  // Regular category thumbnails (first row - items 2-3)
+  const regularThumbnailsData: CategoryThumbnail[] = [
     {
       id: "art-coloring-1",
       label: "Art & Coloring",
       bgColor:
         "linear-gradient(135deg, hsl(280 50% 92%) 0%, hsl(290 40% 88%) 100%)",
       icon: "🎨",
-    },
-    {
-      id: "art-coloring-2",
-      label: "Art & Coloring",
-      bgColor:
-        "linear-gradient(135deg, hsl(140 50% 90%) 0%, hsl(150 40% 85%) 100%)",
-      icon: "✏️",
     },
   ];
 
@@ -304,6 +311,11 @@ export const PreLovedImpact = () => {
       id: "makeup-set",
       label: "Makeup Set",
       image: makeupSetImage,
+    },
+    {
+      id: "mini-air-hockey",
+      label: "Mini Air Hockey",
+      image: miniAirHockeyImage,
     },
     {
       id: "misc-items",
@@ -420,10 +432,14 @@ export const PreLovedImpact = () => {
               ))}
             </div>
 
-            {/* Thumbnails Grid - First row: 4 columns */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {/* Thumbnails Grid - First row: centered */}
+            <div className="flex flex-wrap justify-center gap-3">
+              {/* Doll Houses Carousel - 1st item */}
+              <div className="w-[calc(50%-6px)] sm:w-[calc(25%-9px)]">
+                <CategoryThumbnailCarousel slides={dollHousesCarouselSlides} />
+              </div>
               {regularThumbnailsData.map((thumbnail) => (
-                <div key={thumbnail.id} className="flex flex-col">
+                <div key={thumbnail.id} className="flex flex-col w-[calc(50%-6px)] sm:w-[calc(25%-9px)]">
                   <CategoryThumbnailImage
                     thumbnail={thumbnail}
                     isAdmin={isAdmin}
@@ -440,8 +456,10 @@ export const PreLovedImpact = () => {
                   </span>
                 </div>
               ))}
-              {/* MISC Carousel - 4th item */}
-              <CategoryThumbnailCarousel slides={miscCarouselSlides} />
+              {/* MISC Carousel - 3rd item */}
+              <div className="w-[calc(50%-6px)] sm:w-[calc(25%-9px)]">
+                <CategoryThumbnailCarousel slides={miscCarouselSlides} />
+              </div>
             </div>
 
             {/* "These items are needed" Header */}
