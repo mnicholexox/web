@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
@@ -48,7 +48,26 @@ export const UpdateCard = ({
   imagePlacement = 'sidebar'
 }: UpdateCardProps) => {
   const CardWrapper = href ? 'a' : 'article';
-  const cardProps = href ? { href, className: 'group block' } : { className: 'group' };
+  
+  const articleClassName = `relative overflow-hidden transition-all duration-300 ease-out ${
+    isHero 
+      ? 'rounded-3xl group-hover:shadow-2xl group-hover:-translate-y-1' 
+      : 'rounded-2xl group-hover:shadow-lg group-hover:-translate-y-1'
+  }`;
+  
+  const articleStyle = {
+    background: 'rgba(255, 255, 255, 0.65)',
+    backdropFilter: 'blur(8px)',
+    WebkitBackdropFilter: 'blur(8px)',
+    border: '1px solid rgba(139, 74, 92, 0.08)',
+    boxShadow: isHero 
+      ? '0 8px 32px rgba(139, 74, 92, 0.08), 0 4px 16px rgba(139, 74, 92, 0.04)' 
+      : '0 2px 16px rgba(139, 74, 92, 0.05), 0 1px 4px rgba(139, 74, 92, 0.03)',
+  };
+
+  const cardProps = href 
+    ? { href, className: `group block ${articleClassName}`, style: articleStyle } 
+    : { className: `group ${articleClassName}`, style: articleStyle };
 
   const hasFullContent = !!fullContent;
   
@@ -107,6 +126,12 @@ export const UpdateCard = ({
   };
 
   // Render image carousel component
+  // 
+  // PADDING RULE: All sidebar images (left side) must have left padding that matches
+  // the right padding used for full-width images (right side). This ensures visual
+  // consistency across all article layouts:
+  // - Hero articles: pl-8 md:pl-10 lg:pl-12 (matches content section's right padding)
+  // - Regular articles: pl-6 md:pl-8 (matches content section's right padding)
   const renderImageCarousel = (isFullWidth: boolean = false, inFlexContainer: boolean = false) => {
     if (images.length === 0) return null;
 
@@ -114,7 +139,7 @@ export const UpdateCard = ({
       ? 'w-full -mx-6 md:-mx-8 lg:-mx-10 xl:-mx-12 my-8'
       : isFullWidth && inFlexContainer
       ? 'w-full'
-      : `${isHero ? 'lg:w-96 xl:w-[28rem] h-96 lg:h-auto pt-8 md:pt-10 lg:pt-12' : 'md:w-56 lg:w-64 pt-6 md:pt-8'} flex-shrink-0 overflow-hidden`;
+      : `${isHero ? 'lg:w-96 xl:w-[28rem] h-96 lg:h-auto pt-8 md:pt-10 lg:pt-12' : 'md:w-56 lg:w-64 pt-6 md:pt-8'} flex-shrink-0 overflow-hidden ${!isFullWidth ? (isHero ? 'pl-8 md:pl-10 lg:pl-12' : 'pl-6 md:pl-8') : ''}`;
 
     const imageContainerClasses = isFullWidth && !inFlexContainer
       ? 'w-full h-[400px] md:h-[500px] lg:h-[600px] relative overflow-hidden rounded-lg'
@@ -207,24 +232,11 @@ export const UpdateCard = ({
     );
   };
 
+  const WrapperComponent = CardWrapper as keyof JSX.IntrinsicElements;
+  
   return (
-    <CardWrapper {...cardProps}>
-      <article 
-        className={`relative overflow-hidden transition-all duration-300 ease-out ${
-          isHero 
-            ? 'rounded-3xl group-hover:shadow-2xl group-hover:-translate-y-1' 
-            : 'rounded-2xl group-hover:shadow-lg group-hover:-translate-y-1'
-        }`}
-        style={{
-          background: 'rgba(255, 255, 255, 0.65)',
-          backdropFilter: 'blur(8px)',
-          WebkitBackdropFilter: 'blur(8px)',
-          border: '1px solid rgba(139, 74, 92, 0.08)',
-          boxShadow: isHero 
-            ? '0 8px 32px rgba(139, 74, 92, 0.08), 0 4px 16px rgba(139, 74, 92, 0.04)' 
-            : '0 2px 16px rgba(139, 74, 92, 0.05), 0 1px 4px rgba(139, 74, 92, 0.03)',
-        }}
-      >
+    <Fragment>
+      <WrapperComponent {...cardProps}>
         {/* Subtle inner glow for warmth */}
         <div 
           className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -233,12 +245,9 @@ export const UpdateCard = ({
           }}
         />
 
-        <div className={`relative flex ${imagePlacement === 'full-width' ? 'flex-col' : (isHero ? 'flex-col lg:flex-row items-start' : 'flex-col md:flex-row items-start')}`}>
-          {/* Image Section (sidebar placement) */}
-          {images.length > 0 && imagePlacement === 'sidebar' && renderImageCarousel(false)}
-
-          {/* Content Section */}
-          <div className={`flex-1 flex flex-col ${isHero ? 'p-8 md:p-10 lg:p-12' : 'p-6 md:p-8'} ${hasFullContent ? 'justify-start' : 'justify-center'}`}>
+        <div className={`relative ${imagePlacement === 'full-width' ? 'flex flex-col' : 'flex flex-col'}`}>
+          {/* Header Section (Date + Headline) - Full Width */}
+          <div className={`flex-1 flex flex-col ${isHero ? 'p-8 md:p-10 lg:p-12 pb-0 -mb-8' : 'p-6 md:p-8 pb-0'}`}>
             {/* Date - subtle, secondary */}
             <time 
               className={`${isHero ? 'text-xs md:text-sm' : 'text-[11px] md:text-xs'} font-sans uppercase tracking-[0.2em] text-primary/50 font-medium mb-3`}
@@ -248,8 +257,9 @@ export const UpdateCard = ({
             </time>
 
             {/* Headline - warm, human */}
+            {/* Note: mb-0 ensures minimal spacing between headline and subheadline */}
             <h3 
-              className={`font-serif text-foreground font-normal leading-snug mb-3 group-hover:text-primary/90 transition-colors duration-200 ${
+              className={`font-serif text-foreground font-normal leading-snug mb-0 group-hover:text-primary/90 transition-colors duration-200 ${
                 isHero 
                   ? 'text-2xl md:text-3xl lg:text-4xl' 
                   : 'text-[clamp(1.125rem,2.5vw,1.375rem)]'
@@ -257,15 +267,24 @@ export const UpdateCard = ({
             >
               {headline}
             </h3>
+          </div>
 
-            {/* Subheadline (for hero/full content) */}
-            {fullContent?.subheadline && (
-              <p className={`font-serif text-foreground/75 leading-relaxed mb-6 ${
-                isHero ? 'text-lg md:text-xl' : 'text-base'
-              }`}>
-                {fullContent.subheadline}
-              </p>
-            )}
+          {/* Content Section with Image (if sidebar) or Full Content (if full-width) */}
+          <div className={`relative flex ${imagePlacement === 'full-width' ? 'flex-col' : (isHero ? 'flex-col lg:flex-row items-start' : 'flex-col md:flex-row items-start')} ${isHero ? '-mt-8' : ''}`}>
+            {/* Image Section (sidebar placement) */}
+            {images.length > 0 && imagePlacement === 'sidebar' && renderImageCarousel(false)}
+
+            {/* Content Section */}
+            <div className={`flex-1 flex flex-col ${isHero ? 'p-8 md:p-10 lg:p-12 pt-0' : 'p-6 md:p-8 pt-0'} ${hasFullContent ? 'justify-start' : 'justify-center'}`}>
+              {/* Subheadline (for hero/full content) */}
+              {/* Note: -mt-8 negative margin pulls subheadline closer to headline for reduced spacing */}
+              {fullContent?.subheadline && (
+                <p className={`font-serif text-foreground/75 leading-relaxed mb-6 ${
+                  isHero ? 'text-lg md:text-xl -mt-8' : 'text-base -mt-8'
+                }`}>
+                  {fullContent.subheadline}
+                </p>
+              )}
 
             {/* Full Content */}
             {hasFullContent ? (
@@ -327,8 +346,15 @@ export const UpdateCard = ({
                   </div>
                 )}
 
-                {/* Closing paragraphs - only show when NOT in full-width mode with images */}
-                {!shouldShowTruncated && !(imagePlacement === 'full-width' && images.length > 0) && fullContent.closing?.map((paragraph, index) => (
+                {/* Full-width image when there's no list */}
+                {!fullContent.list && imagePlacement === 'full-width' && images.length > 0 && (
+                  <div className="w-full">
+                    {renderImageCarousel(true, false)}
+                  </div>
+                )}
+
+                {/* Closing paragraphs - only show when NOT in full-width mode with images, or when full-width but no list */}
+                {!shouldShowTruncated && !(imagePlacement === 'full-width' && images.length > 0 && fullContent.list) && fullContent.closing?.map((paragraph, index) => (
                   <p 
                     key={index}
                     className={`text-foreground/70 leading-relaxed ${
@@ -383,10 +409,10 @@ export const UpdateCard = ({
               </div>
             )}
           </div>
+          </div>
         </div>
-      </article>
+      </WrapperComponent>
 
-      {/* Image Enlargement Modal with Carousel */}
       <Dialog open={isImageModalOpen} onOpenChange={setIsImageModalOpen}>
         <DialogContent className="max-w-5xl w-[95vw] h-[90vh] p-0 border-none" style={{ backgroundColor: '#ded4d2' }}>
           <div className="relative w-full h-full flex items-center justify-center">
@@ -451,7 +477,7 @@ export const UpdateCard = ({
           </div>
         </DialogContent>
       </Dialog>
-    </CardWrapper>
+    </Fragment>
   );
 };
 

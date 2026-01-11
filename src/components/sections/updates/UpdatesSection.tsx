@@ -11,6 +11,9 @@ import endOfYearSuccess from '@/components/sections/End of Year Success.png';
 import moneyRaised1 from '@/components/sections/moneyraised1of2.PNG';
 import moneyRaised2 from '@/components/sections/moneyraised2of2.PNG';
 
+// Import Need Donations image
+import needDonations from '@/components/sections/need donations.PNG';
+
 /**
  * Sample updates data
  * In a real application, this would come from a CMS or database
@@ -53,7 +56,7 @@ const SAMPLE_UPDATES = [
     fullContent: {
       subheadline: 'Because of your generosity, the remaining 10 wishlists can now be fulfilled—meaning more children will feel warm, cared for, and confident this Christmas.',
       paragraphs: [
-        'With just 8 days until Christmas, our community showed up in an incredible way. Thanks to your generosity, we raised over $800 to support the remaining Angel Tree children this season.',
+        'With just 7 days until Christmas, our community showed up in an incredible way. Thanks to your generosity, we raised over $800 to support the remaining Angel Tree children this season.',
       ],
       list: {
         intro: 'Because of you, all 18 local children will receive:',
@@ -68,6 +71,24 @@ const SAMPLE_UPDATES = [
         'And, if funds allow, a small toy to bring a little extra joy.',
         'This support helps ensure every child feels warm, cared for, and confident during the winter months. We don\'t always know what these kids have access to during the other 364 days of the year—but today, we can rest a little easier knowing they\'re stocked with what they need for a while.',
         'That peace of mind is something you made possible.',
+      ],
+    },
+  },
+  {
+    id: '2.5',
+    date: '2024-12-17',
+    headline: 'Only 8 Days Left: 10 Children Still in Need This Christmas',
+    imageUrls: [needDonations],
+    fullContent: {
+      subheadline: 'With just 8 days until Christmas, 10 out of 18 children still have unmet needs—and your kindness can help close these final gaps.',
+      paragraphs: [
+        'With only 8 days left until Christmas, our Angel Tree program is supporting 18 local children right here in Twin Lakes—and while many needs have already been met, there is still important work to do.',
+        'Thanks to the generosity of our neighbors, several wishlists have been fulfilled—but 10 children still have unclaimed items. Many of these lists aren\'t focused on toys. Instead, they include essentials like warm winter jackets, properly fitting shoes, and school-ready clothing—items that directly impact a child\'s comfort, confidence, and well-being.',
+        'Every contribution helps close these final gaps. A $35 donation can go a long way toward completing a wishlist item and ensuring a child feels supported, seen, and cared for this Christmas.',
+        'We know this time of year can be financially demanding, and we are deeply grateful for any form of support—whether that\'s donating, sharing this message, or simply keeping these families in your thoughts. Together, small acts of kindness add up to something truly meaningful.',
+      ],
+      closing: [
+        '💛 Thank you for helping our neighborhood children feel warm, confident, and remembered this Christmas.',
       ],
     },
   },
