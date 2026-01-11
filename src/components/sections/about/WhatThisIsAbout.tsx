@@ -6,18 +6,18 @@ export const WhatThisIsAbout = () => {
     <section 
       id="what-this-is-about"
       data-section="what-this-is-about"
-      className="w-full pt-6 md:pt-10 pb-12 md:pb-16 bg-card"
+      className="w-full pt-4 md:pt-10 pb-4 md:pb-16 bg-card"
     >
       {/* Editorial Headline Block */}
       <div className="max-w-5xl mx-auto px-6 md:px-8">
         <div className="max-w-4xl">
           {/* Eyebrow */}
-          <span className="inline-block text-[11px] md:text-xs font-sans uppercase tracking-[0.25em] text-muted-foreground/70 font-medium mb-6 md:mb-8">
+          <span className="inline-block text-[11px] md:text-xs font-sans uppercase tracking-[0.25em] text-muted-foreground/70 font-medium mb-3 md:mb-8">
             What This Is All About
           </span>
           
           {/* Primary Editorial Headline */}
-          <h2 className="font-serif text-foreground font-normal leading-[1.2] md:leading-[1.15] tracking-normal"
+          <h2 className="font-serif text-foreground font-normal leading-[1.15] md:leading-[1.15] tracking-normal mb-4 md:mb-0"
               style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)' }}>
             A community-led holiday program built to help children feel supported, confident, and cared for.
           </h2>
@@ -26,7 +26,7 @@ export const WhatThisIsAbout = () => {
       </div>
 
       {/* Decorative Ribbon - Full width, outside container */}
-      <div className="relative w-full mt-16 md:mt-24">
+      <div className="relative w-full mt-6 md:mt-24">
         {/* Large decorative ribbon - flowing from left edge of section */}
         <div className="absolute left-0 top-0 w-full pointer-events-none hidden md:block" style={{ transform: 'translateY(-9%)' }}>
           <img
@@ -44,7 +44,7 @@ export const WhatThisIsAbout = () => {
           />
         </div>
         {/* Mobile version */}
-        <div className="relative md:hidden px-6" style={{ marginBottom: '-20px' }}>
+        <div className="relative md:hidden px-6 mb-3 md:mb-2">
           <img
             src="/ribbon_3.png"
             alt=""

@@ -81,7 +81,7 @@ const SponsorAChild = () => {
   return (
     <main className="min-h-screen bg-background">
       {/* Navigation */}
-      <div className="max-w-[1200px] mx-auto px-6 md:px-8 py-6">
+      <div className="max-w-[1200px] mx-auto px-6 md:px-8 pt-20 sm:pt-24 pb-6">
         <Link to={ROUTES.HOME}>
           <Button
             variant="ghost"
