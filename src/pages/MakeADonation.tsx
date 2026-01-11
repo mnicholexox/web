@@ -1,13 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ArrowLeft, Heart, Gift, Sparkles, ShieldCheck } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants";
 import { cn } from "@/lib/utils";
 import { PreLovedImpact } from "@/components/sections";
+import { NewsletterSignupModal } from "@/components/sections/newsletter";
 
 const MakeADonation = () => {
   const location = useLocation();
+  const [isNewsletterModalOpen, setIsNewsletterModalOpen] = useState(false);
 
   // Scroll to hash anchor on page load, accounting for fixed header
   useEffect(() => {
@@ -26,6 +28,19 @@ const MakeADonation = () => {
       }
     }
   }, [location.hash]);
+
+  // Open newsletter modal if navigated from SponsorAChild
+  useEffect(() => {
+    const state = location.state as { openNewsletter?: boolean } | null;
+    if (state?.openNewsletter) {
+      // Small delay to ensure page has rendered
+      setTimeout(() => {
+        setIsNewsletterModalOpen(true);
+        // Clear the state to prevent reopening on re-render
+        window.history.replaceState({}, '');
+      }, 300);
+    }
+  }, [location.state]);
   const donationExamples = [
     {
       icon: <Gift className="w-5 h-5 text-primary/70" strokeWidth={1.5} />,
@@ -165,7 +180,7 @@ const MakeADonation = () => {
               </Button>
 
               <p className="text-center text-muted-foreground text-xs mt-4">
-                Secure payment processing • Tax-deductible contribution
+                Secure payment processing
               </p>
             </div>
           </div>
@@ -246,6 +261,12 @@ const MakeADonation = () => {
           Thank you for being part of something meaningful.
         </p>
       </div>
+
+      {/* Newsletter Signup Modal */}
+      <NewsletterSignupModal
+        open={isNewsletterModalOpen}
+        onOpenChange={setIsNewsletterModalOpen}
+      />
     </main>
   );
 };

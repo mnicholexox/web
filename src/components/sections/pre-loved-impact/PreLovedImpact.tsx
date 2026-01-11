@@ -470,9 +470,9 @@ export const PreLovedImpact = () => {
             </div>
 
             {/* Thumbnails Grid - Second row: Needed items with special styling */}
-            <div className="flex justify-center gap-4">
+            <div className="flex flex-wrap justify-center gap-3">
               {neededThumbnailsData.map((thumbnail) => (
-                <div key={thumbnail.id} className="flex flex-col w-[calc(25%-8px)]">
+                <div key={thumbnail.id} className="flex flex-col w-[calc(50%-6px)] sm:w-[calc(25%-9px)]">
                   {/* Wrapper with dashed border and glow */}
                   <div
                     className="rounded-xl p-1"

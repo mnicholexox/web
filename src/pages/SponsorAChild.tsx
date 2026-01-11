@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ArrowLeft, ArrowRight, Gift, Heart, Sparkles, Star, Clock, ClipboardList, ShoppingBag } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants";
 import { cn } from "@/lib/utils";
@@ -10,6 +10,7 @@ const SponsorAChild = () => {
   // TODO: This would come from your data source (API, context, etc.)
   const wishlistsAvailable = false;
   const [isNewsletterModalOpen, setIsNewsletterModalOpen] = useState(false);
+  const navigate = useNavigate();
   const step01 = {
     number: "01",
     icon: <ClipboardList className="w-6 h-6 text-primary/70" strokeWidth={1.5} />,
@@ -427,12 +428,15 @@ const SponsorAChild = () => {
               {/* Gentle Note */}
               <p className="text-center text-muted-foreground text-sm pt-3 px-4">
                 Can't sponsor a full wishlist?{" "}
-                <Link 
-                  to={ROUTES.MAKE_A_DONATION} 
-                  className="text-primary font-medium hover:text-primary/80 transition-colors"
+                <button
+                  onClick={() => {
+                    navigate(ROUTES.MAKE_A_DONATION, { state: { openNewsletter: true } });
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="text-primary font-medium hover:text-primary/80 transition-colors underline underline-offset-2"
                 >
                   Make a donation
-                </Link>{" "}
+                </button>{" "}
                 to help cover items for children who need extra support.
               </p>
             </div>
