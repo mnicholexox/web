@@ -14,6 +14,19 @@ import moneyRaised2 from '@/components/sections/moneyraised2of2.PNG';
 // Import Need Donations image
 import needDonations from '@/components/sections/need donations.PNG';
 
+// Import Angel Tree images for Grinch article
+import angelTree1 from '@/components/sections/angel tree1.png';
+import angelTree2 from '@/components/sections/angel tree2.png';
+import angelTree3 from '@/components/sections/angel tree3.png';
+
+// Import Angel Tree images for Deliveries Complete article
+import angelTree4 from '@/components/sections/angel tree4.jpg';
+import angelTree5 from '@/components/sections/angel tree5.jpg';
+
+// Import Angel Tree images for Deliveries Ready article
+import angelTree6 from '@/components/sections/angel tree6.jpg';
+import angelTree7 from '@/components/sections/angel tree7.jpg';
+
 /**
  * Sample updates data
  * In a real application, this would come from a CMS or database
@@ -96,6 +109,7 @@ const SAMPLE_UPDATES = [
     id: '3',
     date: '2024-12-11',
     headline: '🎄 The Grinch Stole Twin Lakes: A Holiday Community Celebration',
+    imageUrls: [angelTree1, angelTree2, angelTree3],
     fullContent: {
       subheadline: 'Event Date: December 7, 2024 • Location: Twin Lakes Community',
       paragraphs: [
@@ -111,22 +125,43 @@ const SAMPLE_UPDATES = [
   },
   {
     id: '4',
-    date: '2025-10-20',
-    headline: 'Wishlist Collection Begins',
-    blurb: 'Our annual wishlist collection has officially begun! We\'re working with school counselors and family advocates to gather thoughtful wishes from children in our community.',
+    date: '2023-12-18',
+    headline: '🎁 Angel Tree Deliveries Complete',
+    blurb: 'In December, our Angel Tree effort came full circle as volunteers delivered every gift prepared through Santa\'s Workshop—ensuring children in our community felt seen, supported, and celebrated.',
+    imageUrls: [angelTree4, angelTree5],
+    fullContent: {
+      subheadline: '8 children · 6 families · One unforgettable Christmas',
+      paragraphs: [
+        'In December, our Angel Tree effort came full circle as volunteers delivered every gift prepared through Santa\'s Workshop—ensuring children in our community felt seen, supported, and celebrated.',
+        'Together with dedicated coordinators and counselors, Joy Drop helped fulfill the holiday wishlists of 8 children across 6 families, turning weeks of planning, organizing, and wrapping into moments of real joy.',
+        'This delivery marked more than the end of a project—it reflected what happens when a community shows up with intention. Every gift was thoughtfully prepared, carefully tracked, and delivered with dignity and care.',
+      ],
+      closing: [
+        'A special thank-you to Kaetlyn Porter for leading coordination efforts and working closely with school counselors and adopters to make this possible. We\'re proud to continue building this partnership and look forward to growing this tradition in the years ahead.',
+        '💛 Because when care is shared, joy travels far.',
+      ],
+    },
   },
   {
-    id: '5',
-    date: '2025-09-08',
-    headline: 'Back-to-School Success: 45 Kids Ready for Class',
-    blurb: 'This fall, Joy Drop provided back-to-school essentials for 45 children, including backpacks, school supplies, and new outfits for the first day. Every child deserves to start the year feeling prepared and confident.',
-    imageUrl: '/placeholder-update-3.jpg',
-  },
-  {
-    id: '6',
-    date: '2025-07-12',
-    headline: 'Summer Program Recap: Joy in Every Package',
-    blurb: 'Our summer care packages brought smiles to 30 families, including books, activity kits, and summer essentials. Thank you to everyone who helped make summer a little brighter for our community.',
+    id: '4.5',
+    date: '2023-12-18',
+    headline: '🎁 Angel Tree Deliveries Ready: 14 Children, One Beautiful Christmas',
+    imageUrls: [angelTree6, angelTree7],
+    fullContent: {
+      subheadline: 'After weeks of organizing and three days of wrapping, gifts are now ready to bring joy to local families.',
+      paragraphs: [
+        'This year, 14 children in our community are waking up to a brighter Christmas morning thanks to our Angel Tree program. 😇🎄',
+        'After weeks of organizing, shopping, and three full days of wrapping, these thoughtfully chosen gifts are now ready to be delivered to parents—ensuring elementary and middle school students feel celebrated, supported, and deeply cared for.',
+        'Being part of this effort is a powerful reminder of what community truly means. Watching neighbors show up, give generously, and support children they may never meet is something we will never take for granted. ❤️',
+      ],
+      closing: [
+        'A heartfelt thank-you to everyone who made this possible:',
+        '📣 Thank you to all the neighbors who donated gifts',
+        '📣 Thank you to Mary Elizabeth Couch and Claire Betz Melancon for stepping in to help wrap when things got wild 😂',
+        '📣 Thank you to Kaetlyn Porter for organizing and working alongside us every step of the way ❤️',
+        'Because of you, joy will be unwrapped tomorrow morning.',
+      ],
+    },
   },
 ];
 
@@ -165,7 +200,7 @@ export const UpdatesSection = () => {
                   imageUrls={update.imageUrls}
                   isHero={isHero}
                   truncateAt={isHero ? 'Special surprises that brought genuine joy' : undefined}
-                  imagePlacement={update.id === '2' ? 'full-width' : 'sidebar'}
+                  imagePlacement={update.id === '2' ? 'full-width' : (update.id === '3' || update.id === '4' || update.id === '4.5') ? 'hero-top' : 'sidebar'}
                   hideClosingByDefault={update.id === '2.5'}
                 />
               </div>

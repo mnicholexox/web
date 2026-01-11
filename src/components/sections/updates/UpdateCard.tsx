@@ -22,7 +22,7 @@ interface UpdateCardProps {
   href?: string;
   isHero?: boolean;
   truncateAt?: string; // Text to truncate content at (for list items)
-  imagePlacement?: 'sidebar' | 'full-width'; // How images should be displayed
+  imagePlacement?: 'sidebar' | 'full-width' | 'hero-top'; // How images should be displayed
   hideClosingByDefault?: boolean; // Hide closing section by default with expand button
 }
 
@@ -272,6 +272,72 @@ export const UpdateCard = ({
               {headline}
             </h3>
           </div>
+
+          {/* Hero-top images - placed right after headline/date, before body text */}
+          {images.length > 0 && imagePlacement === 'hero-top' && (
+            <div className={`w-full ${isHero ? 'px-8 md:px-10 lg:px-12 pb-6 md:pb-8' : 'px-6 md:px-8 pb-4 md:pb-6'}`}>
+              <div className="w-full h-[400px] md:h-[500px] lg:h-[600px] relative overflow-hidden rounded-lg">
+                {images.length > 1 ? (
+                  <>
+                    {images.map((img, index) => (
+                      <div
+                        key={index}
+                        className={`absolute inset-0 transition-opacity duration-500 ease-in-out cursor-pointer ${
+                          index === currentImageIndex ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                        }`}
+                        onClick={handleImageClick}
+                      >
+                        <img
+                          src={img}
+                          alt={`${imageAlt || headline} - Image ${index + 1}`}
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+                    ))}
+                    
+                    {/* Navigation Arrows */}
+                    <button
+                      onClick={goToPrevious}
+                      className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm border border-white/50 flex items-center justify-center text-foreground/70 hover:bg-white hover:text-foreground transition-all shadow-lg z-10 opacity-70 hover:opacity-100"
+                      aria-label="Previous image"
+                    >
+                      <ChevronLeft className="w-5 h-5" strokeWidth={2} />
+                    </button>
+                    <button
+                      onClick={goToNext}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm border border-white/50 flex items-center justify-center text-foreground/70 hover:bg-white hover:text-foreground transition-all shadow-lg z-10 opacity-70 hover:opacity-100"
+                      aria-label="Next image"
+                    >
+                      <ChevronRight className="w-5 h-5" strokeWidth={2} />
+                    </button>
+                    
+                    {/* Dots Indicator */}
+                    <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10">
+                      {images.map((_, index) => (
+                        <button
+                          key={index}
+                          onClick={(e) => goToSlide(index, e)}
+                          className={`transition-all rounded-full ${
+                            index === currentImageIndex
+                              ? 'bg-white/90 w-2.5 h-2.5'
+                              : 'bg-white/50 hover:bg-white/70 w-2 h-2'
+                          }`}
+                          aria-label={`Go to slide ${index + 1}`}
+                        />
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <img
+                    src={images[0]}
+                    alt={imageAlt || headline}
+                    className="w-full h-full object-contain cursor-pointer"
+                    onClick={handleImageClick}
+                  />
+                )}
+              </div>
+            </div>
+          )}
 
           {/* Content Section with Image (if sidebar) or Full Content (if full-width) */}
           <div className={`relative flex ${imagePlacement === 'full-width' ? 'flex-col' : (isHero ? 'flex-col lg:flex-row items-start' : 'flex-col md:flex-row items-start')} ${isHero ? '-mt-8' : ''}`}>
