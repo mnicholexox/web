@@ -85,19 +85,29 @@ const SAMPLE_UPDATES = [
         'With only 8 days left until Christmas, our Angel Tree program is supporting 18 local children right here in Twin Lakes—and while many needs have already been met, there is still important work to do.',
         'Thanks to the generosity of our neighbors, several wishlists have been fulfilled—but 10 children still have unclaimed items. Many of these lists aren\'t focused on toys. Instead, they include essentials like warm winter jackets, properly fitting shoes, and school-ready clothing—items that directly impact a child\'s comfort, confidence, and well-being.',
         'Every contribution helps close these final gaps. A $35 donation can go a long way toward completing a wishlist item and ensuring a child feels supported, seen, and cared for this Christmas.',
-        'We know this time of year can be financially demanding, and we are deeply grateful for any form of support—whether that\'s donating, sharing this message, or simply keeping these families in your thoughts. Together, small acts of kindness add up to something truly meaningful.',
       ],
       closing: [
+        'We know this time of year can be financially demanding, and we are deeply grateful for any form of support—whether that\'s donating, sharing this message, or simply keeping these families in your thoughts. Together, small acts of kindness add up to something truly meaningful.',
         '💛 Thank you for helping our neighborhood children feel warm, confident, and remembered this Christmas.',
       ],
     },
   },
   {
     id: '3',
-    date: '2025-11-15',
-    headline: 'New Partnership with Local Schools Announced',
-    blurb: 'We\'re thrilled to announce partnerships with three additional elementary schools, allowing us to reach more children in need. This expansion means more families will have access to support during the holiday season and beyond.',
-    imageUrl: '/placeholder-update-2.jpg',
+    date: '2024-12-11',
+    headline: '🎄 The Grinch Stole Twin Lakes: A Holiday Community Celebration',
+    fullContent: {
+      subheadline: 'Event Date: December 7, 2024 • Location: Twin Lakes Community',
+      paragraphs: [
+        'Our December holiday event brought Twin Lakes together for an evening full of laughter, memories, and meaningful giving. Families gathered to enjoy festive activities, capture holiday photos, and support neighbors in need—all in one joyful celebration.',
+        'Santa and Mrs. Claus made a special appearance, joined by a surprise guest: the Grinch himself! Children (and pets!) had the chance to take photos, decorate ornaments, and enjoy creative crafts throughout the event. Activities were thoughtfully scheduled so everyone had time to participate while keeping the evening flowing smoothly.',
+        'Beyond the fun, the heart of the night was giving back. Guests were invited to support our Angel Tree and Food Drive—helping ensure local families had both gifts and essentials this season. Thanks to the generosity of our community, donations poured in to support children and middle school students in need.',
+      ],
+      closing: [
+        'We\'re incredibly grateful to everyone who attended, donated, volunteered, and helped make the night possible. Seeing families come together—sharing joy, kindness, and generosity—is exactly what Joy Drop is all about.',
+        '✨ Thank you for helping us make the season brighter for our community.',
+      ],
+    },
   },
   {
     id: '4',
@@ -156,6 +166,7 @@ export const UpdatesSection = () => {
                   isHero={isHero}
                   truncateAt={isHero ? 'Special surprises that brought genuine joy' : undefined}
                   imagePlacement={update.id === '2' ? 'full-width' : 'sidebar'}
+                  hideClosingByDefault={update.id === '2.5'}
                 />
               </div>
             </div>

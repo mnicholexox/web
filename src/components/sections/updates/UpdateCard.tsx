@@ -23,6 +23,7 @@ interface UpdateCardProps {
   isHero?: boolean;
   truncateAt?: string; // Text to truncate content at (for list items)
   imagePlacement?: 'sidebar' | 'full-width'; // How images should be displayed
+  hideClosingByDefault?: boolean; // Hide closing section by default with expand button
 }
 
 /**
@@ -45,7 +46,8 @@ export const UpdateCard = ({
   href,
   isHero = false,
   truncateAt,
-  imagePlacement = 'sidebar'
+  imagePlacement = 'sidebar',
+  hideClosingByDefault = false
 }: UpdateCardProps) => {
   const CardWrapper = href ? 'a' : 'article';
   
@@ -73,6 +75,8 @@ export const UpdateCard = ({
   
   // State for expanded content
   const [isExpanded, setIsExpanded] = useState(false);
+  // State for closing section expansion
+  const [isClosingExpanded, setIsClosingExpanded] = useState(false);
   
   // Determine if content should be truncated
   const shouldTruncate = truncateAt && fullContent?.list?.items;
@@ -289,17 +293,122 @@ export const UpdateCard = ({
             {/* Full Content */}
             {hasFullContent ? (
               <div className="space-y-6">
-                {/* Paragraphs */}
-                {fullContent.paragraphs?.map((paragraph, index) => (
-                  <p 
-                    key={index}
-                    className={`text-foreground/70 leading-relaxed ${
-                      isHero ? 'text-base md:text-lg' : 'text-[0.9375rem]'
+                {/* Paragraphs - exclude last one when hideClosingByDefault is true */}
+                {fullContent.paragraphs?.map((paragraph, index) => {
+                  const isLastParagraph = index === (fullContent.paragraphs?.length ?? 0) - 1;
+                  // Skip last paragraph if it should be hidden (it will be in expandable section)
+                  if (hideClosingByDefault && isLastParagraph) {
+                    return null;
+                  }
+                  
+                  return (
+                    <p 
+                      key={index}
+                      className={`text-foreground/70 leading-relaxed ${
+                        isHero ? 'text-base md:text-lg' : 'text-[0.9375rem]'
+                      }`}
+                    >
+                      {paragraph}
+                    </p>
+                  );
+                })}
+                
+                {/* Button and expandable section for last paragraph + closing (non-list, non-sidebar) */}
+                {hideClosingByDefault && fullContent.paragraphs && fullContent.paragraphs.length > 0 && 
+                 !fullContent.list && !(imagePlacement === 'sidebar' && images.length > 0) && (
+                  <>
+                    {/* Read Entire Story / Show Less button */}
+                    {fullContent.closing && fullContent.closing.length > 0 && (
+                      <div className="flex justify-end -mt-5 mb-2">
+                        <Button
+                          size={isHero ? "lg" : "default"}
+                          className="group/btn text-white hover:opacity-90"
+                          style={{ backgroundColor: '#55111c' }}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setIsClosingExpanded(!isClosingExpanded);
+                            if (!isClosingExpanded) {
+                              setTimeout(() => {
+                                const card = e.currentTarget.closest('article');
+                                if (card) {
+                                  const expandableSection = card.querySelector('[data-expandable-last-paragraph]');
+                                  if (expandableSection) {
+                                    expandableSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                                  }
+                                }
+                              }, 300);
+                            }
+                          }}
+                        >
+                          <span>{isClosingExpanded ? 'Show Less' : 'Read Entire Story'}</span>
+                          {!isClosingExpanded && (
+                            <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover/btn:translate-x-1" />
+                          )}
+                        </Button>
+                      </div>
+                    )}
+                    {/* Last paragraph and closing section - expandable together */}
+                    <div 
+                      data-expandable-last-paragraph
+                      className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                        !isClosingExpanded 
+                          ? 'max-h-0 opacity-0' 
+                          : 'max-h-[2000px] opacity-100'
+                      }`}
+                    >
+                      <div className="space-y-6">
+                        {/* Last paragraph */}
+                        {fullContent.paragraphs[fullContent.paragraphs.length - 1] && (
+                          <p 
+                            className={`text-foreground/70 leading-relaxed ${
+                              isHero ? 'text-base md:text-lg' : 'text-[0.9375rem]'
+                            }`}
+                          >
+                            {fullContent.paragraphs[fullContent.paragraphs.length - 1]}
+                          </p>
+                        )}
+                        {/* Closing section for non-list, non-sidebar layouts */}
+                        {fullContent.closing?.map((paragraph, index) => (
+                          <p 
+                            key={index}
+                            className={`text-foreground/70 leading-relaxed ${
+                              isHero ? 'text-base md:text-lg' : 'text-[0.9375rem]'
+                            }`}
+                          >
+                            {paragraph}
+                          </p>
+                        ))}
+                      </div>
+                    </div>
+                  </>
+                )}
+                
+                {/* Last paragraph - expandable (for list or sidebar layouts, button is in closing section) */}
+                {hideClosingByDefault && fullContent.paragraphs && fullContent.paragraphs.length > 0 && 
+                 (fullContent.list || (imagePlacement === 'sidebar' && images.length > 0)) && (
+                  <div 
+                    data-expandable-last-paragraph
+                    className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                      !isClosingExpanded 
+                        ? 'max-h-0 opacity-0' 
+                        : 'max-h-[2000px] opacity-100'
                     }`}
                   >
-                    {paragraph}
-                  </p>
-                ))}
+                    <div className="space-y-6">
+                      {/* Last paragraph */}
+                      {fullContent.paragraphs[fullContent.paragraphs.length - 1] && (
+                        <p 
+                          className={`text-foreground/70 leading-relaxed ${
+                            isHero ? 'text-base md:text-lg' : 'text-[0.9375rem]'
+                          }`}
+                        >
+                          {fullContent.paragraphs[fullContent.paragraphs.length - 1]}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                )}
 
                 {/* List */}
                 {fullContent.list && (
@@ -326,16 +435,63 @@ export const UpdateCard = ({
                         ))}
                       </ul>
                       {/* All closing paragraphs in left column when images are present */}
-                      {!shouldShowTruncated && imagePlacement === 'full-width' && images.length > 0 && fullContent.closing?.map((paragraph, index) => (
-                        <p 
-                          key={index}
-                          className={`text-foreground/70 leading-relaxed text-left ${
-                            isHero ? 'text-base md:text-lg' : 'text-[0.9375rem]'
-                          }`}
-                        >
-                          {paragraph}
-                        </p>
-                      ))}
+                      {!shouldShowTruncated && imagePlacement === 'full-width' && images.length > 0 && (
+                        <>
+                          {/* Read Entire Story / Show Less button for full-width layouts */}
+                          {hideClosingByDefault && fullContent.closing && fullContent.closing.length > 0 && (
+                            <div className="flex justify-end -mt-5 mb-2">
+                              <Button
+                                size={isHero ? "lg" : "default"}
+                                className="group/btn text-white hover:opacity-90"
+                                style={{ backgroundColor: '#55111c' }}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  setIsClosingExpanded(!isClosingExpanded);
+                                  // Smooth scroll to show expanded content
+                                  if (!isClosingExpanded) {
+                                    setTimeout(() => {
+                                      const card = e.currentTarget.closest('article');
+                                      if (card) {
+                                        const closingSection = card.querySelector('[data-closing-section-fullwidth]');
+                                        if (closingSection) {
+                                          closingSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                                        }
+                                      }
+                                    }, 300);
+                                  }
+                                }}
+                              >
+                                <span>{isClosingExpanded ? 'Show Less' : 'Read Entire Story'}</span>
+                                {!isClosingExpanded && (
+                                  <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover/btn:translate-x-1" />
+                                )}
+                              </Button>
+                            </div>
+                          )}
+                          {hideClosingByDefault && !isClosingExpanded ? null : (
+                            <div 
+                              data-closing-section-fullwidth
+                              className={`space-y-4 overflow-hidden transition-all duration-500 ease-in-out ${
+                                hideClosingByDefault && !isClosingExpanded 
+                                  ? 'max-h-0 opacity-0' 
+                                  : 'max-h-[2000px] opacity-100'
+                              }`}
+                            >
+                              {fullContent.closing?.map((paragraph, index) => (
+                                <p 
+                                  key={index}
+                                  className={`text-foreground/70 leading-relaxed text-left ${
+                                    isHero ? 'text-base md:text-lg' : 'text-[0.9375rem]'
+                                  }`}
+                                >
+                                  {paragraph}
+                                </p>
+                              ))}
+                            </div>
+                          )}
+                        </>
+                      )}
                     </div>
                     {/* Images to the right of list when full-width placement */}
                     {imagePlacement === 'full-width' && images.length > 0 && (
@@ -353,17 +509,25 @@ export const UpdateCard = ({
                   </div>
                 )}
 
-                {/* Closing paragraphs - only show when NOT in full-width mode with images, or when full-width but no list */}
-                {!shouldShowTruncated && !(imagePlacement === 'full-width' && images.length > 0 && fullContent.list) && fullContent.closing?.map((paragraph, index) => (
-                  <p 
-                    key={index}
-                    className={`text-foreground/70 leading-relaxed ${
-                      isHero ? 'text-base md:text-lg' : 'text-[0.9375rem]'
-                    }`}
-                  >
-                    {paragraph}
-                  </p>
-                ))}
+                {/* Closing paragraphs - only show when NOT in full-width mode with images, or when full-width but no list, AND NOT sidebar with images (those render full-width below) */}
+                {/* Exclude when hideClosingByDefault is true and there's no list and no sidebar (already in expandable section) */}
+                {!shouldShowTruncated && 
+                 !(imagePlacement === 'full-width' && images.length > 0 && fullContent.list) && 
+                 !(imagePlacement === 'sidebar' && images.length > 0) && 
+                 !(hideClosingByDefault && !fullContent.list && !(imagePlacement === 'sidebar' && images.length > 0)) && (
+                  <>
+                    {fullContent.closing?.map((paragraph, index) => (
+                      <p 
+                        key={index}
+                        className={`text-foreground/70 leading-relaxed ${
+                          isHero ? 'text-base md:text-lg' : 'text-[0.9375rem]'
+                        }`}
+                      >
+                        {paragraph}
+                      </p>
+                    ))}
+                  </>
+                )}
               </div>
             ) : (
               /* Supporting blurb (for regular cards) */
@@ -410,6 +574,63 @@ export const UpdateCard = ({
             )}
           </div>
           </div>
+          
+          {/* Full-width closing section for sidebar image layouts */}
+          {!shouldShowTruncated && imagePlacement === 'sidebar' && images.length > 0 && fullContent?.closing && fullContent.closing.length > 0 && (
+            <div className={`w-full ${isHero ? 'px-8 md:px-10 lg:px-12 pt-0 pb-8 md:pb-10 lg:pb-12' : 'px-6 md:px-8 pt-0 pb-6 md:pb-8'}`}>
+              {/* Read Entire Story / Show Less button for sidebar layouts */}
+              {hideClosingByDefault && (
+                <div className="flex justify-end -mt-6 mb-2">
+                  <Button
+                    size={isHero ? "lg" : "default"}
+                    className="group/btn text-white hover:opacity-90"
+                    style={{ backgroundColor: '#55111c' }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setIsClosingExpanded(!isClosingExpanded);
+                      // Smooth scroll to show expanded content
+                      if (!isClosingExpanded) {
+                        setTimeout(() => {
+                          const card = e.currentTarget.closest('article');
+                          if (card) {
+                            const closingSection = card.querySelector('[data-closing-section]');
+                            if (closingSection) {
+                              closingSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                            }
+                          }
+                        }, 300);
+                      }
+                    }}
+                  >
+                    <span>{isClosingExpanded ? 'Show Less' : 'Read Entire Story'}</span>
+                    {!isClosingExpanded && (
+                      <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover/btn:translate-x-1" />
+                    )}
+                  </Button>
+                </div>
+              )}
+              <div 
+                data-closing-section
+                className={`space-y-4 overflow-hidden transition-all duration-500 ease-in-out ${
+                  hideClosingByDefault && !isClosingExpanded 
+                    ? 'max-h-0 opacity-0' 
+                    : 'max-h-[2000px] opacity-100'
+                }`}
+              >
+                {fullContent.closing.map((paragraph, index) => (
+                  <p 
+                    key={index}
+                    className={`text-foreground/70 leading-relaxed ${
+                      isHero ? 'text-base md:text-lg' : 'text-[0.9375rem]'
+                    }`}
+                  >
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </WrapperComponent>
 
