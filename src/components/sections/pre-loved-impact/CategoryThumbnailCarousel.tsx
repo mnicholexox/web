@@ -72,14 +72,14 @@ export const CategoryThumbnailCarousel = ({
           <>
             <button
               onClick={goToPrevious}
-              className="absolute left-1 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white/80 backdrop-blur-sm border border-white/40 flex items-center justify-center text-foreground/70 hover:bg-white hover:text-foreground transition-all shadow-sm opacity-0 group-hover:opacity-100"
+              className="absolute left-1 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white/80 backdrop-blur-sm border border-white/40 flex items-center justify-center text-foreground/70 hover:bg-white hover:text-foreground transition-all shadow-sm opacity-100 md:opacity-0 md:group-hover:opacity-100"
               aria-label="Previous image"
             >
               <ChevronLeft className="w-3 h-3" strokeWidth={2.5} />
             </button>
             <button
               onClick={goToNext}
-              className="absolute right-1 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white/80 backdrop-blur-sm border border-white/40 flex items-center justify-center text-foreground/70 hover:bg-white hover:text-foreground transition-all shadow-sm opacity-0 group-hover:opacity-100"
+              className="absolute right-1 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white/80 backdrop-blur-sm border border-white/40 flex items-center justify-center text-foreground/70 hover:bg-white hover:text-foreground transition-all shadow-sm opacity-100 md:opacity-0 md:group-hover:opacity-100"
               aria-label="Next image"
             >
               <ChevronRight className="w-3 h-3" strokeWidth={2.5} />
