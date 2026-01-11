@@ -1,65 +1,45 @@
-/* Small heart icon for editorial callouts */
+/* Small heart icon for cards */
 const HeartAccent = () => (
   <svg 
-    className="w-3 h-3 text-primary/30 flex-shrink-0 mt-[0.35em]" 
+    className="w-3 h-3 flex-shrink-0" 
     viewBox="0 0 24 24" 
     fill="currentColor"
     aria-hidden="true"
+    style={{ color: '#B87B83' }}
   >
     <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
   </svg>
 );
 
-/* Delicate divider between editorial callouts */
-const EditorialDivider = () => (
-  <div className="flex items-center justify-center gap-1.5 py-2 md:py-3">
-    <div className="w-1 h-1 rounded-full bg-primary/35" />
-    <div className="w-[7px] h-[7px] rounded-full bg-accent/65" />
-    <div className="w-1 h-1 rounded-full bg-primary/35" />
-  </div>
-);
-
-interface EditorialCalloutProps {
+interface CardProps {
   title: string;
   children: React.ReactNode;
 }
 
-/* Soft editorial callout block */
-const EditorialCallout = ({ title, children }: EditorialCalloutProps) => (
+/* Card component with white background and shadow */
+const Card = ({ title, children }: CardProps) => (
   <article 
-    className="relative pl-8 md:pl-10 py-6 md:py-8 pr-8 md:pr-10 rounded-sm"
+    className="bg-white p-6 md:p-8 rounded-lg shadow-sm"
     style={{
-      background: 'linear-gradient(135deg, hsl(var(--primary) / 0.03) 0%, hsl(var(--accent) / 0.02) 100%)',
-      borderLeft: '1px solid hsl(var(--primary) / 0.08)',
+      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
     }}
   >
-    {/* Subtle inner glow for warmth */}
-    <div 
-      className="absolute inset-0 rounded-sm pointer-events-none"
-      style={{
-        background: 'radial-gradient(ellipse at 0% 0%, hsl(var(--primary) / 0.04) 0%, transparent 60%)',
-      }}
-    />
-    
-    <div className="relative">
-      {/* Subheading with icon */}
-      <div className="flex items-start gap-3 mb-4 md:mb-5">
-        <HeartAccent />
-        <h3 
-          className="font-serif font-normal tracking-wide leading-snug"
-          style={{ fontSize: 'clamp(1.25rem, 3vw, 1.5rem)', color: '#4c3838' }}
-        >
-          {title}
-        </h3>
-      </div>
-      
-      {/* Content spanning full card width for expansive, editorial feel */}
-      <div>
-        <p className="text-foreground/65 leading-[1.9] md:leading-[2] text-base md:text-[1.0625rem]">
-          {children}
-        </p>
-      </div>
+    <div className="flex items-start gap-3 mb-4">
+      <HeartAccent />
+      <h3 
+        className="font-sans font-bold text-lg md:text-xl"
+        style={{ color: '#4A3C39' }}
+      >
+        {title}
+      </h3>
     </div>
+    
+    <p 
+      className="text-base md:text-[1.0625rem] leading-relaxed"
+      style={{ color: '#6B5D5B' }}
+    >
+      {children}
+    </p>
   </article>
 );
 
@@ -68,86 +48,89 @@ export const WhereTheHeartComesIn = () => {
     <section 
       id="where-the-heart-comes-in"
       data-section="where-the-heart-comes-in"
-      className="w-full pt-16 md:pt-24 pb-16 md:pb-20 bg-background relative overflow-hidden"
+      className="w-full pt-16 md:pt-24 pb-16 md:pb-20 bg-background"
     >
-      {/* Subtle decorative background element */}
-      <div 
-        className="absolute inset-0 opacity-[0.03] pointer-events-none"
-        style={{
-          backgroundImage: 'radial-gradient(circle at 20% 50%, hsl(var(--primary)) 0%, transparent 50%), radial-gradient(circle at 80% 80%, hsl(var(--accent)) 0%, transparent 40%)',
-        }}
-      />
-      
-      <div className="max-w-5xl mx-auto px-6 md:px-8 lg:px-12 relative">
-        {/* Left-aligned editorial content with expanded reading width (~1.5x original) */}
-        <div className="space-y-10 md:space-y-12">
-          {/* Headline block */}
-          <div className="space-y-6">
-            {/* Eyebrow */}
-            <span className="inline-block text-[11px] md:text-xs font-sans uppercase tracking-[0.3em] text-primary/70 font-medium">
+      <div className="max-w-6xl mx-auto px-6 md:px-8 lg:px-12">
+        <div className="space-y-8 md:space-y-10">
+          {/* Centered header section */}
+          <div className="text-center space-y-4 md:space-y-6">
+            {/* OUR PURPOSE subtitle */}
+            <span 
+              className="inline-block text-xs md:text-sm font-sans uppercase tracking-wider font-medium"
+              style={{ color: '#B87B83' }}
+            >
               Our Purpose
             </span>
             
-            {/* Primary Editorial Headline */}
+            {/* Main heading */}
             <h2 
-              className="font-serif text-foreground font-normal leading-[1.25] md:leading-[1.2] tracking-normal"
-              style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)' }}
+              className="font-serif font-bold leading-tight"
+              style={{ 
+                fontSize: 'clamp(2rem, 5vw, 3rem)',
+                color: '#4A3C39'
+              }}
             >
               Where the Heart Comes In
             </h2>
             
-            {/* Narrative bridge sub-line */}
-            <p className="text-[0.8125rem] md:text-sm text-foreground/45 font-sans tracking-wide leading-relaxed">
+            {/* Sub-description */}
+            <p 
+              className="text-base md:text-lg font-sans leading-relaxed max-w-2xl mx-auto"
+              style={{ color: '#6B5D5B' }}
+            >
               Care that shows up on Christmas — and stays for the other 364 days.
             </p>
-          </div>
-          
-          {/* Delicate decorative divider after headline */}
-          <div className="flex items-center gap-2 py-2">
-            <div className="w-8 h-px bg-primary/20" />
-            <div className="w-1 h-1 rounded-full bg-primary/35" />
-            <div className="w-[7px] h-[7px] rounded-full bg-accent/65" />
-            <div className="w-1 h-1 rounded-full bg-primary/35" />
-          </div>
-          
-          {/* Editorial callout blocks */}
-          <div className="space-y-1 md:space-y-2">
-            {/* Block 1: More Than Gifts */}
-            <EditorialCallout title="More Than Gifts">
-              Joy Drop exists to make sure every child feels seen, valued, and confident — not just on Christmas morning, but in the days that follow, with fresh back-to-school clothes and experiences that help them feel included among their peers.
-            </EditorialCallout>
             
-            {/* Delicate visual separator */}
-            <EditorialDivider />
-            
-            {/* Block 2: Meeting Real Needs */}
-            <EditorialCallout title="Meeting Real Needs">
-              We want to ensure children's needs are met on the other 364 days of the year. Toy donations help make that possible by freeing up our small budget for essentials like hygiene items, warm clothing, and properly fitting shoes — so children can feel prepared, included, and cared for all year long.
-            </EditorialCallout>
-          </div>
-          
-          {/* Closing breath - editorial tagline */}
-          <div className="pt-10 md:pt-14 space-y-6">
-            <p 
-              className="font-serif italic text-foreground/50 leading-relaxed"
-              style={{ fontSize: 'clamp(1rem, 2.5vw, 1.125rem)' }}
-            >
-              Support that carries children forward, long after the season passes.
-            </p>
-            
-            {/* Closing decorative element */}
-            <div className="flex items-center gap-3">
-              <div className="w-6 h-px bg-primary/10" />
-              <svg 
-                className="w-3.5 h-3.5 text-primary/20" 
-                viewBox="0 0 24 24" 
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-              </svg>
-              <div className="w-6 h-px bg-primary/10" />
+            {/* Decorative divider with three dots */}
+            <div className="flex items-center justify-center pt-2 relative" style={{ width: '200px', margin: '0 auto' }}>
+              {/* Horizontal line */}
+              <div 
+                className="absolute w-full h-px"
+                style={{ 
+                  backgroundColor: '#E8D4D6',
+                  top: '50%',
+                  transform: 'translateY(-50%)'
+                }}
+              />
+              {/* Dots on the line */}
+              <div className="relative flex items-center justify-center gap-3">
+                <div 
+                  className="rounded-full"
+                  style={{ 
+                    width: '4px',
+                    height: '4px',
+                    backgroundColor: '#D4A5AB'
+                  }}
+                />
+                <div 
+                  className="rounded-full"
+                  style={{ 
+                    width: '6px',
+                    height: '6px',
+                    backgroundColor: '#B87B83'
+                  }}
+                />
+                <div 
+                  className="rounded-full"
+                  style={{ 
+                    width: '4px',
+                    height: '4px',
+                    backgroundColor: '#D4A5AB'
+                  }}
+                />
+              </div>
             </div>
+          </div>
+          
+          {/* Two cards side-by-side */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 pt-4">
+            <Card title="More Than Gifts">
+              Joy Drop exists to make sure every child feels seen, valued, and confident — not just on Christmas morning, but in the days that follow, with fresh back-to-school clothes and experiences that help them feel included among their peers.
+            </Card>
+            
+            <Card title="Meeting Real Needs">
+              We want to ensure children's needs are met on the other 364 days of the year. Toy donations help make that possible by freeing up our small budget for essentials like hygiene items, warm clothing, and properly fitting shoes — so children can feel prepared, included, and cared for all year long.
+            </Card>
           </div>
         </div>
       </div>
