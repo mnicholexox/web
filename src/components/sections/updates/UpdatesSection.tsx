@@ -7,6 +7,10 @@ import checklist3 from '@/components/sections/checklist3.png';
 import checklist4 from '@/components/sections/checklist4.png';
 import endOfYearSuccess from '@/components/sections/End of Year Success.png';
 
+// Import Goal Reached images for carousel
+import moneyRaised1 from '@/components/sections/moneyraised1of2.PNG';
+import moneyRaised2 from '@/components/sections/moneyraised2of2.PNG';
+
 /**
  * Sample updates data
  * In a real application, this would come from a CMS or database
@@ -45,6 +49,7 @@ const SAMPLE_UPDATES = [
     id: '2',
     date: '2025-12-18',
     headline: 'Goal Reached: $800+ Raised. 8 out of 18 Children Supported This Season.',
+    imageUrls: [moneyRaised1, moneyRaised2],
     fullContent: {
       subheadline: 'Because of your generosity, the remaining 10 wishlists can now be fulfilled—meaning more children will feel warm, cared for, and confident this Christmas.',
       paragraphs: [
@@ -129,6 +134,7 @@ export const UpdatesSection = () => {
                   imageUrls={update.imageUrls}
                   isHero={isHero}
                   truncateAt={isHero ? 'Special surprises that brought genuine joy' : undefined}
+                  imagePlacement={update.id === '2' ? 'full-width' : 'sidebar'}
                 />
               </div>
             </div>

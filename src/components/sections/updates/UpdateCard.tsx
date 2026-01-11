@@ -22,6 +22,7 @@ interface UpdateCardProps {
   href?: string;
   isHero?: boolean;
   truncateAt?: string; // Text to truncate content at (for list items)
+  imagePlacement?: 'sidebar' | 'full-width'; // How images should be displayed
 }
 
 /**
@@ -43,7 +44,8 @@ export const UpdateCard = ({
   imageAlt,
   href,
   isHero = false,
-  truncateAt
+  truncateAt,
+  imagePlacement = 'sidebar'
 }: UpdateCardProps) => {
   const CardWrapper = href ? 'a' : 'article';
   const cardProps = href ? { href, className: 'group block' } : { className: 'group' };
@@ -104,6 +106,107 @@ export const UpdateCard = ({
     setIsImageModalOpen(true);
   };
 
+  // Render image carousel component
+  const renderImageCarousel = (isFullWidth: boolean = false, inFlexContainer: boolean = false) => {
+    if (images.length === 0) return null;
+
+    const containerClasses = isFullWidth && !inFlexContainer
+      ? 'w-full -mx-6 md:-mx-8 lg:-mx-10 xl:-mx-12 my-8'
+      : isFullWidth && inFlexContainer
+      ? 'w-full'
+      : `${isHero ? 'lg:w-96 xl:w-[28rem] h-96 lg:h-auto pt-8 md:pt-10 lg:pt-12' : 'md:w-56 lg:w-64 pt-6 md:pt-8'} flex-shrink-0 overflow-hidden`;
+
+    const imageContainerClasses = isFullWidth && !inFlexContainer
+      ? 'w-full h-[400px] md:h-[500px] lg:h-[600px] relative overflow-hidden rounded-lg'
+      : isFullWidth && inFlexContainer
+      ? 'w-full h-[350px] md:h-[450px] lg:h-[500px] relative overflow-hidden rounded-lg'
+      : `${isHero ? 'h-96 lg:h-full min-h-[500px] lg:min-h-[600px]' : 'h-48 md:h-full min-h-[180px]'} relative overflow-hidden`;
+
+    return (
+      <div className={containerClasses}>
+        <div 
+          className={imageContainerClasses}
+          style={!isFullWidth ? {
+            background: 'linear-gradient(135deg, hsl(344 35% 92% / 0.5) 0%, hsl(38 67% 94% / 0.5) 100%)',
+          } : {}}
+        >
+          {images.length > 1 ? (
+            <>
+              {images.map((img, index) => (
+                <div
+                  key={index}
+                  className={`absolute inset-0 transition-opacity duration-500 ease-in-out cursor-pointer ${
+                    index === currentImageIndex ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                  }`}
+                  onClick={handleImageClick}
+                >
+                  <img
+                    src={img}
+                    alt={`${imageAlt || headline} - Image ${index + 1}`}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+              ))}
+              
+              {/* Navigation Arrows */}
+              <button
+                onClick={goToPrevious}
+                className={`absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm border border-white/50 flex items-center justify-center text-foreground/70 hover:bg-white hover:text-foreground transition-all shadow-lg z-10 ${
+                  isFullWidth ? 'opacity-70 hover:opacity-100' : 'opacity-70 md:opacity-0 md:group-hover:opacity-100'
+                }`}
+                aria-label="Previous image"
+              >
+                <ChevronLeft className="w-5 h-5" strokeWidth={2} />
+              </button>
+              <button
+                onClick={goToNext}
+                className={`absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm border border-white/50 flex items-center justify-center text-foreground/70 hover:bg-white hover:text-foreground transition-all shadow-lg z-10 ${
+                  isFullWidth ? 'opacity-70 hover:opacity-100' : 'opacity-70 md:opacity-0 md:group-hover:opacity-100'
+                }`}
+                aria-label="Next image"
+              >
+                <ChevronRight className="w-5 h-5" strokeWidth={2} />
+              </button>
+              
+              {/* Dots Indicator */}
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10">
+                {images.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={(e) => goToSlide(index, e)}
+                    className={`transition-all rounded-full ${
+                      index === currentImageIndex
+                        ? 'bg-white/90 w-2.5 h-2.5'
+                        : 'bg-white/50 hover:bg-white/70 w-2 h-2'
+                    }`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                ))}
+              </div>
+            </>
+          ) : (
+            <img
+              src={images[0]}
+              alt={imageAlt || headline}
+              className="w-full h-full object-contain cursor-pointer"
+              onClick={handleImageClick}
+            />
+          )}
+          
+          {/* Soft edge overlay for blending - only for sidebar */}
+          {!isFullWidth && (
+            <div 
+              className={`absolute inset-0 pointer-events-none ${isHero ? 'hidden lg:block' : 'hidden md:block'}`}
+              style={{
+                background: 'linear-gradient(to right, transparent 70%, rgba(255, 255, 255, 0.4) 100%)',
+              }}
+            />
+          )}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <CardWrapper {...cardProps}>
       <article 
@@ -130,87 +233,9 @@ export const UpdateCard = ({
           }}
         />
 
-        <div className={`relative flex ${isHero ? 'flex-col lg:flex-row items-start' : 'flex-col md:flex-row items-start'}`}>
-          {/* Image Section (optional) - supports carousel for hero cards */}
-          {images.length > 0 && (
-            <div className={`${isHero ? 'lg:w-96 xl:w-[28rem] h-96 lg:h-auto pt-8 md:pt-10 lg:pt-12' : 'md:w-56 lg:w-64 pt-6 md:pt-8'} flex-shrink-0 overflow-hidden`}>
-              <div 
-                className={`${isHero ? 'h-96 lg:h-full min-h-[500px] lg:min-h-[600px]' : 'h-48 md:h-full min-h-[180px]'} relative overflow-hidden`}
-                style={{
-                  background: 'linear-gradient(135deg, hsl(344 35% 92% / 0.5) 0%, hsl(38 67% 94% / 0.5) 100%)',
-                }}
-              >
-                {/* Carousel for multiple images (hero cards) */}
-                {images.length > 1 ? (
-                  <>
-                    {images.map((img, index) => (
-                      <div
-                        key={index}
-                        className={`absolute inset-0 transition-opacity duration-500 ease-in-out cursor-pointer ${
-                          index === currentImageIndex ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                        }`}
-                        onClick={handleImageClick}
-                      >
-                        <img
-                          src={img}
-                          alt={`${imageAlt || headline} - Image ${index + 1}`}
-                          className="w-full h-full object-contain"
-                        />
-                      </div>
-                    ))}
-                    
-                    {/* Navigation Arrows */}
-                    <button
-                      onClick={goToPrevious}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm border border-white/50 flex items-center justify-center text-foreground/70 hover:bg-white hover:text-foreground transition-all shadow-lg opacity-70 md:opacity-0 md:group-hover:opacity-100 z-10"
-                      aria-label="Previous image"
-                    >
-                      <ChevronLeft className="w-5 h-5" strokeWidth={2} />
-                    </button>
-                    <button
-                      onClick={goToNext}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm border border-white/50 flex items-center justify-center text-foreground/70 hover:bg-white hover:text-foreground transition-all shadow-lg opacity-70 md:opacity-0 md:group-hover:opacity-100 z-10"
-                      aria-label="Next image"
-                    >
-                      <ChevronRight className="w-5 h-5" strokeWidth={2} />
-                    </button>
-                    
-                    {/* Dots Indicator */}
-                    <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10">
-                      {images.map((_, index) => (
-                        <button
-                          key={index}
-                          onClick={(e) => goToSlide(index, e)}
-                          className={`transition-all rounded-full ${
-                            index === currentImageIndex
-                              ? 'bg-white/90 w-2.5 h-2.5'
-                              : 'bg-white/50 hover:bg-white/70 w-2 h-2'
-                          }`}
-                          aria-label={`Go to slide ${index + 1}`}
-                        />
-                      ))}
-                    </div>
-                  </>
-                ) : (
-                  /* Single image */
-                  <img
-                    src={images[0]}
-                    alt={imageAlt || headline}
-                    className="w-full h-full object-contain cursor-pointer"
-                    onClick={handleImageClick}
-                  />
-                )}
-                
-                {/* Soft edge overlay for blending */}
-                <div 
-                  className={`absolute inset-0 pointer-events-none ${isHero ? 'hidden lg:block' : 'hidden md:block'}`}
-                  style={{
-                    background: 'linear-gradient(to right, transparent 70%, rgba(255, 255, 255, 0.4) 100%)',
-                  }}
-                />
-              </div>
-            </div>
-          )}
+        <div className={`relative flex ${imagePlacement === 'full-width' ? 'flex-col' : (isHero ? 'flex-col lg:flex-row items-start' : 'flex-col md:flex-row items-start')}`}>
+          {/* Image Section (sidebar placement) */}
+          {images.length > 0 && imagePlacement === 'sidebar' && renderImageCarousel(false)}
 
           {/* Content Section */}
           <div className={`flex-1 flex flex-col ${isHero ? 'p-8 md:p-10 lg:p-12' : 'p-6 md:p-8'} ${hasFullContent ? 'justify-start' : 'justify-center'}`}>
@@ -259,32 +284,51 @@ export const UpdateCard = ({
 
                 {/* List */}
                 {fullContent.list && (
-                  <div className="space-y-3">
-                    {fullContent.list.intro && (
-                      <p className={`text-foreground/70 font-medium ${
-                        isHero ? 'text-base md:text-lg' : 'text-[0.9375rem]'
-                      }`}>
-                        {fullContent.list.intro}
-                      </p>
-                    )}
-                    <ul className={`space-y-2 ${isHero ? 'pl-6 md:pl-8' : 'pl-5'}`}>
-                      {displayedListItems.map((item, index) => (
-                        <li 
+                  <div className={imagePlacement === 'full-width' && images.length > 0 ? 'flex flex-col md:flex-row gap-6 md:gap-8 items-start' : 'space-y-3'}>
+                    <div className="flex-1 space-y-3">
+                      {fullContent.list.intro && (
+                        <p className={`text-foreground/70 font-medium text-left ${
+                          isHero ? 'text-base md:text-lg' : 'text-[0.9375rem]'
+                        }`}>
+                          {fullContent.list.intro}
+                        </p>
+                      )}
+                      <ul className={`space-y-2 text-left ${isHero ? 'pl-6 md:pl-8' : 'pl-5'}`}>
+                        {displayedListItems.map((item, index) => (
+                          <li 
+                            key={index}
+                            className={`text-foreground/70 leading-relaxed ${
+                              isHero ? 'text-base md:text-lg' : 'text-[0.9375rem]'
+                            }`}
+                            style={{ listStyleType: 'disc' }}
+                          >
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                      {/* All closing paragraphs in left column when images are present */}
+                      {!shouldShowTruncated && imagePlacement === 'full-width' && images.length > 0 && fullContent.closing?.map((paragraph, index) => (
+                        <p 
                           key={index}
-                          className={`text-foreground/70 leading-relaxed ${
+                          className={`text-foreground/70 leading-relaxed text-left ${
                             isHero ? 'text-base md:text-lg' : 'text-[0.9375rem]'
                           }`}
-                          style={{ listStyleType: 'disc' }}
                         >
-                          {item}
-                        </li>
+                          {paragraph}
+                        </p>
                       ))}
-                    </ul>
+                    </div>
+                    {/* Images to the right of list when full-width placement */}
+                    {imagePlacement === 'full-width' && images.length > 0 && (
+                      <div className="flex-shrink-0 w-full md:w-80 lg:w-96">
+                        {renderImageCarousel(true, true)}
+                      </div>
+                    )}
                   </div>
                 )}
 
-                {/* Closing paragraphs */}
-                {!shouldShowTruncated && fullContent.closing?.map((paragraph, index) => (
+                {/* Closing paragraphs - only show when NOT in full-width mode with images */}
+                {!shouldShowTruncated && !(imagePlacement === 'full-width' && images.length > 0) && fullContent.closing?.map((paragraph, index) => (
                   <p 
                     key={index}
                     className={`text-foreground/70 leading-relaxed ${
