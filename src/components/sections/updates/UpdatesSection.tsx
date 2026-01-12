@@ -186,7 +186,7 @@ export const UpdatesSection = () => {
           return (
             <div 
               key={update.id} 
-              className={isHero ? 'mb-8 md:mb-12' : ''}
+              className={isHero ? 'mb-4 md:mb-12' : ''}
             >
               <div 
                 className={isHero ? 'w-[130%] -ml-[15%] md:w-[130%] md:-ml-[15%]' : ''}

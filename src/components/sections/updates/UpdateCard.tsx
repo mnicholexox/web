@@ -143,7 +143,7 @@ export const UpdateCard = ({
       ? 'w-full -mx-6 md:-mx-8 lg:-mx-10 xl:-mx-12 my-8'
       : isFullWidth && inFlexContainer
       ? 'w-full'
-      : `${isHero ? 'lg:w-96 xl:w-[28rem] h-96 lg:h-auto pt-8 md:pt-10 lg:pt-12' : 'md:w-56 lg:w-64 pt-6 md:pt-8'} flex-shrink-0 overflow-hidden ${!isFullWidth ? (isHero ? 'pl-8 md:pl-10 lg:pl-12' : 'pl-6 md:pl-8') : ''}`;
+      : `${isHero ? 'lg:w-96 xl:w-[28rem] h-96 lg:h-auto pt-6 md:pt-10 lg:pt-12' : 'md:w-56 lg:w-64 pt-6 md:pt-8'} flex-shrink-0 overflow-hidden ${!isFullWidth ? (isHero ? 'pl-6 md:pl-10 lg:pl-12' : 'pl-6 md:pl-8') : ''}`;
 
     const imageContainerClasses = isFullWidth && !inFlexContainer
       ? 'w-full h-[400px] md:h-[500px] lg:h-[600px] relative overflow-hidden rounded-lg'
@@ -251,10 +251,10 @@ export const UpdateCard = ({
 
         <div className={`relative ${imagePlacement === 'full-width' ? 'flex flex-col' : 'flex flex-col'}`}>
           {/* Header Section (Date + Headline) - Full Width */}
-          <div className={`flex-1 flex flex-col ${isHero ? 'p-8 md:p-10 lg:p-12 pb-0 -mb-8' : 'p-6 md:p-8 pb-0'}`}>
+          <div className={`flex-1 flex flex-col ${isHero ? 'p-6 md:p-10 lg:p-12 pb-0 -mb-4 md:-mb-8' : 'p-6 md:p-8 pb-0'}`}>
             {/* Date - subtle, secondary */}
             <time 
-              className={`${isHero ? 'text-xs md:text-sm' : 'text-[11px] md:text-xs'} font-sans uppercase tracking-[0.2em] text-primary/50 font-medium mb-3`}
+              className={`${isHero ? 'text-xs md:text-sm' : 'text-[11px] md:text-xs'} font-sans uppercase tracking-[0.2em] text-primary/50 font-medium ${isHero ? 'mb-2 md:mb-3' : 'mb-3'}`}
               dateTime={date}
             >
               {formatDate(date)}
@@ -263,10 +263,10 @@ export const UpdateCard = ({
             {/* Headline - warm, human */}
             {/* Note: mb-0 ensures minimal spacing between headline and subheadline */}
             <h3 
-              className={`font-serif text-foreground font-normal leading-snug mb-0 group-hover:text-primary/90 transition-colors duration-200 ${
+              className={`font-serif text-foreground font-normal mb-0 group-hover:text-primary/90 transition-colors duration-200 ${
                 isHero 
-                  ? 'text-2xl md:text-3xl lg:text-4xl' 
-                  : 'text-[clamp(1.125rem,2.5vw,1.375rem)]'
+                  ? 'text-xl leading-tight md:text-3xl md:leading-snug lg:text-4xl' 
+                  : 'text-[clamp(1.125rem,2.5vw,1.375rem)] leading-snug'
               }`}
             >
               {headline}
@@ -275,7 +275,7 @@ export const UpdateCard = ({
 
           {/* Hero-top images - placed right after headline/date, before body text */}
           {images.length > 0 && imagePlacement === 'hero-top' && (
-            <div className={`w-full ${isHero ? 'px-8 md:px-10 lg:px-12 pb-6 md:pb-8' : 'px-6 md:px-8 pb-4 md:pb-6'}`}>
+            <div className={`w-full ${isHero ? 'px-6 md:px-10 lg:px-12 pb-4 md:pb-8' : 'px-6 md:px-8 pb-4 md:pb-6'}`}>
               <div className="w-full h-[400px] md:h-[500px] lg:h-[600px] relative overflow-hidden rounded-lg">
                 {images.length > 1 ? (
                   <>
@@ -340,17 +340,17 @@ export const UpdateCard = ({
           )}
 
           {/* Content Section with Image (if sidebar) or Full Content (if full-width) */}
-          <div className={`relative flex ${imagePlacement === 'full-width' ? 'flex-col' : (isHero ? 'flex-col lg:flex-row items-start' : 'flex-col md:flex-row items-start')} ${isHero ? '-mt-8' : ''}`}>
+          <div className={`relative flex ${imagePlacement === 'full-width' ? 'flex-col' : (isHero ? 'flex-col lg:flex-row items-start' : 'flex-col md:flex-row items-start')} ${isHero ? '-mt-4 md:-mt-8' : ''}`}>
             {/* Image Section (sidebar placement) */}
             {images.length > 0 && imagePlacement === 'sidebar' && renderImageCarousel(false)}
 
             {/* Content Section */}
-            <div className={`flex-1 flex flex-col ${isHero ? 'p-8 md:p-10 lg:p-12 pt-0' : 'p-6 md:p-8 pt-0'} ${hasFullContent ? 'justify-start' : 'justify-center'}`}>
+            <div className={`flex-1 flex flex-col ${isHero ? 'p-6 md:p-10 lg:p-12 pt-0 max-w-full' : 'p-6 md:p-8 pt-0'} ${hasFullContent ? 'justify-start' : 'justify-center'}`}>
               {/* Subheadline (for hero/full content) */}
               {/* Note: -mt-8 negative margin pulls subheadline closer to headline for reduced spacing */}
               {fullContent?.subheadline && (
-                <p className={`font-serif text-foreground/75 leading-relaxed mb-6 ${
-                  isHero ? 'text-lg md:text-xl -mt-8' : 'text-base -mt-8'
+                <p className={`font-serif text-foreground/75 leading-relaxed ${
+                  isHero ? 'text-base md:text-xl -mt-4 md:-mt-8 mb-4 md:mb-6' : 'text-base -mt-8 mb-6'
                 }`}>
                   {fullContent.subheadline}
                 </p>
@@ -358,7 +358,7 @@ export const UpdateCard = ({
 
             {/* Full Content */}
             {hasFullContent ? (
-              <div className="space-y-6">
+              <div className={`${isHero ? 'space-y-4 md:space-y-6' : 'space-y-6'}`}>
                 {/* Paragraphs - exclude last one when hideClosingByDefault is true */}
                 {fullContent.paragraphs?.map((paragraph, index) => {
                   const isLastParagraph = index === (fullContent.paragraphs?.length ?? 0) - 1;
@@ -371,7 +371,7 @@ export const UpdateCard = ({
                     <p 
                       key={index}
                       className={`text-foreground/70 leading-relaxed ${
-                        isHero ? 'text-base md:text-lg' : 'text-[0.9375rem]'
+                        isHero ? 'text-sm md:text-lg' : 'text-[0.9375rem]'
                       }`}
                     >
                       {paragraph}
@@ -385,7 +385,7 @@ export const UpdateCard = ({
                   <>
                     {/* Read Entire Story / Show Less button */}
                     {fullContent.closing && fullContent.closing.length > 0 && (
-                      <div className="flex justify-end -mt-5 mb-2">
+                      <div className={`flex justify-end ${isHero ? '-mt-3 md:-mt-5 mb-1 md:mb-2' : '-mt-5 mb-2'}`}>
                         <Button
                           size={isHero ? "lg" : "default"}
                           className="group/btn text-white hover:opacity-90"
@@ -415,20 +415,20 @@ export const UpdateCard = ({
                       </div>
                     )}
                     {/* Last paragraph and closing section - expandable together */}
-                    <div 
-                      data-expandable-last-paragraph
-                      className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                        !isClosingExpanded 
-                          ? 'max-h-0 opacity-0' 
-                          : 'max-h-[2000px] opacity-100'
-                      }`}
-                    >
-                      <div className="space-y-6">
+              <div 
+                data-expandable-last-paragraph
+                className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                  !isClosingExpanded 
+                    ? 'max-h-0 opacity-0' 
+                    : 'max-h-[2000px] opacity-100'
+                }`}
+              >
+                <div className={`${isHero ? 'space-y-4 md:space-y-6' : 'space-y-6'}`}>
                         {/* Last paragraph */}
                         {fullContent.paragraphs[fullContent.paragraphs.length - 1] && (
                           <p 
                             className={`text-foreground/70 leading-relaxed ${
-                              isHero ? 'text-base md:text-lg' : 'text-[0.9375rem]'
+                              isHero ? 'text-sm md:text-lg' : 'text-[0.9375rem]'
                             }`}
                           >
                             {fullContent.paragraphs[fullContent.paragraphs.length - 1]}
@@ -439,7 +439,7 @@ export const UpdateCard = ({
                           <p 
                             key={index}
                             className={`text-foreground/70 leading-relaxed ${
-                              isHero ? 'text-base md:text-lg' : 'text-[0.9375rem]'
+                              isHero ? 'text-sm md:text-lg' : 'text-[0.9375rem]'
                             }`}
                           >
                             {paragraph}
@@ -461,12 +461,12 @@ export const UpdateCard = ({
                         : 'max-h-[2000px] opacity-100'
                     }`}
                   >
-                    <div className="space-y-6">
+                    <div className={`${isHero ? 'space-y-4 md:space-y-6' : 'space-y-6'}`}>
                       {/* Last paragraph */}
                       {fullContent.paragraphs[fullContent.paragraphs.length - 1] && (
                         <p 
                           className={`text-foreground/70 leading-relaxed ${
-                            isHero ? 'text-base md:text-lg' : 'text-[0.9375rem]'
+                            isHero ? 'text-sm md:text-lg' : 'text-[0.9375rem]'
                           }`}
                         >
                           {fullContent.paragraphs[fullContent.paragraphs.length - 1]}
@@ -478,21 +478,21 @@ export const UpdateCard = ({
 
                 {/* List */}
                 {fullContent.list && (
-                  <div className={imagePlacement === 'full-width' && images.length > 0 ? 'flex flex-col md:flex-row gap-6 md:gap-8 items-start' : 'space-y-3'}>
-                    <div className="flex-1 space-y-3">
+                  <div className={imagePlacement === 'full-width' && images.length > 0 ? `flex flex-col md:flex-row ${isHero ? 'gap-4 md:gap-8' : 'gap-6 md:gap-8'} items-start` : `${isHero ? 'space-y-2 md:space-y-3' : 'space-y-3'}`}>
+                    <div className={`flex-1 ${isHero ? 'space-y-2 md:space-y-3' : 'space-y-3'}`}>
                       {fullContent.list.intro && (
                         <p className={`text-foreground/70 font-medium text-left ${
-                          isHero ? 'text-base md:text-lg' : 'text-[0.9375rem]'
+                          isHero ? 'text-sm md:text-lg' : 'text-[0.9375rem]'
                         }`}>
                           {fullContent.list.intro}
                         </p>
                       )}
-                      <ul className={`space-y-2 text-left ${isHero ? 'pl-6 md:pl-8' : 'pl-5'}`}>
+                      <ul className={`${isHero ? 'space-y-1.5 md:space-y-2' : 'space-y-2'} text-left ${isHero ? 'pl-6 md:pl-8' : 'pl-5'}`}>
                         {displayedListItems.map((item, index) => (
                           <li 
                             key={index}
                             className={`text-foreground/70 leading-relaxed ${
-                              isHero ? 'text-base md:text-lg' : 'text-[0.9375rem]'
+                              isHero ? 'text-sm md:text-lg' : 'text-[0.9375rem]'
                             }`}
                             style={{ listStyleType: 'disc' }}
                           >
@@ -505,7 +505,7 @@ export const UpdateCard = ({
                         <>
                           {/* Read Entire Story / Show Less button for full-width layouts */}
                           {hideClosingByDefault && fullContent.closing && fullContent.closing.length > 0 && (
-                            <div className="flex justify-end -mt-5 mb-2">
+                            <div className={`flex justify-end ${isHero ? '-mt-3 md:-mt-5 mb-1 md:mb-2' : '-mt-5 mb-2'}`}>
                               <Button
                                 size={isHero ? "lg" : "default"}
                                 className="group/btn text-white hover:opacity-90"
@@ -538,7 +538,7 @@ export const UpdateCard = ({
                           {hideClosingByDefault && !isClosingExpanded ? null : (
                             <div 
                               data-closing-section-fullwidth
-                              className={`space-y-4 overflow-hidden transition-all duration-500 ease-in-out ${
+                              className={`${isHero ? 'space-y-3 md:space-y-4' : 'space-y-4'} overflow-hidden transition-all duration-500 ease-in-out ${
                                 hideClosingByDefault && !isClosingExpanded 
                                   ? 'max-h-0 opacity-0' 
                                   : 'max-h-[2000px] opacity-100'
@@ -548,7 +548,7 @@ export const UpdateCard = ({
                                 <p 
                                   key={index}
                                   className={`text-foreground/70 leading-relaxed text-left ${
-                                    isHero ? 'text-base md:text-lg' : 'text-[0.9375rem]'
+                                    isHero ? 'text-sm md:text-lg' : 'text-[0.9375rem]'
                                   }`}
                                 >
                                   {paragraph}
@@ -586,7 +586,7 @@ export const UpdateCard = ({
                       <p 
                         key={index}
                         className={`text-foreground/70 leading-relaxed ${
-                          isHero ? 'text-base md:text-lg' : 'text-[0.9375rem]'
+                          isHero ? 'text-sm md:text-lg' : 'text-[0.9375rem]'
                         }`}
                       >
                         {paragraph}
@@ -597,14 +597,14 @@ export const UpdateCard = ({
               </div>
             ) : (
               /* Supporting blurb (for regular cards) */
-              <p className={`text-foreground/60 leading-relaxed mb-4 ${isHero ? 'text-base md:text-lg' : 'text-[0.9375rem] line-clamp-2'}`}>
+              <p className={`text-foreground/60 leading-relaxed ${isHero ? 'mb-3 md:mb-4' : 'mb-4'} ${isHero ? 'text-base md:text-lg' : 'text-[0.9375rem] line-clamp-2'}`}>
                 {blurb}
               </p>
             )}
 
             {/* Subtle arrow affordance */}
             {href && !shouldShowTruncated && (
-              <div className="flex items-center gap-2 text-primary/60 group-hover:text-primary transition-colors duration-200 mt-4">
+              <div className={`flex items-center gap-2 text-primary/60 group-hover:text-primary transition-colors duration-200 ${isHero ? 'mt-3 md:mt-4' : 'mt-4'}`}>
                 <span className={`${isHero ? 'text-sm' : 'text-[0.8125rem]'} font-medium tracking-wide`}>Read more</span>
                 <ArrowRight 
                   className={`${isHero ? 'w-5 h-5' : 'w-4 h-4'} transition-transform duration-200 group-hover:translate-x-1`} 
@@ -615,7 +615,7 @@ export const UpdateCard = ({
             
             {/* Read Entire Story button (when truncated) */}
             {shouldShowTruncated && (
-              <div className="flex justify-end mt-6">
+              <div className={`flex justify-end ${isHero ? 'mt-4 md:mt-6' : 'mt-6'}`}>
                 <Button
                   size={isHero ? "lg" : "default"}
                   className="group/btn text-white hover:opacity-90"
@@ -643,10 +643,10 @@ export const UpdateCard = ({
           
           {/* Full-width closing section for sidebar image layouts */}
           {!shouldShowTruncated && imagePlacement === 'sidebar' && images.length > 0 && fullContent?.closing && fullContent.closing.length > 0 && (
-            <div className={`w-full ${isHero ? 'px-8 md:px-10 lg:px-12 pt-0 pb-8 md:pb-10 lg:pb-12' : 'px-6 md:px-8 pt-0 pb-6 md:pb-8'}`}>
+            <div className={`w-full ${isHero ? 'px-6 md:px-10 lg:px-12 pt-0 pb-4 md:pb-10 lg:pb-12' : 'px-6 md:px-8 pt-0 pb-6 md:pb-8'}`}>
               {/* Read Entire Story / Show Less button for sidebar layouts */}
               {hideClosingByDefault && (
-                <div className="flex justify-end -mt-6 mb-2">
+                <div className={`flex justify-end ${isHero ? '-mt-4 md:-mt-6 mb-1 md:mb-2' : '-mt-6 mb-2'}`}>
                   <Button
                     size={isHero ? "lg" : "default"}
                     className="group/btn text-white hover:opacity-90"
@@ -678,7 +678,7 @@ export const UpdateCard = ({
               )}
               <div 
                 data-closing-section
-                className={`space-y-4 overflow-hidden transition-all duration-500 ease-in-out ${
+                className={`${isHero ? 'space-y-3 md:space-y-4' : 'space-y-4'} overflow-hidden transition-all duration-500 ease-in-out ${
                   hideClosingByDefault && !isClosingExpanded 
                     ? 'max-h-0 opacity-0' 
                     : 'max-h-[2000px] opacity-100'
@@ -688,7 +688,7 @@ export const UpdateCard = ({
                   <p 
                     key={index}
                     className={`text-foreground/70 leading-relaxed ${
-                      isHero ? 'text-base md:text-lg' : 'text-[0.9375rem]'
+                      isHero ? 'text-sm md:text-lg' : 'text-[0.9375rem]'
                     }`}
                   >
                     {paragraph}
