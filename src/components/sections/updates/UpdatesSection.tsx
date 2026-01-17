@@ -189,7 +189,7 @@ export const UpdatesSection = () => {
               className={isHero ? 'mb-4 md:mb-12' : ''}
             >
               <div 
-                className={isHero ? 'w-[130%] -ml-[15%] md:w-[130%] md:-ml-[15%]' : ''}
+                className={isHero ? 'md:w-[130%] md:-ml-[15%]' : ''}
               >
                 <UpdateCard
                   date={update.date}
