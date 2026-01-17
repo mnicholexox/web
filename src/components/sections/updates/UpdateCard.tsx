@@ -143,7 +143,7 @@ export const UpdateCard = ({
       ? 'w-full -mx-6 md:-mx-8 lg:-mx-10 xl:-mx-12 my-8'
       : isFullWidth && inFlexContainer
       ? 'w-full'
-      : `${isHero ? 'lg:w-96 xl:w-[28rem] h-96 lg:h-auto pt-6 md:pt-10 lg:pt-12' : 'md:w-56 lg:w-64 pt-6 md:pt-8'} flex-shrink-0 overflow-hidden ${!isFullWidth ? (isHero ? 'pl-6 md:pl-10 lg:pl-12' : 'pl-6 md:pl-8') : ''}`;
+      : `${isHero ? 'w-full lg:w-96 xl:w-[28rem] h-96 lg:h-auto pt-6 md:pt-10 lg:pt-12' : 'md:w-56 lg:w-64 pt-6 md:pt-8'} flex-shrink-0 overflow-hidden ${!isFullWidth ? (isHero ? 'px-6 md:px-10 lg:px-0 lg:pl-12' : 'pl-6 md:pl-8') : ''}`;
 
     const imageContainerClasses = isFullWidth && !inFlexContainer
       ? 'w-full h-[400px] md:h-[500px] lg:h-[600px] relative overflow-hidden rounded-lg'
