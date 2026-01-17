@@ -4,6 +4,7 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/', // Custom domain (joydrop.app) doesn't need a subpath
   root: process.cwd(), // Explicitly set root directory
   plugins: [react()],
   assetsInclude: ["**/*.JPEG", "**/*.JPG", "**/*.PNG"], // Handle uppercase image extensions
