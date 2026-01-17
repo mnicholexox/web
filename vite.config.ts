@@ -3,8 +3,8 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
-  base: mode === 'production' ? '/web/' : '/', // Use /web/ only for GitHub Pages production build
+export default defineConfig({
+  base: '/', // Custom domain (joydrop.app) doesn't need a subpath
   root: process.cwd(), // Explicitly set root directory
   plugins: [react()],
   assetsInclude: ["**/*.JPEG", "**/*.JPG", "**/*.PNG"], // Handle uppercase image extensions
@@ -21,5 +21,5 @@ export default defineConfig(({ mode }) => ({
       usePolling: true, // Required for file watching in Docker
     },
   },
-}));
+});
 
