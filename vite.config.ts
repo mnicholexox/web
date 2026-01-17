@@ -4,6 +4,7 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/web/', // GitHub Pages base path for mnicholexox/web repo
   root: process.cwd(), // Explicitly set root directory
   plugins: [react()],
   assetsInclude: ["**/*.JPEG", "**/*.JPG", "**/*.PNG"], // Handle uppercase image extensions
