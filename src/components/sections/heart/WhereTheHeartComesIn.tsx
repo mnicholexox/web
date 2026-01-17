@@ -18,10 +18,11 @@ const HeartAccent = () => (
 interface BulletPointProps {
   children: React.ReactNode;
   isSub?: boolean;
+  className?: string;
 }
 
-const BulletPoint = ({ children, isSub = false }: BulletPointProps) => (
-  <li className="flex items-start gap-3 mb-3">
+const BulletPoint = ({ children, isSub = false, className = '' }: BulletPointProps) => (
+  <li className={`flex items-start gap-3 mb-3 ${className}`}>
     <div 
       className="rounded-full flex-shrink-0 mt-1.5"
       style={{ 
@@ -66,7 +67,7 @@ const Card = ({ title, mainTitle, children, imageUrl, imageAlt, imagePlaceholder
       boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
     }}
   >
-    {/* Text content - no right padding needed since image is bottom-anchored */}
+    {/* Text content - bottom bullets may need pr-[35%] md:pr-[42%] to clear the image */}
     <div className="relative z-10">
       <div className="flex items-start gap-3 mb-4">
         <HeartAccent />
@@ -216,7 +217,7 @@ export const WhereTheHeartComesIn = () => {
                   <BulletPoint isSub>Feeling left out</BulletPoint>
                 </SubBulletList>
               </BulletPoint>
-              <BulletPoint>
+              <BulletPoint className="pr-[35%] md:pr-[42%]">
                 Without essentials or confidence-boosting experiences, it's hard for these kids to thrive at school and in friendships.
               </BulletPoint>
             </Card>
