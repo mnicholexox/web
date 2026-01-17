@@ -11,6 +11,7 @@ export const ROUTES = {
   MAKE_A_DONATION: '/make-a-donation',
   FAQ: '/faq',
   UPDATES: '/updates',
+  LOGIN: '/login',
   // Add more routes as pages are created
   // ABOUT: '/about',
   // CONTACT: '/contact',

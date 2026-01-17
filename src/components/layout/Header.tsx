@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ROUTES } from "@/constants";
+import { Button } from "@/components/ui/button";
 
 /**
  * Header component
@@ -96,6 +97,11 @@ export const Header = () => {
                 {item.label}
               </Link>
             ))}
+            <Link to={ROUTES.LOGIN} className="ml-2">
+              <Button variant="default" size="default">
+                Login
+              </Button>
+            </Link>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -137,6 +143,15 @@ export const Header = () => {
               {item.label}
             </Link>
           ))}
+          <Link
+            to={ROUTES.LOGIN}
+            onClick={() => setMobileMenuOpen(false)}
+            className="block mt-2"
+          >
+            <Button variant="default" size="default" className="w-full">
+              Login
+            </Button>
+          </Link>
         </nav>
       </div>
     </header>
