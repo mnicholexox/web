@@ -3,4 +3,5 @@ export { default as SponsorAChildPage } from './SponsorAChild';
 export { default as MakeADonationPage } from './MakeADonation';
 export { default as FAQPage } from './FAQ';
 export { default as UpdatesPage } from './Updates';
+export { default as LoginPage } from './Login';
 
