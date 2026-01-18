@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -26,14 +26,77 @@ const navItems: NavItem[] = [
 
 export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
 
+  // Track which section is currently visible using Intersection Observer
+  useEffect(() => {
+    // Only observe sections when on the homepage
+    if (location.pathname !== ROUTES.HOME) {
+      setActiveSection(null);
+      return;
+    }
+
+    // Get all sections that nav items can scroll to
+    const sectionIds = navItems
+      .filter((item) => item.scrollTo)
+      .map((item) => item.scrollTo!);
+
+    const observers: IntersectionObserver[] = [];
+
+    const observerCallback = (sectionId: string) => (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(sectionId);
+        }
+      });
+    };
+
+    // Small delay to ensure DOM is ready
+    const timeoutId = setTimeout(() => {
+      sectionIds.forEach((sectionId) => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const observer = new IntersectionObserver(observerCallback(sectionId), {
+            rootMargin: "-20% 0px -60% 0px", // Trigger when section is in upper portion of viewport
+            threshold: 0,
+          });
+          observer.observe(element);
+          observers.push(observer);
+        }
+      });
+    }, 100);
+
+    return () => {
+      clearTimeout(timeoutId);
+      observers.forEach((observer) => observer.disconnect());
+    };
+  }, [location.pathname]);
+
+  // Clear active section when scrolled to top (for "Home" to be active)
+  useEffect(() => {
+    if (location.pathname !== ROUTES.HOME) return;
+
+    const handleScroll = () => {
+      // If scrolled near the top, clear the active section so "Home" is highlighted
+      if (window.scrollY < 200) {
+        setActiveSection(null);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [location.pathname]);
+
   const isActive = (href: string, scrollTo?: string) => {
-    // Scroll-to items are never shown as "active" in the traditional sense
-    if (scrollTo) return false;
+    // For scroll-to items, check if that section is currently visible
+    if (scrollTo) {
+      return activeSection === scrollTo;
+    }
+    // For Home, it's active when on homepage AND no section is active
     if (href === ROUTES.HOME) {
-      return location.pathname === href;
+      return location.pathname === href && !activeSection;
     }
     return location.pathname.startsWith(href);
   };
