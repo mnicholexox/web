@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Redirecting...</title>
+    <script>
+      // GitHub Pages SPA redirect workaround
+      // Stores the current path and redirects to the root
+      // The main app will then restore the correct path
+      var pathSegmentsToKeep = 0;
+      var l = window.location;
+      var pathQuery = l.pathname.slice(1) + l.search + l.hash;
+      sessionStorage.setItem('spa-redirect', pathQuery);
+      l.replace(l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + '/');
+    </script>
+  </head>
+  <body>
+    <noscript>
+      <p>JavaScript is required for this site to work properly.</p>
+    </noscript>
+  </body>
+</html>
