@@ -110,6 +110,16 @@ export const Header = () => {
       setMobileMenuOpen(false);
     }
 
+    // Handle "Home" link - scroll to top when already on homepage
+    if (item.href === ROUTES.HOME && !item.scrollTo) {
+      if (location.pathname === ROUTES.HOME) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        setActiveSection(null);
+      }
+      return;
+    }
+
     if (item.scrollTo) {
       e.preventDefault();
       
