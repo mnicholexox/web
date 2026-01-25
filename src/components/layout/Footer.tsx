@@ -139,7 +139,7 @@ export const Footer = () => {
           {/* Thank You Message */}
           <div className="mt-8 pt-8 border-t border-border/50">
             <p className="text-center text-sm text-foreground/80 font-medium">
-              Thank you for being part of something meaningful.
+              Support that carries children forward, long after the season passes.
             </p>
           </div>
         </div>
