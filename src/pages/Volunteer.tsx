@@ -1,4 +1,4 @@
-import { ArrowLeft, Gift, ClipboardCheck, Car, Package, Printer3d, Box, Megaphone, Hammer, Heart, Users, ArrowRight } from "lucide-react";
+import { ArrowLeft, Gift, ClipboardCheck, Car, Package, Printer, Box, Megaphone, Hammer, Heart, Users, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants";
@@ -43,7 +43,7 @@ const Volunteer = () => {
       description: "Help organize, wrap, & coordinate gift pickups and deliveries.",
     },
     {
-      icon: <Printer3d className="w-5 h-5 text-primary/70" strokeWidth={1.5} />,
+      icon: <Printer className="w-5 h-5 text-primary/70" strokeWidth={1.5} />,
       title: "3D Printer Volunteers",
       description: "Use a 3D printer to create custom toys tailored to specific wishlist interests (like Legos or Minecraft-themed items).",
     },
