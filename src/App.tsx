@@ -5,6 +5,7 @@ import MakeADonation from "./pages/MakeADonation.tsx";
 import FAQ from "./pages/FAQ.tsx";
 import Updates from "./pages/Updates.tsx";
 import Login from "./pages/Login.tsx";
+import Volunteer from "./pages/Volunteer.tsx";
 import { Header, Footer, ScrollToTop } from "./components/layout";
 import { ROUTES } from "./constants";
 
@@ -19,6 +20,7 @@ const App = () => (
       <Route path={ROUTES.FAQ} element={<FAQ />} />
       <Route path={ROUTES.UPDATES} element={<Updates />} />
       <Route path={ROUTES.LOGIN} element={<Login />} />
+      <Route path={ROUTES.VOLUNTEER} element={<Volunteer />} />
     </Routes>
     <Footer />
   </BrowserRouter>

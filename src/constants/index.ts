@@ -12,6 +12,7 @@ export const ROUTES = {
   FAQ: '/faq',
   UPDATES: '/updates',
   LOGIN: '/login',
+  VOLUNTEER: '/volunteer',
   // Add more routes as pages are created
   // ABOUT: '/about',
   // CONTACT: '/contact',
