@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { ImageCarousel, CarouselImageItem } from "./ImageCarousel";
 import { Plus, AlertCircle } from "lucide-react";
 import {
@@ -51,10 +51,17 @@ export const LadiesCraftCrewCard = ({ isAdmin = false }: LadiesCraftCrewCardProp
   }, []);
 
   // Combine uploaded images with defaults (uploaded images come first)
-  const allImages: CarouselImageItem[] = [
-    ...uploadedImages,
-    ...(uploadedImages.length === 0 ? defaultCarouselImages : []),
-  ];
+  const allImages: CarouselImageItem[] = useMemo(() => {
+    // Convert uploaded images to CarouselImageItem format
+    const uploadedItems: CarouselImageItem[] = uploadedImages.map((img) => ({
+      id: img.id,
+      src: img.src,
+      alt: img.alt,
+    }));
+    
+    // If there are uploaded images, show them. Otherwise, show defaults.
+    return uploadedItems.length > 0 ? uploadedItems : defaultCarouselImages;
+  }, [uploadedImages]);
 
   const handleAddPhotoClick = () => {
     fileInputRef.current?.click();
@@ -145,12 +152,14 @@ export const LadiesCraftCrewCard = ({ isAdmin = false }: LadiesCraftCrewCardProp
       )}
 
       {/* Image Carousel */}
-      <ImageCarousel
-        images={allImages}
-        className="mb-4"
-        isAdmin={isAdmin}
-        onRemoveImage={isAdmin ? handleRemoveImage : undefined}
-      />
+      <div className="mb-4 overflow-visible">
+        <ImageCarousel
+          images={allImages}
+          className=""
+          isAdmin={isAdmin}
+          onRemoveImage={isAdmin ? handleRemoveImage : undefined}
+        />
+      </div>
 
       {/* Description */}
       <p className="text-sm text-foreground/70 leading-relaxed mt-auto">
