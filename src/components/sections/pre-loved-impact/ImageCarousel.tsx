@@ -48,9 +48,22 @@ export const ImageCarousel = ({
   if (images.length === 0) return null;
 
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative flex items-center gap-2 ${className}`}>
+      {/* Navigation Arrows - Outside */}
+      {images.length > 1 && (
+        <>
+          <button
+            onClick={goToPrevious}
+            className="flex-shrink-0 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm border border-white/40 flex items-center justify-center text-foreground/70 hover:bg-white hover:text-foreground transition-all shadow-sm z-10"
+            aria-label="Previous image"
+          >
+            <ChevronLeft className="w-4 h-4" strokeWidth={2} />
+          </button>
+        </>
+      )}
+
       {/* Image Container */}
-      <div className="relative h-[180px] md:h-[200px] rounded-lg overflow-hidden group">
+      <div className="relative flex-1 h-[180px] md:h-[200px] rounded-lg overflow-hidden group">
         {images.map((image, index) => (
           <div
             key={image.id || index}
@@ -77,27 +90,20 @@ export const ImageCarousel = ({
             )}
           </div>
         ))}
-
-        {/* Navigation Arrows */}
-        {images.length > 1 && (
-          <>
-            <button
-              onClick={goToPrevious}
-              className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm border border-white/40 flex items-center justify-center text-foreground/70 hover:bg-white hover:text-foreground transition-all shadow-sm"
-              aria-label="Previous image"
-            >
-              <ChevronLeft className="w-4 h-4" strokeWidth={2} />
-            </button>
-            <button
-              onClick={goToNext}
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm border border-white/40 flex items-center justify-center text-foreground/70 hover:bg-white hover:text-foreground transition-all shadow-sm"
-              aria-label="Next image"
-            >
-              <ChevronRight className="w-4 h-4" strokeWidth={2} />
-            </button>
-          </>
-        )}
       </div>
+
+      {/* Navigation Arrows - Outside */}
+      {images.length > 1 && (
+        <>
+          <button
+            onClick={goToNext}
+            className="flex-shrink-0 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm border border-white/40 flex items-center justify-center text-foreground/70 hover:bg-white hover:text-foreground transition-all shadow-sm z-10"
+            aria-label="Next image"
+          >
+            <ChevronRight className="w-4 h-4" strokeWidth={2} />
+          </button>
+        </>
+      )}
 
       {/* Dots Indicator */}
       {images.length > 1 && (

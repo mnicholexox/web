@@ -255,13 +255,6 @@ const MakeADonation = () => {
         </div>
       </section>
 
-      {/* Closing Statement */}
-      <div className="border-t border-border/20">
-        <p className="text-center text-muted-foreground text-[0.8125rem] font-light tracking-wide py-12 sm:py-16">
-          Thank you for being part of something meaningful.
-        </p>
-      </div>
-
       {/* Newsletter Signup Modal */}
       <NewsletterSignupModal
         open={isNewsletterModalOpen}

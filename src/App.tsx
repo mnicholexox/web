@@ -5,7 +5,7 @@ import MakeADonation from "./pages/MakeADonation.tsx";
 import FAQ from "./pages/FAQ.tsx";
 import Updates from "./pages/Updates.tsx";
 import Login from "./pages/Login.tsx";
-import { Header, ScrollToTop } from "./components/layout";
+import { Header, Footer, ScrollToTop } from "./components/layout";
 import { ROUTES } from "./constants";
 
 const App = () => (
@@ -20,6 +20,7 @@ const App = () => (
       <Route path={ROUTES.UPDATES} element={<Updates />} />
       <Route path={ROUTES.LOGIN} element={<Login />} />
     </Routes>
+    <Footer />
   </BrowserRouter>
 );
 

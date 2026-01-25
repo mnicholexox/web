@@ -37,7 +37,7 @@ export const HowYouCanHelp = () => {
       description:
         "Your contribution helps fill gaps, cover essentials, and ensure no child is left without a gift.",
       ctaText: "Make a Donation",
-      to: `${ROUTES.MAKE_A_DONATION}#cash-donations`,
+      to: `${ROUTES.MAKE_A_DONATION}#pre-loved-impact`,
     },
     {
       number: "03",
