@@ -68,11 +68,6 @@ const Index = () => {
       
       {/* SECTION: Contact */}
       <ContactSection />
-      
-      {/* Closing Statement */}
-      <p className="text-center text-muted-foreground text-[0.8125rem] font-light tracking-wide py-16 md:py-20">
-        Support that carries children forward, long after the season passes.
-      </p>
     </main>
   );
 };
