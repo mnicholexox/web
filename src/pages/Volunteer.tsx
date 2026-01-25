@@ -1,4 +1,4 @@
-import { ArrowLeft, Gift, ClipboardCheck, Car, Package, Printer, Box, Megaphone, Hammer, Heart, Users, ArrowRight } from "lucide-react";
+import { ArrowLeft, Gift, ClipboardCheck, Car, Package, Printer, Box, Megaphone, Hammer, Heart, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants";
@@ -6,18 +6,6 @@ import { cn } from "@/lib/utils";
 import { ContactSection } from "@/components/sections";
 
 const Volunteer = () => {
-  const scrollToContact = () => {
-    const contactSection = document.getElementById("contact");
-    if (contactSection) {
-      const headerHeight = 64; // h-16 = 64px fixed header
-      const elementPosition = contactSection.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({
-        top: elementPosition - headerHeight,
-        behavior: "smooth"
-      });
-    }
-  };
-
   const whereYoullHelp = [
     {
       icon: <Gift className="w-6 h-6 text-primary/70" strokeWidth={1.5} />,
@@ -111,35 +99,45 @@ const Volunteer = () => {
           </p>
 
           {/* Descriptive text */}
-          <p className="text-foreground/60 text-sm sm:text-base mb-8">
+          <p className="text-foreground/60 text-sm sm:text-base">
             Every helping hand matters.
           </p>
+        </div>
+      </div>
 
-          {/* CTA Button */}
-          <Button
-            onClick={scrollToContact}
-            className={cn(
-              "bg-primary text-primary-foreground",
-              "rounded-full",
-              "px-8 py-6",
-              "font-medium text-base",
-              "transition-all duration-200",
-              "hover:scale-[1.02] hover:bg-primary/90",
-              "shadow-sm hover:shadow-md hover:shadow-primary/20",
-              "mb-4"
-            )}
-          >
-            Volunteer With Joy Drop
-          </Button>
-
-          {/* FAQ Link */}
-          <Link 
-            to={ROUTES.FAQ}
-            className="inline-flex items-center gap-2 text-sm text-primary hover:text-primary/80 underline underline-offset-2"
-          >
-            View FAQ
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+      {/* Decorative Ribbon - Full width, outside container */}
+      <div className="relative w-full mt-6 md:mt-24">
+        {/* Large decorative ribbon - flowing from left edge of section */}
+        <div className="absolute left-0 top-0 w-full pointer-events-none hidden md:block" style={{ transform: 'translateY(calc(-9% - 70px))' }}>
+          <img
+            src="/ribbon_3.png"
+            alt=""
+            aria-hidden="true"
+            style={{
+              width: '60%',
+              height: 'auto',
+              minHeight: '240px',
+              opacity: 0.9,
+              objectFit: 'contain',
+              objectPosition: 'left center',
+            }}
+          />
+        </div>
+        {/* Mobile version */}
+        <div className="relative md:hidden px-6 mb-3 md:mb-2" style={{ marginTop: '-70px' }}>
+          <img
+            src="/ribbon_3.png"
+            alt=""
+            aria-hidden="true"
+            className="pointer-events-none"
+            style={{
+              width: '200%',
+              height: 'auto',
+              minHeight: '160px',
+              opacity: 0.7,
+              objectFit: 'contain',
+            }}
+          />
         </div>
       </div>
 
