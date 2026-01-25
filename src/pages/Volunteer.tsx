@@ -1,4 +1,4 @@
-import { ArrowLeft, Gift, ClipboardCheck, Car, Package, Printer, Box, Megaphone, Hammer, Heart, Users } from "lucide-react";
+import { ArrowLeft, Gift, Package, Printer, Box, Megaphone, Hammer, Heart, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants";
@@ -8,17 +8,17 @@ import { ContactSection } from "@/components/sections";
 const Volunteer = () => {
   const whereYoullHelp = [
     {
-      icon: <Gift className="w-6 h-6 text-primary/70" strokeWidth={1.5} />,
+      icon: <img src="/wrapping presents.png" alt="Wrapping supplies" className="w-28 h-28 sm:w-36 sm:h-36 object-contain" />,
       title: "Wrap & Prep Night",
       description: "Help wrap gifts, label bags, organize wishlists, and prep deliveries.",
     },
     {
-      icon: <ClipboardCheck className="w-6 h-6 text-primary/70" strokeWidth={1.5} />,
+      icon: <img src="/inventory.png" alt="Sorting and inventory" className="w-28 h-28 sm:w-36 sm:h-36 object-contain" />,
       title: "Sorting & Inventory",
       description: "Check donated items, match to wishlists, and keep everything organized.",
     },
     {
-      icon: <Car className="w-6 h-6 text-primary/70" strokeWidth={1.5} />,
+      icon: <img src="/delivery.png" alt="Delivery support" className="w-28 h-28 sm:w-36 sm:h-36 object-contain" />,
       title: "Delivery Support",
       description: "Help drop off gifts with care (or assist behind the scenes if you prefer).",
     },
@@ -173,7 +173,12 @@ const Volunteer = () => {
                 {/* Icon container */}
                 <div className="relative mb-5 sm:mb-6">
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full blur-xl scale-150" />
-                  <div className="relative flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-primary/8 to-accent/8 border border-primary/10">
+                  <div className={cn(
+                    "relative flex items-center justify-center rounded-full bg-gradient-to-br from-primary/8 to-accent/8 border border-primary/10",
+                    (item.title === "Wrap & Prep Night" || item.title === "Sorting & Inventory" || item.title === "Delivery Support")
+                      ? "w-32 h-32 sm:w-40 sm:h-40" 
+                      : "w-16 h-16 sm:w-20 sm:h-20"
+                  )}>
                     {item.icon}
                   </div>
                 </div>
