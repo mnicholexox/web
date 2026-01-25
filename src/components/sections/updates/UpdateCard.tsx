@@ -251,7 +251,7 @@ export const UpdateCard = ({
 
         <div className={`relative ${imagePlacement === 'full-width' ? 'flex flex-col' : 'flex flex-col'}`}>
           {/* Header Section (Date + Headline) - Full Width */}
-          <div className={`flex-1 flex flex-col ${isHero ? 'p-6 md:p-10 lg:p-12 pb-0 -mb-4 md:-mb-8' : 'p-6 md:p-8 pb-0'}`}>
+          <div className={`flex-1 flex flex-col ${isHero ? 'p-4 sm:p-6 md:p-10 lg:p-12 pb-2 sm:pb-0 md:pb-0' : 'p-4 sm:p-6 md:p-8 pb-2 sm:pb-0'}`}>
             {/* Date - subtle, secondary */}
             <time 
               className={`${isHero ? 'text-xs md:text-sm' : 'text-[11px] md:text-xs'} font-sans uppercase tracking-[0.2em] text-primary/50 font-medium ${isHero ? 'mb-2 md:mb-3' : 'mb-3'}`}
@@ -275,8 +275,8 @@ export const UpdateCard = ({
 
           {/* Hero-top images - placed right after headline/date, before body text */}
           {images.length > 0 && imagePlacement === 'hero-top' && (
-            <div className={`w-full ${isHero ? 'px-6 md:px-10 lg:px-12 pb-4 md:pb-8' : 'px-6 md:px-8 pb-4 md:pb-6'}`}>
-              <div className="w-full h-[400px] md:h-[500px] lg:h-[600px] relative overflow-hidden rounded-lg">
+            <div className={`w-full ${isHero ? 'px-4 sm:px-6 md:px-10 lg:px-12 pb-4 md:pb-8' : 'px-4 sm:px-6 md:px-8 pb-4 md:pb-6'}`}>
+              <div className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] relative overflow-hidden rounded-lg">
                 {images.length > 1 ? (
                   <>
                     {images.map((img, index) => (
@@ -340,17 +340,17 @@ export const UpdateCard = ({
           )}
 
           {/* Content Section with Image (if sidebar) or Full Content (if full-width) */}
-          <div className={`relative flex ${imagePlacement === 'full-width' ? 'flex-col' : (isHero ? 'flex-col lg:flex-row items-start' : 'flex-col md:flex-row items-start')} ${isHero ? '-mt-4 md:-mt-8' : ''}`}>
+          <div className={`relative flex ${imagePlacement === 'full-width' ? 'flex-col' : (isHero ? 'flex-col lg:flex-row items-start' : 'flex-col md:flex-row items-start')}`}>
             {/* Image Section (sidebar placement) */}
             {images.length > 0 && imagePlacement === 'sidebar' && renderImageCarousel(false)}
 
             {/* Content Section */}
-            <div className={`flex-1 flex flex-col ${isHero ? 'p-6 md:p-10 lg:p-12 pt-0 max-w-full' : 'p-6 md:p-8 pt-0'} ${hasFullContent ? 'justify-start' : 'justify-center'}`}>
+            <div className={`flex-1 flex flex-col ${isHero ? 'p-4 sm:p-6 md:p-10 lg:p-12 pt-2 sm:pt-4 md:pt-0 max-w-full' : 'p-4 sm:p-6 md:p-8 pt-2 sm:pt-4 md:pt-0'} ${hasFullContent ? 'justify-start' : 'justify-center'}`}>
               {/* Subheadline (for hero/full content) */}
-              {/* Note: -mt-8 negative margin pulls subheadline closer to headline for reduced spacing */}
+              {/* Note: Reduced negative margin on mobile to prevent overlap */}
               {fullContent?.subheadline && (
                 <p className={`font-serif text-foreground/75 leading-relaxed ${
-                  isHero ? 'text-base md:text-xl -mt-4 md:-mt-8 mb-4 md:mb-6' : 'text-base -mt-8 mb-6'
+                  isHero ? 'text-base md:text-xl mt-2 sm:mt-0 md:-mt-4 lg:-mt-8 mb-4 md:mb-6' : 'text-base mt-2 sm:mt-0 md:-mt-4 lg:-mt-8 mb-4 sm:mb-6'
                 }`}>
                   {fullContent.subheadline}
                 </p>
@@ -358,7 +358,7 @@ export const UpdateCard = ({
 
             {/* Full Content */}
             {hasFullContent ? (
-              <div className={`${isHero ? 'space-y-4 md:space-y-6' : 'space-y-6'}`}>
+              <div className={`${isHero ? 'space-y-4 sm:space-y-4 md:space-y-6' : 'space-y-4 sm:space-y-6'}`}>
                 {/* Paragraphs - exclude last one when hideClosingByDefault is true */}
                 {fullContent.paragraphs?.map((paragraph, index) => {
                   const isLastParagraph = index === (fullContent.paragraphs?.length ?? 0) - 1;

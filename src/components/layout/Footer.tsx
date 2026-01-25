@@ -126,7 +126,7 @@ export const Footer = () => {
                   <Facebook className="w-5 h-5" />
                 </a>
                 <a
-                  href="mailto:info@joydrop.org"
+                  href="mailto:hello@joydrop.app"
                   className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-foreground hover:bg-primary/20 hover:text-primary transition-colors"
                   aria-label="Send us an email"
                 >

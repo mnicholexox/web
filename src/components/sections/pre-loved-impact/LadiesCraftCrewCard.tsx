@@ -13,6 +13,7 @@ import ladiesCraftCrew1 from "@/components/sections/mission/Ladies Craft Crew1.j
 import ladiesCraftCrew2 from "@/components/sections/mission/Ladies Craft Crew2.JPEG";
 import ladiesCraftCrew3 from "@/components/sections/mission/Ladies Craft Crew3.JPG";
 import ladiesCraftCrew4 from "@/components/sections/mission/Ladies Craft Crew4.JPG";
+import ladiesCraftCrew5 from "@/components/sections/mission/Ladies Craft Crew5.jpeg";
 
 // Default images for the carousel
 const defaultCarouselImages: CarouselImageItem[] = [
@@ -31,6 +32,10 @@ const defaultCarouselImages: CarouselImageItem[] = [
   {
     src: ladiesCraftCrew4,
     alt: "Ladies Craft Crew fun photoshoot with pumpkins",
+  },
+  {
+    src: ladiesCraftCrew5,
+    alt: "Ladies Craft Crew with completed dollhouses",
   },
 ];
 
