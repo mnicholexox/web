@@ -3,6 +3,13 @@ import { Heart } from "lucide-react";
 import heroBannerImage from "./Hero Banner Image 3.png";
 
 export const HeroBanner = () => {
+  const scrollToHowYouCanHelp = () => {
+    const howYouCanHelpSection = document.getElementById("how-you-can-help");
+    if (howYouCanHelpSection) {
+      howYouCanHelpSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <section 
       id="hero-banner"
@@ -73,6 +80,7 @@ export const HeroBanner = () => {
           <Button 
             className="text-white font-semibold px-6 py-3 text-base shadow-lg hover:opacity-90 transition-opacity uppercase"
             style={{ backgroundColor: '#55111c' }}
+            onClick={scrollToHowYouCanHelp}
           >
             <Heart className="inline-block mr-1.5 w-4 h-4" /> Get Involved
           </Button>
@@ -110,6 +118,7 @@ export const HeroBanner = () => {
             <Button 
               className="text-white font-semibold px-6 py-3 text-base md:text-lg shadow-lg hover:opacity-90 transition-opacity uppercase"
               style={{ backgroundColor: '#55111c' }}
+              onClick={scrollToHowYouCanHelp}
             >
               <Heart className="inline-block mr-1.5 w-4 h-4" /> Get Involved
             </Button>
