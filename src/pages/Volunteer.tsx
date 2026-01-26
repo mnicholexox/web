@@ -8,6 +8,21 @@ import { ContactSection } from "@/components/sections";
 const Volunteer = () => {
   const whereYoullHelp = [
     {
+      icon: <Box className="w-28 h-28 sm:w-36 sm:h-36 text-primary/70" strokeWidth={1.5} />,
+      title: "Marketplace Movers",
+      description: "Find and pick up free items from online marketplaces to add to children's wishlists.",
+    },
+    {
+      icon: <img src="/3D print.png" alt="3D printer" className="w-32 h-32 sm:w-40 sm:h-40 object-contain" />,
+      title: "3D Printer Volunteers",
+      description: "Use a 3D printer to create custom toys tailored to specific wishlist interests (like Legos or Minecraft-themed items).",
+    },
+    {
+      icon: <Megaphone className="w-28 h-28 sm:w-36 sm:h-36 text-primary/70" strokeWidth={1.5} />,
+      title: "Word Spreaders",
+      description: "Help spread the word about Joy Drop by sharing posts and stories that raise awareness for our Angel Tree program.",
+    },
+    {
       icon: <img src="/wrapping presents.png" alt="Wrapping supplies" className="w-28 h-28 sm:w-36 sm:h-36 object-contain" />,
       title: "Wrap & Prep Night",
       description: "Help wrap gifts, label bags, organize wishlists, and prep deliveries.",
@@ -175,7 +190,7 @@ const Volunteer = () => {
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full blur-xl scale-150" />
                   <div className={cn(
                     "relative flex items-center justify-center rounded-full bg-gradient-to-br from-primary/8 to-accent/8 border border-primary/10",
-                    (item.title === "Wrap & Prep Night" || item.title === "Sorting & Inventory" || item.title === "Delivery Support")
+                    (item.title === "Marketplace Movers" || item.title === "3D Printer Volunteers" || item.title === "Word Spreaders" || item.title === "Wrap & Prep Night" || item.title === "Sorting & Inventory" || item.title === "Delivery Support")
                       ? "w-32 h-32 sm:w-40 sm:h-40" 
                       : "w-16 h-16 sm:w-20 sm:h-20"
                   )}>
