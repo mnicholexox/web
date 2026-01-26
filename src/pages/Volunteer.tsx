@@ -26,7 +26,7 @@ const Volunteer = () => {
     },
     {
       icon: <img src="/wrapping presents.png" alt="Wrapping supplies" className="w-28 h-28 sm:w-36 sm:h-36 object-contain" />,
-      title: "Wrap & Prep Night",
+      title: "Wrap & Prep",
       description: "Help wrap gifts, label bags, organize wishlists, and prep deliveries.",
     },
     {
@@ -164,7 +164,7 @@ const Volunteer = () => {
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full blur-xl scale-150" />
                   <div className={cn(
                     "relative flex items-center justify-center rounded-full bg-gradient-to-br from-primary/8 to-accent/8 border border-primary/10",
-                    (item.title === "Marketplace Movers" || item.title === "3D Printer Volunteers" || item.title === "Word Spreaders" || item.title === "Wrap & Prep Night" || item.title === "Sorting & Inventory" || item.title === "Delivery Support")
+                    (item.title === "Marketplace Movers" || item.title === "3D Printer Volunteers" || item.title === "Word Spreaders" || item.title === "Wrap & Prep" || item.title === "Sorting & Inventory" || item.title === "Delivery Support")
                       ? "w-32 h-32 sm:w-40 sm:h-40" 
                       : "w-16 h-16 sm:w-20 sm:h-20"
                   )}>
