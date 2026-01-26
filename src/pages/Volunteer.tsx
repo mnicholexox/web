@@ -4,16 +4,18 @@ import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants";
 import { cn } from "@/lib/utils";
 import { ContactSection } from "@/components/sections";
+import marketplaceImage from "./marketplace.png";
+import threeDPrintImage from "./3D print.png";
 
 const Volunteer = () => {
   const whereYoullHelp = [
     {
-      icon: <Box className="w-28 h-28 sm:w-36 sm:h-36 text-primary/70" strokeWidth={1.5} />,
+      icon: <img src={marketplaceImage} alt="Marketplace" className="w-32 h-32 sm:w-40 sm:h-40 object-contain" />,
       title: "Marketplace Movers",
       description: "Find and pick up free items from online marketplaces to add to children's wishlists.",
     },
     {
-      icon: <img src="/3D print.png" alt="3D printer" className="w-32 h-32 sm:w-40 sm:h-40 object-contain" />,
+      icon: <img src={threeDPrintImage} alt="3D printer" className="w-32 h-32 sm:w-40 sm:h-40 object-contain" />,
       title: "3D Printer Volunteers",
       description: "Use a 3D printer to create custom toys tailored to specific wishlist interests (like Legos or Minecraft-themed items).",
     },
