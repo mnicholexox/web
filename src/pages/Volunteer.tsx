@@ -1,4 +1,4 @@
-import { ArrowLeft, Gift, Package, Printer, Box, Megaphone, Hammer, Heart, Users } from "lucide-react";
+import { ArrowLeft, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants";
@@ -20,7 +20,7 @@ const Volunteer = () => {
       description: "Use a 3D printer to create custom toys tailored to specific wishlist interests (like Legos or Minecraft-themed items).",
     },
     {
-      icon: <Megaphone className="w-28 h-28 sm:w-36 sm:h-36 text-primary/70" strokeWidth={1.5} />,
+      icon: <img src="/announce.png" alt="Word Spreaders" className="w-32 h-32 sm:w-40 sm:h-40 object-contain" />,
       title: "Word Spreaders",
       description: "Help spread the word about Joy Drop by sharing posts and stories that raise awareness for our Angel Tree program.",
     },
@@ -38,34 +38,6 @@ const Volunteer = () => {
       icon: <img src="/delivery.png" alt="Delivery support" className="w-28 h-28 sm:w-36 sm:h-36 object-contain" />,
       title: "Delivery Support",
       description: "Help drop off gifts with care (or assist behind the scenes if you prefer).",
-    },
-  ];
-
-  const volunteerRoles = [
-    {
-      icon: <Gift className="w-5 h-5 text-primary/70" strokeWidth={1.5} />,
-      title: "Sorters/Wrappers/Delivery Coordinators",
-      description: "Help organize, wrap, & coordinate gift pickups and deliveries.",
-    },
-    {
-      icon: <Printer className="w-5 h-5 text-primary/70" strokeWidth={1.5} />,
-      title: "3D Printer Volunteers",
-      description: "Use a 3D printer to create custom toys tailored to specific wishlist interests (like Legos or Minecraft-themed items).",
-    },
-    {
-      icon: <Box className="w-5 h-5 text-primary/70" strokeWidth={1.5} />,
-      title: "Marketplace Movers",
-      description: "Find and pick up free items from online marketplaces to add to children's wishlists.",
-    },
-    {
-      icon: <Megaphone className="w-5 h-5 text-primary/70" strokeWidth={1.5} />,
-      title: "Word Spreaders",
-      description: "Help spread the word about Joy Drop by sharing posts and stories that raise awareness for our Angel Tree program.",
-    },
-    {
-      icon: <Hammer className="w-5 h-5 text-primary/70" strokeWidth={1.5} />,
-      title: "Craft Crew",
-      description: "Refurbish and repair donated toys (like dollhouses), making them feel brand new for the children who receive them.",
     },
   ];
 
@@ -209,55 +181,6 @@ const Volunteer = () => {
                 <p className="text-sm sm:text-[0.9375rem] text-foreground/70 leading-relaxed">
                   {item.description}
                 </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Volunteer Roles Section */}
-      <section id="volunteer-roles" data-section="volunteer-roles" className="pb-20 sm:pb-28 bg-card/20">
-        <div className="max-w-[1200px] mx-auto px-6 md:px-8">
-          {/* Section Header */}
-          <div className="text-center mb-12 sm:mb-16">
-            <div className="flex items-center justify-center gap-4 mb-4">
-              <div className="flex-1 h-px bg-border/30" />
-              <h2 className="font-sans text-sm sm:text-base uppercase tracking-[0.2em] text-primary/60 px-4">
-                Volunteer Roles
-              </h2>
-              <div className="flex-1 h-px bg-border/30" />
-            </div>
-          </div>
-
-          {/* Roles Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-            {volunteerRoles.map((role, index) => (
-              <div
-                key={index}
-                className={cn(
-                  "flex gap-4 items-start",
-                  "p-6 sm:p-8",
-                  "bg-card/60 rounded-2xl",
-                  "border border-border/20",
-                  "transition-all duration-300",
-                  "hover:shadow-lg hover:shadow-primary/5",
-                  "hover:border-primary/20"
-                )}
-              >
-                {/* Icon */}
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/8 flex items-center justify-center">
-                  {role.icon}
-                </div>
-
-                {/* Content */}
-                <div className="flex-1">
-                  <h3 className="font-serif text-lg sm:text-xl text-foreground mb-2">
-                    {role.title}
-                  </h3>
-                  <p className="text-sm sm:text-[0.9375rem] text-foreground/70 leading-relaxed">
-                    {role.description}
-                  </p>
-                </div>
               </div>
             ))}
           </div>
