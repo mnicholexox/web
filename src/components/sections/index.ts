@@ -12,4 +12,5 @@ export * from './faq';
 export * from './pre-loved-impact';
 export * from './newsletter';
 export * from './updates';
+export * from './volunteer-cta';
 

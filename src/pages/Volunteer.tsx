@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants";
 import { cn } from "@/lib/utils";
+import { ReadyToVolunteer } from "@/components/sections/volunteer-cta";
 import marketplaceImage from "./marketplace.png";
 import threeDPrintImage from "./3D print.png";
 
@@ -81,9 +82,9 @@ const Volunteer = () => {
             Volunteer Your Time
           </h1>
 
-          {/* Subheadline */}
-          <p className="text-foreground/70 text-base sm:text-lg leading-relaxed max-w-xl mx-auto mb-4">
-            Lend your time and talents to help prepare, wrap, and deliver gifts.
+          {/* Subheading text */}
+          <p className="text-foreground/60 text-sm sm:text-base mb-4">
+            Whether you have one hour or a full afternoon, there's a place for you here.
           </p>
 
           {/* Descriptive text */}
@@ -132,16 +133,6 @@ const Volunteer = () => {
       {/* Where You'll Help Most Section */}
       <section id="where-youll-help" data-section="where-youll-help" className="pb-20 sm:pb-28">
         <div className="max-w-[1200px] mx-auto px-6 md:px-8">
-          {/* Section Header */}
-          <div className="text-center mb-12 sm:mb-16">
-            <h2 className="font-serif text-[28px] sm:text-[36px] md:text-[42px] lg:text-5xl text-foreground leading-tight tracking-tight mb-4">
-              Where You'll Help Most
-            </h2>
-            <p className="text-foreground/70 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-              Whether you have one hour or a full afternoon, there's a place for you here.
-            </p>
-          </div>
-
           {/* Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             {whereYoullHelp.map((item, index) => (
@@ -238,6 +229,9 @@ const Volunteer = () => {
           <Heart className="w-4 h-4 inline-block text-primary/60" fill="currentColor" strokeWidth={0} />
         </p>
       </div>
+
+      {/* Ready to Volunteer Section */}
+      <ReadyToVolunteer />
     </main>
   );
 };

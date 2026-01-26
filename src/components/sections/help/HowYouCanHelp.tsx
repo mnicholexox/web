@@ -42,7 +42,7 @@ export const HowYouCanHelp = () => {
       ),
       title: "Volunteer Your Time",
       description:
-        "Lend your time and talents to help prepare, wrap, and deliver gifts. Every helping hand matters.",
+        "Every helping hand matters.",
       ctaText: "Volunteer With Joy Drop",
       to: ROUTES.VOLUNTEER,
     },
