@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants";
 import { cn } from "@/lib/utils";
-import { ContactSection } from "@/components/sections";
 import marketplaceImage from "./marketplace.png";
 import threeDPrintImage from "./3D print.png";
 
@@ -239,9 +238,6 @@ const Volunteer = () => {
           <Heart className="w-4 h-4 inline-block text-primary/60" fill="currentColor" strokeWidth={0} />
         </p>
       </div>
-
-      {/* Contact Section */}
-      <ContactSection />
     </main>
   );
 };
