@@ -34,51 +34,25 @@ const Updates = () => {
       />
 
       {/* Content Container - pt accounts for fixed header */}
-      <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 md:pb-28">
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 md:pb-28">
         {/* Page Header */}
-        <header className="text-center mb-12 sm:mb-16 md:mb-20">
-          {/* Decorative element above title */}
-          <div className="flex justify-center mb-6">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-px bg-primary/20" />
-              <svg 
-                className="w-3 h-3 text-primary/30" 
-                viewBox="0 0 24 24" 
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-              </svg>
-              <div className="w-6 h-px bg-primary/20" />
-            </div>
-          </div>
-
-          {/* Main Heading */}
-          <h1 className="font-serif text-[36px] sm:text-[44px] md:text-[52px] text-foreground leading-tight tracking-tight mb-5">
+        <header className="mb-10 sm:mb-12">
+          <span className="block font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#a2465a]">
+            JoyDrop Journal
+          </span>
+          <h1
+            className="mt-3 font-serif text-[#3a2420] leading-[1.05] tracking-tight"
+            style={{ fontSize: "clamp(3rem, 7vw, 5rem)" }}
+          >
             Updates
           </h1>
-
-          {/* Subheading */}
-          <p 
-            className="font-serif text-foreground/70 leading-relaxed mb-4"
-            style={{ fontSize: 'clamp(1.0625rem, 2.5vw, 1.25rem)' }}
-          >
+          <p className="mt-5 font-sans text-lg sm:text-xl leading-relaxed text-foreground/85">
             Milestones, announcements, and moments from Joy Drop.
           </p>
-
-          {/* Human context line */}
-          <p className="text-foreground/55 text-[0.9375rem] sm:text-base max-w-xl mx-auto leading-relaxed">
-            Thanks for following Joy Drop's journey. Here's what we've been up to recently.
+          <p className="mt-1 font-sans text-base sm:text-lg leading-relaxed text-foreground/75">
+            Thanks for following Joy Drop&rsquo;s journey. Here&rsquo;s what we&rsquo;ve been up to recently.
           </p>
-
-          {/* Decorative divider */}
-          <div className="flex justify-center mt-8 sm:mt-10">
-            <div className="flex items-center gap-2">
-              <div className="w-1 h-1 rounded-full bg-primary/30" />
-              <div className="w-2 h-2 rounded-full bg-accent/50" />
-              <div className="w-1 h-1 rounded-full bg-primary/30" />
-            </div>
-          </div>
+          <div className="mt-8 h-px bg-[#c98a96]/70" aria-hidden="true" />
         </header>
 
         {/* Updates List */}

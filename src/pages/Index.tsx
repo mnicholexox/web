@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { HeroBanner, WhatThisIsAbout, WhereTheHeartComesIn, WhoJoyDropIsFor, HowYouCanHelp, ContactSection } from "@/components/sections";
 
 /**
@@ -49,6 +51,21 @@ import { HeroBanner, WhatThisIsAbout, WhereTheHeartComesIn, WhoJoyDropIsFor, How
  */
 
 const Index = () => {
+  const location = useLocation();
+
+  // Scroll to a section when arriving with a hash (e.g. /#contact from another page)
+  useEffect(() => {
+    if (!location.hash) return;
+    const timer = setTimeout(() => {
+      const element = document.getElementById(location.hash.slice(1));
+      if (!element) return;
+      const headerHeight = 64; // h-16 fixed header
+      const top = element.getBoundingClientRect().top + window.scrollY - headerHeight;
+      window.scrollTo({ top, behavior: "smooth" });
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [location.hash, location.key]);
+
   return (
     <main className="min-h-screen">
       {/* SECTION: Hero Banner */}

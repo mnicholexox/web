@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowLeft, ArrowRight, Gift, Heart, Sparkles, Star, Clock } from "lucide-react";
+import { ArrowLeft, ArrowRight, BookOpen, CalendarDays, CalendarHeart, Gift, Heart, Minus, Plus, Search, Star } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants";
@@ -7,38 +7,171 @@ import { cn } from "@/lib/utils";
 import { NewsletterSignupModal } from "@/components/sections/newsletter";
 import { FulfillWishSteps } from "@/components/sections/how-it-works";
 
+/** Clipboard with a heart on it. */
+const ClipboardHeartIcon = () => (
+  <svg
+    className="h-6 w-6 sm:h-8 sm:w-8"
+    viewBox="0 0 32 32"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <rect x="6" y="6" width="20" height="23" rx="3" />
+    <rect x="11.5" y="3" width="9" height="5" rx="1.5" />
+    <path d="M16 23.5 C 13 21.3 11 19.5 11 17.3 C 11 15.8 12.1 14.8 13.4 14.8 C 14.5 14.8 15.4 15.4 16 16.3 C 16.6 15.4 17.5 14.8 18.6 14.8 C 19.9 14.8 21 15.8 21 17.3 C 21 19.5 19 21.3 16 23.5 Z" />
+  </svg>
+);
+
+const FAQS = [
+  {
+    icon: <ClipboardHeartIcon />,
+    question: "Can I fulfill more than one wish list?",
+    answer:
+      "Absolutely. You can choose one or several wish lists based on what feels manageable for you.",
+  },
+  {
+    icon: <Search className="h-6 w-6 sm:h-8 sm:w-8" strokeWidth={1.8} />,
+    question: "What if an item is unavailable?",
+    answer:
+      "Please contact Joy Drop before choosing a substitute. We'll help you find an approved alternative that still fits the child's request.",
+  },
+];
+
+/** Red envelope of wishlist tags tied with a satin bow. */
+const OpeningSoonIllustration = () => (
+  <svg
+    className="mx-auto hidden w-full max-w-[320px] lg:block"
+    viewBox="0 0 340 300"
+    aria-hidden="true"
+  >
+    <defs>
+      <linearGradient id="os-env" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0%" stopColor="#b8263f" />
+        <stop offset="100%" stopColor="#8a1428" />
+      </linearGradient>
+      <linearGradient id="os-ribbon" x1="0" x2="1" y1="0" y2="1">
+        <stop offset="0%" stopColor="#f3a3ad" />
+        <stop offset="55%" stopColor="#e07a88" />
+        <stop offset="100%" stopColor="#c4566a" />
+      </linearGradient>
+      <filter id="os-shadow" x="-20%" y="-20%" width="140%" height="150%">
+        <feDropShadow dx="0" dy="8" stdDeviation="8" floodColor="#6e1428" floodOpacity="0.22" />
+      </filter>
+    </defs>
+
+    {/* Sparkles */}
+    <g fill="#e1a24f">
+      <path d="M290 16 l3 9 l9 3 l-9 3 l-3 9 l-3 -9 l-9 -3 l9 -3 Z" />
+      <path d="M306 46 l2 5 l5 2 l-5 2 l-2 5 l-2 -5 l-5 -2 l5 -2 Z" />
+      <path d="M62 86 l2.5 7 l7 2.5 l-7 2.5 l-2.5 7 l-2.5 -7 l-7 -2.5 l7 -2.5 Z" />
+      <path d="M40 118 l2 5 l5 2 l-5 2 l-2 5 l-2 -5 l-5 -2 l5 -2 Z" />
+    </g>
+
+    {/* Pine sprigs and berries */}
+    <g stroke="#4d6b3a" strokeWidth="2" strokeLinecap="round" fill="none">
+      <path d="M92 250 L 40 196 M80 238 l-14 -2 M80 238 l-2 -14 M68 225 l-14 -2 M68 225 l-2 -14 M56 212 l-13 -2 M56 212 l-2 -13" />
+      <path d="M248 250 L 300 196 M260 238 l14 -2 M260 238 l2 -14 M272 225 l14 -2 M272 225 l2 -14 M284 212 l13 -2 M284 212 l2 -13" />
+    </g>
+    <g fill="#c62a3a">
+      <circle cx="78" cy="252" r="5" /><circle cx="68" cy="246" r="4.5" /><circle cx="74" cy="262" r="4" />
+      <circle cx="264" cy="252" r="5" /><circle cx="274" cy="246" r="4.5" /><circle cx="268" cy="262" r="4" />
+    </g>
+
+    <g filter="url(#os-shadow)">
+      {/* Envelope back */}
+      <path d="M88 132 L 170 104 L 252 132 V 270 H 88 Z" fill="#9a1a30" />
+
+      {/* Wishlist tags peeking out */}
+      <g fill="#fbf1e6" stroke="#e7d3c3" strokeWidth="1.5">
+        <path d="M100 82 l18 -14 h28 l14 14 v96 h-60 Z" transform="rotate(-10 130 120)" />
+        <path d="M144 52 l14 -14 h24 l14 14 v124 h-52 Z" />
+        <path d="M188 82 l14 -14 h28 l18 14 v96 h-60 Z" transform="rotate(10 210 120)" />
+      </g>
+      <g stroke="#c43a4f" strokeWidth="2.4" strokeLinecap="round" fill="none">
+        <path d="M156 78 l4 4 l8 -9 M174 78 h14 M156 98 l4 4 l8 -9 M174 98 h14" />
+        <path d="M112 116 l4 4 l7 -8 M128 112 l14 -4 M116 136 l4 4 l7 -8 M132 132 l12 -3" transform="rotate(-10 130 120)" />
+        <path d="M200 112 l14 4 M204 130 l12 3" transform="rotate(10 210 120)" />
+      </g>
+      {/* Tag strings with little bows */}
+      <g stroke="#d4465c" strokeWidth="2.2" fill="none" strokeLinecap="round">
+        <circle cx="170" cy="46" r="4" />
+        <path d="M170 42 C 160 28, 150 26, 156 20 C 162 16, 168 30, 170 38 C 172 30, 178 16, 184 20 C 190 26, 180 28, 170 42" />
+        <path d="M118 70 C 110 58, 102 58, 106 52 C 110 48, 116 60, 118 66 C 120 60, 126 48, 130 52 C 134 58, 126 58, 118 70" />
+        <path d="M222 70 C 214 58, 206 58, 210 52 C 214 48, 220 60, 222 66 C 224 60, 230 48, 234 52 C 238 58, 230 58, 222 70" />
+      </g>
+
+      {/* Envelope front */}
+      <path d="M88 150 L 170 206 L 252 150 V 270 H 88 Z" fill="url(#os-env)" />
+      <path d="M88 270 L 152 214 M252 270 L 188 214" stroke="#7a1022" strokeOpacity="0.35" strokeWidth="1.5" />
+
+      {/* Ribbon band and bow */}
+      <rect x="88" y="190" width="164" height="18" fill="url(#os-ribbon)" />
+      <path d="M170 198 C 140 168, 112 172, 118 194 C 122 210, 150 206, 170 198 Z" fill="url(#os-ribbon)" />
+      <path d="M170 198 C 200 168, 228 172, 222 194 C 218 210, 190 206, 170 198 Z" fill="url(#os-ribbon)" />
+      <path d="M164 204 L 146 250 L 156 246 L 160 258 L 170 210 Z" fill="#d76a7b" />
+      <path d="M176 204 L 190 246 L 180 244 L 178 256 L 168 210 Z" fill="#c95a6c" />
+      <ellipse cx="170" cy="199" rx="10" ry="9" fill="#e98a97" />
+
+      {/* Opening soon tag */}
+      <g transform="rotate(14 230 236)">
+        <path d="M196 214 h64 l12 12 v24 l-12 12 h-64 Z" fill="#fbf1e6" stroke="#d9bfa8" strokeWidth="1.5" />
+        <circle cx="204" cy="238" r="3.5" fill="#6e1428" />
+        <text x="236" y="234" textAnchor="middle" fontFamily="DM Serif Display, serif" fontSize="14" fill="#5a1a24" letterSpacing="1">OPENING</text>
+        <text x="236" y="251" textAnchor="middle" fontFamily="DM Serif Display, serif" fontSize="14" fill="#5a1a24" letterSpacing="1">SOON</text>
+      </g>
+    </g>
+  </svg>
+);
+
 const SponsorAChild = () => {
+  const [openFaqs, setOpenFaqs] = useState<number[]>(() => FAQS.map((_, i) => i));
+  const toggleFaq = (index: number) =>
+    setOpenFaqs((prev) => (prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]));
   // TODO: This would come from your data source (API, context, etc.)
   const wishlistsAvailable = false;
   const [isNewsletterModalOpen, setIsNewsletterModalOpen] = useState(false);
+  const [notifyMethod, setNotifyMethod] = useState<"email" | "text">("text");
   const [notifyEmail, setNotifyEmail] = useState("");
+  const [notifyPhone, setNotifyPhone] = useState("");
+  const [textConsent, setTextConsent] = useState(false);
 
-  // The inline email field hands off to the full signup modal, prefilled
+  // The inline form hands off to the full signup modal, prefilled
   const handleNotifySubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsNewsletterModalOpen(true);
   };
+
+  // Shows the phone as (555) 123-4567 while typing
+  const formatUsPhone = (value: string) => {
+    const d = value.replace(/\D/g, "").slice(0, 10);
+    if (d.length <= 3) return d;
+    if (d.length <= 6) return `(${d.slice(0, 3)}) ${d.slice(3)}`;
+    return `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}`;
+  };
   const navigate = useNavigate();
   const giftCategories = [
     {
-      icon: <Gift className="w-5 h-5 text-primary/50" strokeWidth={1.5} />,
+      icon: <Gift className="h-7 w-7" strokeWidth={1.6} />,
       title: "Something They Want",
       description: "A special toy, game, or item they've been dreaming about.",
     },
     {
-      icon: <Star className="w-5 h-5 text-primary/50" strokeWidth={1.5} />,
+      icon: <Star className="h-7 w-7" strokeWidth={1.6} />,
       title: "Something They Need",
-      description: "Practical essentials like clothing, shoes, or school supplies.",
+      description: "Practical essentials such as school supplies or personal-care items.",
     },
     {
-      icon: <Heart className="w-5 h-5 text-primary/50" strokeWidth={1.5} />,
+      icon: <Heart className="h-7 w-7" strokeWidth={1.6} />,
       title: "Something to Wear",
       description: "A warm jacket, cozy pajamas, or an outfit that makes them feel special.",
     },
     {
-      icon: <Sparkles className="w-5 h-5 text-primary/50" strokeWidth={1.5} />,
+      icon: <BookOpen className="h-7 w-7" strokeWidth={1.6} />,
       title: "Something to Read",
-      description: "Books that spark imagination and open doors to new worlds.",
+      description: "A book that sparks imagination and opens the door to a new world.",
     },
   ];
 
@@ -84,64 +217,112 @@ const SponsorAChild = () => {
       {/* Coming Soon Notice */}
       {!wishlistsAvailable && (
         <section aria-labelledby="wishlists-opening-heading" className="px-4 sm:px-6 md:px-8 pb-4">
-          <div className="relative mx-auto max-w-6xl overflow-hidden rounded-3xl border border-[#efe1de] bg-[#fdf7f5] px-6 py-10 shadow-[0_18px_50px_-24px_rgba(110,20,40,0.25)] sm:px-12 sm:py-14 lg:px-20">
-            <div className="flex items-center justify-between gap-10">
-              <div className="w-full max-w-[720px]">
-                <span className="inline-block rounded-full bg-[#f6dfe2] px-5 py-2 font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-[#8a1f38]">
+          <div className="relative mx-auto max-w-6xl overflow-hidden rounded-3xl border border-[#efdcd9] bg-[#fdf4f2] px-6 py-10 shadow-[0_18px_50px_-24px_rgba(110,20,40,0.22)] sm:px-12 sm:py-12 lg:px-16">
+            <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,300px)] xl:grid-cols-[minmax(0,1fr)_minmax(0,340px)]">
+              <div>
+                <span className="inline-block rounded-full bg-[#f6d9de] px-5 py-2 font-sans text-xs sm:text-sm font-medium uppercase tracking-[0.2em] text-[#8a1f38]">
                   Opening November 2026
                 </span>
                 <h2
                   id="wishlists-opening-heading"
-                  className="mt-5 font-serif text-foreground leading-[1.05] tracking-tight"
-                  style={{ fontSize: "clamp(2rem, 4.5vw, 3.75rem)" }}
+                  className="mt-5 font-serif text-[#3a2420] leading-[1.02] tracking-tight"
+                  style={{ fontSize: "clamp(2.25rem, 4.6vw, 3.75rem)" }}
                 >
-                  Wish lists are opening soon.
+                  Angel Tree wishlists <br className="hidden sm:block" />
+                  are opening soon.
                 </h2>
-                <p className="mt-4 max-w-[480px] font-sans text-base sm:text-lg leading-relaxed text-foreground/75">
-                  Join the notification list and we&rsquo;ll let you know when children&rsquo;s wish lists
-                  are ready to fulfill.
+                <p className="mt-3 font-sans text-base sm:text-lg md:text-xl text-foreground/80">
+                  Choose how you&rsquo;d like to be notified when they go live.
                 </p>
 
-                <form onSubmit={handleNotifySubmit} className="mt-7 flex flex-col gap-3 sm:flex-row sm:gap-4">
-                  <label htmlFor="wishlist-notify-email" className="sr-only">
-                    Email address
-                  </label>
-                  <input
-                    id="wishlist-notify-email"
-                    type="email"
-                    autoComplete="email"
-                    placeholder="Your email address"
-                    value={notifyEmail}
-                    onChange={(e) => setNotifyEmail(e.target.value)}
-                    className="h-14 w-full rounded-xl border border-[#cfc2bf] bg-white px-5 font-sans text-base text-foreground placeholder:text-[#8f817f] transition-colors focus-visible:border-[#b8556b] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b8556b]/25 sm:max-w-[360px]"
-                  />
-                  <button
-                    type="submit"
-                    className="inline-flex h-14 flex-shrink-0 items-center justify-center gap-3 rounded-full bg-[#7e2139] px-9 font-sans text-sm sm:text-base font-semibold uppercase tracking-[0.18em] text-white shadow-md transition-colors hover:bg-[#6e1830] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b8556b] focus-visible:ring-offset-2"
+                <form onSubmit={handleNotifySubmit} className="mt-6">
+                  <fieldset>
+                    <legend className="font-sans text-base sm:text-lg text-foreground/85">Send updates by</legend>
+                    <div className="mt-2 flex flex-wrap gap-x-12 gap-y-2">
+                      {(["email", "text"] as const).map((method) => (
+                        <label key={method} className="flex cursor-pointer items-center gap-3 font-sans text-base sm:text-lg text-foreground">
+                          <input
+                            type="radio"
+                            name="notify-method"
+                            value={method}
+                            checked={notifyMethod === method}
+                            onChange={() => setNotifyMethod(method)}
+                            className="h-6 w-6 cursor-pointer accent-[#8a1f38]"
+                          />
+                          {method === "email" ? "Email" : "Text message"}
+                        </label>
+                      ))}
+                    </div>
+                  </fieldset>
+
+                  <label
+                    htmlFor={notifyMethod === "email" ? "wishlist-notify-email" : "wishlist-notify-phone"}
+                    className="mt-5 block font-sans text-base sm:text-lg text-foreground/85"
                   >
-                    Notify me
-                    <ArrowRight className="h-5 w-5" />
-                  </button>
+                    {notifyMethod === "email" ? "Email address" : "Mobile phone number"}
+                  </label>
+                  <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:gap-5">
+                    {notifyMethod === "email" ? (
+                      <input
+                        id="wishlist-notify-email"
+                        type="email"
+                        autoComplete="email"
+                        required
+                        placeholder="you@example.com"
+                        value={notifyEmail}
+                        onChange={(e) => setNotifyEmail(e.target.value)}
+                        className="h-14 w-full rounded-xl border border-[#e0bcc3] bg-white px-5 font-sans text-base sm:text-lg text-foreground placeholder:text-[#a6878d] transition-colors focus-visible:border-[#b8556b] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b8556b]/25 sm:max-w-[400px]"
+                      />
+                    ) : (
+                      <div className="flex h-14 w-full items-center rounded-xl border border-[#e0bcc3] bg-white transition-colors focus-within:border-[#b8556b] focus-within:ring-2 focus-within:ring-[#b8556b]/25 sm:max-w-[400px]">
+                        <span className="flex h-8 items-center border-r border-[#e0bcc3] px-5 font-sans text-base sm:text-lg font-semibold text-[#6e1428]" aria-hidden="true">
+                          +1
+                        </span>
+                        <input
+                          id="wishlist-notify-phone"
+                          type="tel"
+                          inputMode="tel"
+                          autoComplete="tel-national"
+                          required
+                          pattern="\(\d{3}\) \d{3}-\d{4}"
+                          title="Enter a 10-digit US phone number"
+                          placeholder="(555) 123-4567"
+                          value={notifyPhone}
+                          onChange={(e) => setNotifyPhone(formatUsPhone(e.target.value))}
+                          className="h-full w-full min-w-0 rounded-r-xl bg-transparent px-4 font-sans text-base sm:text-lg text-foreground placeholder:text-[#a6878d] focus-visible:outline-none"
+                        />
+                      </div>
+                    )}
+                    <button
+                      type="submit"
+                      className="inline-flex h-14 flex-shrink-0 items-center justify-center rounded-xl px-8 font-sans text-sm sm:text-base font-medium uppercase tracking-[0.18em] text-white shadow-md transition-[filter] hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b8556b] focus-visible:ring-offset-2"
+                      style={{ background: "linear-gradient(180deg, #8a1f38 0%, #6e1428 100%)" }}
+                    >
+                      {notifyMethod === "email" ? "Email me updates" : "Text me updates"}
+                    </button>
+                  </div>
+
+                  {notifyMethod === "text" && (
+                    <div className="mt-5">
+                      <label className="flex cursor-pointer items-start gap-3 font-sans text-base sm:text-lg text-foreground">
+                        <input
+                          type="checkbox"
+                          required
+                          checked={textConsent}
+                          onChange={(e) => setTextConsent(e.target.checked)}
+                          className="mt-1 h-5 w-5 shrink-0 cursor-pointer accent-[#8a1f38]"
+                        />
+                        I agree to receive text updates from JoyDrop.
+                      </label>
+                      <p className="mt-1.5 pl-8 font-sans text-sm sm:text-base text-[#a2283f]">
+                        Message &amp; data rates may apply. Reply STOP to unsubscribe.
+                      </p>
+                    </div>
+                  )}
                 </form>
               </div>
 
-              {/* Checklist with heart illustration */}
-              <svg
-                className="hidden md:block h-auto w-40 lg:w-52 flex-shrink-0 text-[#c4687c]"
-                viewBox="0 0 120 120"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M72 108 H 18 a4 4 0 0 1 -4 -4 V 10 a4 4 0 0 1 4 -4 H 80 a4 4 0 0 1 4 4 V 64" />
-                <path d="M26 28 l5 6 l9 -12 M48 30 H 72" />
-                <path d="M26 52 l5 6 l9 -12 M48 54 H 72" />
-                <path d="M26 76 l5 6 l9 -12 M48 78 H 58" />
-                <path d="M94 118 C 76 104 66 95 66 84 C 66 76.5 71.5 71 78 71 C 83 71 87 73.6 94 80 C 101 73.6 105 71 110 71 C 116.5 71 122 76.5 122 84 C 122 95 112 104 94 118 Z" transform="translate(-6 -6)" />
-              </svg>
+              <OpeningSoonIllustration />
             </div>
           </div>
         </section>
@@ -258,143 +439,212 @@ const SponsorAChild = () => {
         </section>
       )}
 
-      {/* What You'll Provide Section */}
-      <section className="py-20 sm:py-24 md:py-28">
-        <div className="max-w-[1200px] mx-auto px-6 md:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-            {/* Left Column - Content */}
+      {/* The Gift of Giving */}
+      <section aria-labelledby="wish-list-contents-heading" className="py-16 sm:py-20 md:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-12 items-start">
+            {/* Left column */}
             <div>
-              <span className="inline-block text-xs md:text-sm font-sans uppercase tracking-[0.2em] text-primary/60 mb-3">
+              <span className="block font-sans text-xs sm:text-sm font-medium uppercase tracking-[0.3em] text-[#a2465a]">
                 The Gift of Giving
               </span>
-              <h2 className="font-serif text-[24px] sm:text-[28px] md:text-[32px] text-foreground leading-tight tracking-tight mb-4">
-                What You'll Provide
+              <h2
+                id="wish-list-contents-heading"
+                className="mt-4 font-serif text-foreground leading-[1.05] tracking-tight"
+                style={{ fontSize: "clamp(2.5rem, 4.1vw, 3.75rem)" }}
+              >
+                What&rsquo;s on a Wish List
               </h2>
-              <p className="text-foreground/70 text-sm sm:text-base leading-relaxed mb-10">
-                Each wishlist is thoughtfully curated to include a mix of items that 
-                bring both joy and practical support. When you sponsor a child, you're 
-                giving them a complete holiday experience.
+              <p className="mt-5 max-w-[560px] font-sans text-base sm:text-lg leading-relaxed text-foreground/70">
+                Every wish list is thoughtfully created to balance delight with everyday support. By
+                fulfilling one, you&rsquo;re helping create a holiday that feels joyful, personal, and
+                complete.
               </p>
 
-              {/* Gift Categories - Single Card */}
-              <div className="p-6 sm:p-8 rounded-2xl bg-card/40 border border-border/20">
-                <div className="space-y-4">
-                  {giftCategories.map((category, index) => (
-                    <div 
-                      key={index}
-                      className={cn(
-                        "flex gap-4 items-start",
-                        index !== giftCategories.length - 1 && "pb-4 border-b border-border/15"
-                      )}
-                    >
-                      <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/8 flex items-center justify-center">
-                        {category.icon}
-                      </div>
-                      <div className="pt-0.5">
-                        <h3 className="font-medium text-foreground text-sm sm:text-[0.9375rem] mb-1.5">
-                          {category.title}
-                        </h3>
-                        <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
-                          {category.description}
-                        </p>
+              <ul className="mt-10 grid gap-5 sm:grid-cols-2">
+                {giftCategories.map((category) => (
+                  <li
+                    key={category.title}
+                    className="rounded-2xl border border-[#f1e6e3] bg-white/80 p-6 xl:p-7 shadow-[0_10px_30px_-20px_rgba(110,20,40,0.25)]"
+                  >
+                    <span className="flex h-16 w-16 items-center justify-center rounded-full bg-[#f6dfe2] text-[#8a1f38]">
+                      {category.icon}
+                    </span>
+                    <h3 className="mt-4 font-serif text-[22px] lg:text-[20px] xl:text-[21px] 2xl:text-2xl leading-tight text-foreground xl:whitespace-nowrap">
+                      {category.title}
+                    </h3>
+                    <p className="mt-2 font-sans text-base leading-relaxed text-foreground/70">
+                      {category.description}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Right column */}
+            <div className="flex flex-col">
+              {/* Basket illustration with soft halo and hand-drawn accents */}
+              <div className="relative mx-auto w-full max-w-[560px]">
+                <div
+                  className="absolute left-1/2 top-1/2 aspect-square w-[85%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#fbe9eb]"
+                  aria-hidden="true"
+                />
+                <svg
+                  className="absolute inset-0 h-full w-full pointer-events-none text-[#c4687c]"
+                  viewBox="0 0 560 380"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M88 20 L 104 42 M58 56 L 84 66 M50 98 L 76 94" />
+                  <path d="M520 118 C 510 104 500 96 500 86 C 500 79 505 75 510 75 C 514 75 517 78 520 83 C 523 78 526 75 530 75 C 535 75 540 79 540 86 C 540 96 530 104 520 118 Z" />
+                  <path d="M496 150 L 484 176 M518 172 L 498 192" />
+                </svg>
+                <img
+                  src="/sponsorship-icon.png"
+                  alt="A woven basket holding a wrapped gift, storybooks, colored pencils, cozy socks and a scarf, beside a pair of sneakers"
+                  className="relative mx-auto w-[88%] drop-shadow-[0_14px_18px_rgba(80,40,30,0.18)]"
+                />
+              </div>
+
+              {/* Key dates */}
+              <div className="mt-8 rounded-2xl border border-[#f1e6e3] bg-white/80 p-5 sm:p-7 shadow-[0_10px_30px_-20px_rgba(110,20,40,0.25)]">
+                <div className="flex items-center gap-4">
+                  <span className="flex h-14 w-14 items-center justify-center rounded-full bg-[#f6dfe2] text-[#8a1f38]">
+                    <CalendarHeart className="h-6 w-6" strokeWidth={1.6} />
+                  </span>
+                  <h3 className="font-sans text-sm sm:text-base font-semibold uppercase tracking-[0.3em] text-[#8a1f38]">
+                    Key dates
+                  </h3>
+                </div>
+
+                <dl className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+                  {[
+                    { date: "November 2026", label: "Wish lists open." },
+                    { date: "December 10", label: "Gift drop-off deadline." },
+                  ].map((item) => (
+                    <div key={item.date} className="flex items-center gap-3 xl:gap-4 rounded-xl bg-[#fbf1f0] p-4 xl:p-5">
+                      <span className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-[#f6dfe2] text-[#8a1f38]">
+                        <CalendarDays className="h-5 w-5" strokeWidth={1.6} />
+                      </span>
+                      <div>
+                        <dt className="font-serif text-xl xl:text-2xl leading-tight text-foreground sm:whitespace-nowrap">{item.date}</dt>
+                        <dd className="mt-1 font-sans text-sm sm:text-base text-foreground/70">{item.label}</dd>
                       </div>
                     </div>
                   ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column - Reassurance Cards */}
-            <div>
-              {/* Decorative image above the card */}
-              <div className="flex justify-center">
-                <img 
-                  src="/sponsorship-icon.png" 
-                  alt=""
-                  aria-hidden="true"
-                  className="w-80 h-80 object-contain pointer-events-none opacity-90 drop-shadow-sm"
-                  style={{
-                    filter: 'saturate(0.9) brightness(1.02)',
-                  }}
-                />
-              </div>
-              
-              {/* Timeline Note */}
-              <div className="flex gap-5 items-start pt-5 pb-5 px-5 sm:pt-6 sm:pb-6 sm:px-6 rounded-2xl bg-card/50 -mt-16">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-muted/80 flex items-center justify-center">
-                    <Clock className="w-5 h-5 text-foreground/40" strokeWidth={1.5} />
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-foreground text-sm mb-1.5">
-                      Important Timeline
-                    </h4>
-                    <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
-                      Wishlists open in early November. All gifts must be received by 
-                      December 10th to ensure timely delivery to families.
-                    </p>
-                  </div>
+                </dl>
               </div>
 
-              {/* Gentle Note */}
-              <p className="text-center text-muted-foreground text-sm pt-3 px-4">
-                Can't sponsor a full wishlist?{" "}
+              {/* Gentle note */}
+              <p className="mt-6 px-4 text-center font-sans text-base leading-relaxed text-foreground/70">
+                Can&rsquo;t fulfill a complete wish list?{" "}
                 <button
                   onClick={() => {
                     navigate(ROUTES.MAKE_A_DONATION, { state: { openNewsletter: true } });
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    window.scrollTo({ top: 0, behavior: "smooth" });
                   }}
-                  className="text-primary font-medium hover:text-primary/80 transition-colors underline underline-offset-2"
+                  className="font-medium text-[#8a1f38] underline underline-offset-4 transition-colors hover:text-[#6e1428]"
                 >
-                  Make a donation
+                  Make a Donation
                 </button>{" "}
-                to help cover items for children who need extra support.
+                to help cover remaining gifts and essentials.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* FAQ Preview Section */}
-      <section className="py-16 sm:py-20 bg-muted/30">
-        <div className="max-w-[800px] mx-auto px-6 md:px-8">
-          <div className="text-center mb-10">
-            <h2 className="font-serif text-[24px] sm:text-[28px] md:text-[32px] text-foreground leading-tight tracking-tight mb-4">
-              Common Questions
-            </h2>
-          </div>
-
-          <div className="space-y-4">
-            {[
-              {
-                question: "Can I sponsor more than one child?",
-                answer: "Absolutely! Many sponsors choose to adopt multiple children, especially families or groups who want to spread extra joy.",
-              },
-              {
-                question: "What if I can't find an item on the wishlist?",
-                answer: "That's okay! Choose a similar alternative or reach out to us — we're happy to help find substitutes that the child will love.",
-              },
-            ].map((faq, index) => (
-              <div 
-                key={index}
-                className="p-5 sm:p-6 rounded-xl bg-background border border-border/30"
-              >
-                <h3 className="font-medium text-foreground mb-2">
-                  {faq.question}
-                </h3>
-                <p className="text-foreground/70 text-sm leading-relaxed">
-                  {faq.answer}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center mt-8">
-            <Link 
-              to={ROUTES.FAQ}
-              className="text-primary hover:text-primary/80 underline underline-offset-2 text-sm"
+      {/* Need to Know (FAQ preview) */}
+      <section
+        aria-labelledby="need-to-know-heading"
+        className="relative overflow-hidden py-16 sm:py-20 lg:py-24"
+        style={{
+          background:
+            "radial-gradient(ellipse at 100% 0%, rgba(243, 211, 216, 0.55) 0%, transparent 45%), radial-gradient(ellipse at 0% 100%, rgba(246, 223, 226, 0.6) 0%, transparent 40%), #fdf8f6",
+        }}
+      >
+        <div className="relative mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.25fr)] lg:items-center lg:gap-12 lg:px-8 xl:gap-16">
+          {/* Intro */}
+          <div className="relative">
+            <span className="block font-sans text-xs sm:text-sm font-medium uppercase tracking-[0.3em] text-[#a2465a]">
+              Need to know
+            </span>
+            <h2
+              id="need-to-know-heading"
+              className="mt-4 font-serif text-foreground leading-[1.05] tracking-tight"
+              style={{ fontSize: "clamp(2.5rem, 4vw, 3.75rem)" }}
             >
-              View all frequently asked questions →
+              Questions{" "}
+              <span className="sm:whitespace-nowrap">Before You Begin?</span>
+            </h2>
+            <p className="mt-5 max-w-md font-sans text-lg sm:text-xl leading-relaxed text-foreground/75">
+              A few quick answers to help you fulfill a wish with confidence.
+            </p>
+            <Link
+              to={ROUTES.FAQ}
+              className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#8a1f38] px-8 py-4 font-sans text-sm sm:text-base font-semibold tracking-[0.16em] text-white shadow-[0_10px_24px_-10px_rgba(110,20,40,0.6)] transition-colors hover:bg-[#7a1a30] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c98a96] focus-visible:ring-offset-2"
+            >
+              EXPLORE ALL FAQs
+              <ArrowRight className="h-5 w-5" />
             </Link>
+
+            {/* Heart doodle */}
+            <svg
+              className="pointer-events-none absolute -bottom-24 right-[8%] hidden h-36 w-64 text-[#e3aab4] xl:block"
+              viewBox="0 0 260 140"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M10 130 C 70 150, 140 135, 175 95 C 200 68, 205 45, 190 40 C 178 36, 172 50, 172 58 C 168 46, 155 40, 148 50 C 138 65, 160 85, 175 95" />
+              <path d="M200 12 L 196 28 M222 26 L 210 36 M226 54 H 212" />
+            </svg>
+          </div>
+
+          {/* Questions */}
+          <div className="space-y-5 sm:space-y-6">
+            {FAQS.map((faq, index) => {
+              const isOpen = openFaqs.includes(index);
+              const panelId = `need-to-know-answer-${index}`;
+              return (
+                <div
+                  key={faq.question}
+                  className="rounded-3xl border border-[#f0d3d8] bg-white/90 px-5 shadow-[0_12px_36px_-20px_rgba(110,20,40,0.3)] sm:px-8"
+                >
+                  <h3>
+                    <button
+                      type="button"
+                      aria-expanded={isOpen}
+                      aria-controls={panelId}
+                      onClick={() => toggleFaq(index)}
+                      className="flex w-full items-center gap-4 py-5 text-left sm:gap-6 sm:py-7 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c98a96] focus-visible:ring-offset-2 rounded-2xl"
+                    >
+                      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#fbe9eb] text-[#8a1f38] sm:h-16 sm:w-16">
+                        {faq.icon}
+                      </span>
+                      <span className="flex-1 font-sans text-lg font-medium leading-snug text-foreground sm:text-2xl lg:text-xl xl:text-2xl">
+                        {faq.question}
+                      </span>
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#fbe9eb] text-[#8a1f38] sm:h-14 sm:w-14">
+                        {isOpen ? <Minus className="h-5 w-5" /> : <Plus className="h-5 w-5" />}
+                      </span>
+                    </button>
+                  </h3>
+                  <div id={panelId} hidden={!isOpen} className="border-t border-[#f3dfe2] py-5 sm:py-7">
+                    <p className="font-sans text-base sm:text-lg leading-relaxed text-foreground/70">
+                      {faq.answer}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -410,7 +660,9 @@ const SponsorAChild = () => {
       <NewsletterSignupModal
         open={isNewsletterModalOpen}
         onOpenChange={setIsNewsletterModalOpen}
-        initialEmail={notifyEmail.trim()}
+        initialEmail={notifyMethod === "email" ? notifyEmail.trim() : undefined}
+        initialPhone={notifyMethod === "text" ? notifyPhone.replace(/\D/g, "") : undefined}
+        initialPreference={notifyMethod}
       />
     </main>
   );

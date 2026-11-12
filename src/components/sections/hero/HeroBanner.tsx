@@ -1,4 +1,4 @@
-import { ArrowRight, Heart } from "lucide-react";
+import { Heart } from "lucide-react";
 import heroBannerImage from "./hero-banner-4.webp";
 
 const scrollToSection = (id: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
@@ -81,15 +81,6 @@ export const HeroBanner = () => {
             >
               <Heart className="h-5 w-5" strokeWidth={2} />
               See ways to help
-            </a>
-
-            <a
-              href="#what-this-is-about"
-              onClick={scrollToSection("what-this-is-about")}
-              className="group inline-flex items-center gap-3 font-sans text-sm sm:text-base font-medium uppercase tracking-[0.14em] text-white/90 transition-colors hover:text-white focus-visible:outline-none focus-visible:underline"
-            >
-              How Joy Drop works
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </a>
           </div>
         </div>

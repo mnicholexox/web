@@ -1,4 +1,10 @@
-import { UpdateCard } from './UpdateCard';
+import { UpdateCard, type UpdateCardProps } from './UpdateCard';
+
+// Import Back to School images
+import backToSchool1 from '@/components/sections/back to school1.jpg';
+import backToSchool2 from '@/components/sections/back to school2.jpg';
+import backToSchool3 from '@/components/sections/back to school3.jpg';
+import backToSchool4 from '@/components/sections/back to school4.jpg';
 
 // Import End of Year Announcement images for carousel
 import checklist1 from '@/components/sections/checklist1.png';
@@ -31,12 +37,31 @@ import angelTree7 from '@/components/sections/angel tree7.jpg';
  * Sample updates data
  * In a real application, this would come from a CMS or database
  */
-const SAMPLE_UPDATES = [
+const SAMPLE_UPDATES: (Omit<UpdateCardProps, 'featured'> & { id: string })[] = [
+  {
+    id: '0',
+    date: '2026-07-23',
+    headline: 'Before the First Bell — Two Girls, Fully Prepared for School',
+    summary: "Just before school began, JoyDrop helped two local girls—one entering Pre-K and one beginning sixth grade—start the year with fully stocked backpacks, complete school supplies, and a little extra joy.",
+    tags: ['2 girls', 'Pre-K & 6th grade', 'Every list checked off'],
+    images: [backToSchool1, backToSchool2, backToSchool3, backToSchool4],
+    fullContent: {
+      paragraphs: [
+        "Just before the new school year began, JoyDrop learned of two local girls in urgent need of school supplies—one entering Pre-K and the other beginning sixth grade.",
+        "With their school lists in hand, we got to work. By July 23, both girls had everything they needed: backpacks, notebooks, folders, pencils, crayons, markers, colored pencils, highlighters, glue, erasers, headphones, classroom supplies, and more. We also included a few fun extras chosen just for them, because every child deserves to feel excited about their first day.",
+        "Starting school prepared may sound simple, but it can make an enormous difference. These supplies meant both girls could walk into their classrooms feeling confident, included, and ready to learn—and their family had one less worry to carry during an already difficult season.",
+        "This effort came together because our community saw a need and immediately stepped forward to shop, organize, pack, and deliver. Their generosity transformed two long school-supply lists into two fully stocked backpacks before the first bell rang.",
+        "At JoyDrop, moments like this are why we do what we do. Community care doesn’t always have to be complicated. Sometimes, it looks like showing up quickly, checking every box, and making sure two girls begin the year knowing they are supported.",
+      ],
+    },
+  },
   {
     id: '1',
     date: '2025-12-22',
     headline: 'Every Checklist Fulfilled — Because Our Community Showed Up',
-    imageUrls: [checklist1, checklist2, checklist3, checklist4, endOfYearSuccess],
+    summary: 'This holiday season, something truly special happened in Georgia. Thanks to an incredible outpouring of generosity, all 18 children in our Angel Tree initiative had their wishlists fully completed.',
+    tags: ['18 children', 'Every wishlist fulfilled', 'Community delivered'],
+    images: [checklist1, checklist2, checklist3, checklist4, endOfYearSuccess],
     fullContent: {
       subheadline: 'This holiday season, something truly special happened in Georgia.',
       paragraphs: [
@@ -65,7 +90,8 @@ const SAMPLE_UPDATES = [
     id: '2',
     date: '2025-12-18',
     headline: 'Goal Reached: $800+ Raised. 8 out of 18 Children Supported This Season.',
-    imageUrls: [moneyRaised1, moneyRaised2],
+    summary: 'Because of your generosity, the remaining 10 wishlists can now be fulfilled—meaning more children will feel warm, cared for, and confident this Christmas.',
+    images: [moneyRaised1, moneyRaised2],
     fullContent: {
       subheadline: 'Because of your generosity, the remaining 10 wishlists can now be fulfilled—meaning more children will feel warm, cared for, and confident this Christmas.',
       paragraphs: [
@@ -91,7 +117,8 @@ const SAMPLE_UPDATES = [
     id: '2.5',
     date: '2024-12-17',
     headline: 'Only 8 Days Left: 10 Children Still in Need This Christmas',
-    imageUrls: [needDonations],
+    summary: 'With just 8 days until Christmas, 10 out of 18 children still have unmet needs—and your kindness can help close these final gaps.',
+    images: [needDonations],
     fullContent: {
       subheadline: 'With just 8 days until Christmas, 10 out of 18 children still have unmet needs—and your kindness can help close these final gaps.',
       paragraphs: [
@@ -109,7 +136,8 @@ const SAMPLE_UPDATES = [
     id: '3',
     date: '2024-12-11',
     headline: '🎄 The Grinch Stole Twin Lakes: A Holiday Community Celebration',
-    imageUrls: [angelTree1, angelTree2, angelTree3],
+    summary: 'Santa, Mrs. Claus and a surprise visit from the Grinch brought Twin Lakes together for an evening of crafts, photos and giving back.',
+    images: [angelTree1, angelTree2, angelTree3],
     fullContent: {
       subheadline: 'Event Date: December 7, 2024 • Location: Twin Lakes Community',
       paragraphs: [
@@ -127,8 +155,8 @@ const SAMPLE_UPDATES = [
     id: '4',
     date: '2023-12-18',
     headline: '🎁 Angel Tree Deliveries Complete',
-    blurb: 'In December, our Angel Tree effort came full circle as volunteers delivered every gift prepared through Santa\'s Workshop—ensuring children in our community felt seen, supported, and celebrated.',
-    imageUrls: [angelTree4, angelTree5],
+    summary: 'In December, our Angel Tree effort came full circle as volunteers delivered every gift prepared through Santa\'s Workshop—ensuring children in our community felt seen, supported, and celebrated.',
+    images: [angelTree4, angelTree5],
     fullContent: {
       subheadline: '8 children · 6 families · One unforgettable Christmas',
       paragraphs: [
@@ -146,7 +174,8 @@ const SAMPLE_UPDATES = [
     id: '4.5',
     date: '2023-12-18',
     headline: '🎁 Angel Tree Deliveries Ready: 14 Children, One Beautiful Christmas',
-    imageUrls: [angelTree6, angelTree7],
+    summary: 'After weeks of organizing and three days of wrapping, gifts are now ready to bring joy to local families.',
+    images: [angelTree6, angelTree7],
     fullContent: {
       subheadline: 'After weeks of organizing and three days of wrapping, gifts are now ready to bring joy to local families.',
       paragraphs: [
@@ -167,68 +196,32 @@ const SAMPLE_UPDATES = [
 
 /**
  * UpdatesSection
- * 
- * The main content section for the Updates page.
- * Displays a vertically stacked list of update cards with
- * generous spacing and a soft, story-driven visual rhythm.
+ *
+ * The newest update is featured at the top; the rest are listed
+ * under "More from Joy Drop".
  */
 export const UpdatesSection = () => {
+  const [featured, ...rest] = SAMPLE_UPDATES;
+
   return (
-    <section 
-      id="updates-list"
-      data-section="updates-list"
-      className="w-full"
-    >
-      {/* Update Cards List */}
-      <div className="space-y-6 md:space-y-8">
-        {SAMPLE_UPDATES.map((update, index) => {
-          const isHero = index === 0;
-          return (
-            <div 
-              key={update.id} 
-              className={isHero ? 'mb-4 md:mb-12' : ''}
-            >
-              <div 
-                className={isHero ? 'md:w-[130%] md:-ml-[15%]' : ''}
-              >
-                <UpdateCard
-                  date={update.date}
-                  headline={update.headline}
-                  blurb={update.blurb}
-                  fullContent={update.fullContent}
-                  imageUrl={update.imageUrl}
-                  imageUrls={update.imageUrls}
-                  isHero={isHero}
-                  truncateAt={isHero ? 'Special surprises that brought genuine joy' : undefined}
-                  imagePlacement={update.id === '2' ? 'full-width' : (update.id === '3' || update.id === '4' || update.id === '4.5') ? 'hero-top' : 'sidebar'}
-                  hideClosingByDefault={update.id === '2.5'}
-                />
-              </div>
-            </div>
-          );
-        })}
-      </div>
+    <section id="updates-list" data-section="updates-list" className="w-full">
+      <UpdateCard key={featured.id} {...featured} featured />
 
-      {/* Gentle closing element */}
-      <div className="flex justify-center pt-12 md:pt-16">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-px bg-primary/15" />
-          <svg 
-            className="w-4 h-4 text-primary/25" 
-            viewBox="0 0 24 24" 
-            fill="currentColor"
-            aria-hidden="true"
+      {rest.length > 0 && (
+        <>
+          <h2
+            className="mt-14 sm:mt-16 font-serif leading-tight tracking-tight text-[#3a2420]"
+            style={{ fontSize: "clamp(1.875rem, 3.4vw, 2.75rem)" }}
           >
-            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-          </svg>
-          <div className="w-8 h-px bg-primary/15" />
-        </div>
-      </div>
-
-      {/* Soft closing text */}
-      <p className="text-center text-muted-foreground/70 text-[0.8125rem] font-light tracking-wide pt-6 pb-4">
-        Thank you for being part of our journey.
-      </p>
+            More from Joy Drop
+          </h2>
+          <div className="mt-6 space-y-6">
+            {rest.map(({ id, ...update }) => (
+              <UpdateCard key={id} {...update} />
+            ))}
+          </div>
+        </>
+      )}
     </section>
   );
 };

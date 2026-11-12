@@ -20,14 +20,18 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 
+type NotificationPreference = "email" | "text" | "both";
+
 interface NewsletterSignupModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   /** Prefills the email field each time the modal opens. */
   initialEmail?: string;
+  /** Prefills the phone field (digits) each time the modal opens. */
+  initialPhone?: string;
+  /** Preselects how the person wants to be notified. */
+  initialPreference?: NotificationPreference;
 }
-
-type NotificationPreference = "email" | "text" | "both";
 
 interface FormData {
   fullName: string;
@@ -53,10 +57,21 @@ const HEARD_ABOUT_OPTIONS = [
   { value: "other", label: "Other" },
 ];
 
+// Format phone number as user types
+const formatPhoneNumber = (value: string): string => {
+  const numbers = value.replace(/\D/g, "");
+  if (numbers.length <= 3) return numbers;
+  if (numbers.length <= 6)
+    return `${numbers.slice(0, 3)}-${numbers.slice(3)}`;
+  return `${numbers.slice(0, 3)}-${numbers.slice(3, 6)}-${numbers.slice(6, 10)}`;
+};
+
 export const NewsletterSignupModal = ({
   open,
   onOpenChange,
   initialEmail,
+  initialPhone,
+  initialPreference,
 }: NewsletterSignupModalProps) => {
   const [isSubmitted, setIsSubmitted] = React.useState(false);
   const [formData, setFormData] = React.useState<FormData>({
@@ -69,12 +84,17 @@ export const NewsletterSignupModal = ({
   const [errors, setErrors] = React.useState<FormErrors>({});
   const [touched, setTouched] = React.useState<Record<string, boolean>>({});
 
-  // Prefill the email when the modal opens with one
+  // Prefill details passed in from an inline form when the modal opens
   React.useEffect(() => {
-    if (open && initialEmail) {
-      setFormData((prev) => ({ ...prev, email: initialEmail }));
-    }
-  }, [open, initialEmail]);
+    if (!open) return;
+    setFormData((prev) => ({
+      ...prev,
+      ...(initialEmail ? { email: initialEmail } : {}),
+      ...(initialPhone ? { phone: formatPhoneNumber(initialPhone) } : {}),
+      ...(initialPreference ? { notificationPreference: initialPreference } : {}),
+    }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, initialEmail, initialPhone, initialPreference]);
 
   // Reset form when modal closes
   React.useEffect(() => {
@@ -193,15 +213,6 @@ export const NewsletterSignupModal = ({
     }
 
     return true;
-  };
-
-  // Format phone number as user types
-  const formatPhoneNumber = (value: string): string => {
-    const numbers = value.replace(/\D/g, "");
-    if (numbers.length <= 3) return numbers;
-    if (numbers.length <= 6)
-      return `${numbers.slice(0, 3)}-${numbers.slice(3)}`;
-    return `${numbers.slice(0, 3)}-${numbers.slice(3, 6)}-${numbers.slice(6, 10)}`;
   };
 
   const handlePhoneChange = (value: string) => {

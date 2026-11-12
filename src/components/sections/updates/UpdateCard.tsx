@@ -1,781 +1,286 @@
-import { useState, Fragment } from 'react';
-import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { useState } from "react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
 
-interface UpdateCardProps {
-  date: string;
-  headline: string;
-  blurb?: string;
-  fullContent?: {
-    subheadline?: string;
-    paragraphs?: string[];
-    list?: {
-      intro?: string;
-      items: string[];
-    };
-    closing?: string[];
+export interface UpdateContent {
+  subheadline?: string;
+  paragraphs?: string[];
+  list?: {
+    intro?: string;
+    items: string[];
   };
-  imageUrl?: string;
-  imageUrls?: string[];
-  imageAlt?: string;
-  href?: string;
-  isHero?: boolean;
-  truncateAt?: string; // Text to truncate content at (for list items)
-  imagePlacement?: 'sidebar' | 'full-width' | 'hero-top'; // How images should be displayed
-  hideClosingByDefault?: boolean; // Hide closing section by default with expand button
+  closing?: string[];
 }
 
-/**
- * UpdateCard
- * 
- * A warm, story-driven card for displaying individual updates.
- * Features soft shadows, rounded corners, and gentle hover effects
- * to feel like a scrapbook/journal entry rather than a corporate blog.
- * 
- * Supports hero variant for featured/lead articles with larger styling.
- */
-export const UpdateCard = ({ 
-  date, 
-  headline, 
-  blurb, 
-  fullContent,
-  imageUrl, 
-  imageUrls,
-  imageAlt,
-  href,
-  isHero = false,
-  truncateAt,
-  imagePlacement = 'sidebar',
-  hideClosingByDefault = false
-}: UpdateCardProps) => {
-  const CardWrapper = href ? 'a' : 'article';
-  
-  const articleClassName = `relative overflow-hidden transition-all duration-300 ease-out ${
-    isHero 
-      ? 'rounded-3xl group-hover:shadow-2xl group-hover:-translate-y-1' 
-      : 'rounded-2xl group-hover:shadow-lg group-hover:-translate-y-1'
-  }`;
-  
-  const articleStyle = {
-    background: 'rgba(255, 255, 255, 0.65)',
-    backdropFilter: 'blur(8px)',
-    WebkitBackdropFilter: 'blur(8px)',
-    border: '1px solid rgba(139, 74, 92, 0.08)',
-    boxShadow: isHero 
-      ? '0 8px 32px rgba(139, 74, 92, 0.08), 0 4px 16px rgba(139, 74, 92, 0.04)' 
-      : '0 2px 16px rgba(139, 74, 92, 0.05), 0 1px 4px rgba(139, 74, 92, 0.03)',
-  };
+export interface UpdateCardProps {
+  date: string;
+  headline: string;
+  /** Short teaser shown on the card. */
+  summary: string;
+  /** Highlight pills (featured card only). */
+  tags?: string[];
+  images: string[];
+  /** Full story shown in the reading dialog. */
+  fullContent: UpdateContent;
+  featured?: boolean;
+}
 
-  const cardProps = href 
-    ? { href, className: `group block ${articleClassName}`, style: articleStyle } 
-    : { className: `group ${articleClassName}`, style: articleStyle };
+const CRIMSON = "#6e1428";
 
-  const hasFullContent = !!fullContent;
-  
-  // State for expanded content
-  const [isExpanded, setIsExpanded] = useState(false);
-  // State for closing section expansion
-  const [isClosingExpanded, setIsClosingExpanded] = useState(false);
-  
-  // Determine if content should be truncated
-  const shouldTruncate = truncateAt && fullContent?.list?.items;
-  const truncateIndex = shouldTruncate 
-    ? fullContent.list.items.findIndex(item => item === truncateAt)
-    : -1;
-  const shouldShowTruncated = truncateIndex >= 0 && !isExpanded;
-  const displayedListItems = shouldShowTruncated
-    ? fullContent.list.items.slice(0, truncateIndex + 1) // Include the truncateAt item
-    : fullContent?.list?.items || [];
-  
-  // Use imageUrls array if provided, otherwise fall back to single imageUrl
-  const images = imageUrls && imageUrls.length > 0 ? imageUrls : (imageUrl ? [imageUrl] : []);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
-  const [modalImageIndex, setModalImageIndex] = useState(0);
-  
-  const goToPrevious = (e?: React.MouseEvent) => {
-    e?.stopPropagation();
-    setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  };
-  
-  const goToNext = (e?: React.MouseEvent) => {
-    e?.stopPropagation();
-    setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  };
-  
-  const goToSlide = (index: number, e?: React.MouseEvent) => {
-    e?.stopPropagation();
-    setCurrentImageIndex(index);
-  };
+const formatDate = (iso: string) =>
+  new Date(`${iso}T00:00:00`).toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
 
-  // Modal carousel controls
-  const goToPreviousModal = () => {
-    setModalImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  };
-  
-  const goToNextModal = () => {
-    setModalImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  };
-  
-  const goToSlideModal = (index: number) => {
-    setModalImageIndex(index);
-  };
+/** Image slideshow with arrows and dots when there is more than one image. */
+const ImageCarousel = ({
+  images,
+  alt,
+  className,
+  imageClassName,
+}: {
+  images: string[];
+  alt: string;
+  className?: string;
+  imageClassName?: string;
+}) => {
+  const [index, setIndex] = useState(0);
+  const hasMany = images.length > 1;
 
-  const handleImageClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setModalImageIndex(currentImageIndex);
-    setIsImageModalOpen(true);
-  };
+  const go = (delta: number) => setIndex((i) => (i + delta + images.length) % images.length);
 
-  // Render image carousel component
-  // 
-  // PADDING RULE: All sidebar images (left side) must have left padding that matches
-  // the right padding used for full-width images (right side). This ensures visual
-  // consistency across all article layouts:
-  // - Hero articles: pl-8 md:pl-10 lg:pl-12 (matches content section's right padding)
-  // - Regular articles: pl-6 md:pl-8 (matches content section's right padding)
-  const renderImageCarousel = (isFullWidth: boolean = false, inFlexContainer: boolean = false) => {
-    if (images.length === 0) return null;
-
-    const containerClasses = isFullWidth && !inFlexContainer
-      ? 'w-full -mx-6 md:-mx-8 lg:-mx-10 xl:-mx-12 my-8'
-      : isFullWidth && inFlexContainer
-      ? 'w-full'
-      : `${isHero ? 'w-full lg:w-96 xl:w-[28rem] h-96 lg:h-auto' : 'md:w-56 lg:w-64'} flex-shrink-0 overflow-hidden ${!isFullWidth ? (isHero ? 'px-6 md:px-10 lg:px-0 lg:pl-12' : 'px-6 md:px-8') : ''}`;
-
-    const imageContainerClasses = isFullWidth && !inFlexContainer
-      ? 'w-full h-[400px] md:h-[500px] lg:h-[600px] relative overflow-hidden rounded-lg'
-      : isFullWidth && inFlexContainer
-      ? 'w-full h-[350px] md:h-[450px] lg:h-[500px] relative overflow-hidden rounded-lg'
-      : `${isHero ? 'h-96 lg:h-full min-h-[500px] lg:min-h-[600px]' : 'h-48 md:h-full min-h-[180px]'} relative overflow-hidden`;
-
-    return (
-      <div className={containerClasses}>
-        <div 
-          className={imageContainerClasses}
-          style={!isFullWidth ? {
-            background: 'linear-gradient(135deg, hsl(344 35% 92% / 0.5) 0%, hsl(38 67% 94% / 0.5) 100%)',
-          } : {}}
-        >
-          {images.length > 1 ? (
-            <>
-              {images.map((img, index) => (
-                <div
-                  key={index}
-                  className={`absolute inset-0 transition-opacity duration-500 ease-in-out cursor-pointer ${
-                    index === currentImageIndex ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                  }`}
-                  onClick={handleImageClick}
-                >
-                  <img
-                    src={img}
-                    alt={`${imageAlt || headline} - Image ${index + 1}`}
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-              ))}
-              
-              {/* Navigation Arrows */}
-              <button
-                onClick={goToPrevious}
-                className={`absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm border border-white/50 flex items-center justify-center text-foreground/70 hover:bg-white hover:text-foreground transition-all shadow-lg z-10 ${
-                  isFullWidth ? 'opacity-70 hover:opacity-100' : 'opacity-70 md:opacity-0 md:group-hover:opacity-100'
-                }`}
-                aria-label="Previous image"
-              >
-                <ChevronLeft className="w-5 h-5" strokeWidth={2} />
-              </button>
-              <button
-                onClick={goToNext}
-                className={`absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm border border-white/50 flex items-center justify-center text-foreground/70 hover:bg-white hover:text-foreground transition-all shadow-lg z-10 ${
-                  isFullWidth ? 'opacity-70 hover:opacity-100' : 'opacity-70 md:opacity-0 md:group-hover:opacity-100'
-                }`}
-                aria-label="Next image"
-              >
-                <ChevronRight className="w-5 h-5" strokeWidth={2} />
-              </button>
-              
-              {/* Dots Indicator */}
-              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10">
-                {images.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={(e) => goToSlide(index, e)}
-                    className={`transition-all rounded-full ${
-                      index === currentImageIndex
-                        ? 'bg-white/90 w-2.5 h-2.5'
-                        : 'bg-white/50 hover:bg-white/70 w-2 h-2'
-                    }`}
-                    aria-label={`Go to slide ${index + 1}`}
-                  />
-                ))}
-              </div>
-            </>
-          ) : (
-            <img
-              src={images[0]}
-              alt={imageAlt || headline}
-              className="w-full h-full object-contain cursor-pointer"
-              onClick={handleImageClick}
-            />
-          )}
-          
-          {/* Soft edge overlay for blending - only for sidebar */}
-          {!isFullWidth && (
-            <div 
-              className={`absolute inset-0 pointer-events-none ${isHero ? 'hidden lg:block' : 'hidden md:block'}`}
-              style={{
-                background: 'linear-gradient(to right, transparent 70%, rgba(255, 255, 255, 0.4) 100%)',
-              }}
-            />
-          )}
-        </div>
-      </div>
-    );
-  };
-
-  const WrapperComponent = CardWrapper as keyof JSX.IntrinsicElements;
-  
   return (
-    <Fragment>
-      <WrapperComponent {...cardProps}>
-        {/* Subtle inner glow for warmth */}
-        <div 
-          className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          style={{
-            background: 'radial-gradient(ellipse at 50% 0%, hsl(344 35% 92% / 0.4) 0%, transparent 70%)',
-          }}
+    <div className={cn("group/carousel relative overflow-hidden", className)}>
+      {images.map((src, i) => (
+        <img
+          key={src}
+          src={src}
+          alt={i === index ? alt : ""}
+          aria-hidden={i !== index}
+          loading={i === 0 ? "eager" : "lazy"}
+          className={cn(
+            "absolute inset-0 h-full w-full transition-opacity duration-500",
+            i === index ? "opacity-100" : "opacity-0",
+            imageClassName
+          )}
         />
+      ))}
 
-        <div className={`relative ${imagePlacement === 'full-width' ? 'flex flex-col' : 'flex flex-col'}`}>
-          {/* Header Section (Date + Headline) - Full Width */}
-          <div className={`flex-1 flex flex-col ${isHero ? 'p-6 md:p-10 lg:p-12' : 'p-6 md:p-8'}`}>
-            {/* Date - subtle, secondary */}
-            <time 
-              className={`${isHero ? 'text-xs md:text-sm' : 'text-[11px] md:text-xs'} font-sans uppercase tracking-[0.2em] text-primary/50 font-medium ${isHero ? 'mb-2 md:mb-3' : 'mb-3'}`}
-              dateTime={date}
-            >
-              {formatDate(date)}
-            </time>
-
-            {/* Headline - warm, human */}
-            <h3 
-              className={`font-serif text-foreground font-normal mb-2 md:mb-3 group-hover:text-primary/90 transition-colors duration-200 ${
-                isHero 
-                  ? 'text-xl leading-tight md:text-3xl md:leading-snug lg:text-4xl' 
-                  : 'text-[clamp(1.125rem,2.5vw,1.375rem)] leading-snug'
-              }`}
-            >
-              {headline}
-            </h3>
-          </div>
-
-          {/* Hero-top images - placed right after headline/date, before body text */}
-          {images.length > 0 && imagePlacement === 'hero-top' && (
-            <div className={`w-full ${isHero ? 'px-6 md:px-10 lg:px-12 pt-4 md:pt-6 pb-4 md:pb-8' : 'px-6 md:px-8 pt-4 md:pt-6 pb-4 md:pb-6'}`}>
-              <div className="w-full h-[400px] md:h-[500px] lg:h-[600px] relative overflow-hidden rounded-lg">
-                {images.length > 1 ? (
-                  <>
-                    {images.map((img, index) => (
-                      <div
-                        key={index}
-                        className={`absolute inset-0 transition-opacity duration-500 ease-in-out cursor-pointer ${
-                          index === currentImageIndex ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                        }`}
-                        onClick={handleImageClick}
-                      >
-                        <img
-                          src={img}
-                          alt={`${imageAlt || headline} - Image ${index + 1}`}
-                          className="w-full h-full object-contain"
-                        />
-                      </div>
-                    ))}
-                    
-                    {/* Navigation Arrows */}
-                    <button
-                      onClick={goToPrevious}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm border border-white/50 flex items-center justify-center text-foreground/70 hover:bg-white hover:text-foreground transition-all shadow-lg z-10 opacity-70 hover:opacity-100"
-                      aria-label="Previous image"
-                    >
-                      <ChevronLeft className="w-5 h-5" strokeWidth={2} />
-                    </button>
-                    <button
-                      onClick={goToNext}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm border border-white/50 flex items-center justify-center text-foreground/70 hover:bg-white hover:text-foreground transition-all shadow-lg z-10 opacity-70 hover:opacity-100"
-                      aria-label="Next image"
-                    >
-                      <ChevronRight className="w-5 h-5" strokeWidth={2} />
-                    </button>
-                    
-                    {/* Dots Indicator */}
-                    <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10">
-                      {images.map((_, index) => (
-                        <button
-                          key={index}
-                          onClick={(e) => goToSlide(index, e)}
-                          className={`transition-all rounded-full ${
-                            index === currentImageIndex
-                              ? 'bg-white/90 w-2.5 h-2.5'
-                              : 'bg-white/50 hover:bg-white/70 w-2 h-2'
-                          }`}
-                          aria-label={`Go to slide ${index + 1}`}
-                        />
-                      ))}
-                    </div>
-                  </>
-                ) : (
-                  <img
-                    src={images[0]}
-                    alt={imageAlt || headline}
-                    className="w-full h-full object-contain cursor-pointer"
-                    onClick={handleImageClick}
-                  />
+      {hasMany && (
+        <>
+          <button
+            type="button"
+            onClick={() => go(-1)}
+            className="absolute left-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/85 text-[#6e1428] shadow-md transition-opacity hover:bg-white focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c98a96] md:opacity-0 md:group-hover/carousel:opacity-100"
+            aria-label="Previous image"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+          <button
+            type="button"
+            onClick={() => go(1)}
+            className="absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/85 text-[#6e1428] shadow-md transition-opacity hover:bg-white focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c98a96] md:opacity-0 md:group-hover/carousel:opacity-100"
+            aria-label="Next image"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+          <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1.5 rounded-full bg-black/25 px-2.5 py-1.5 backdrop-blur-sm">
+            {images.map((src, i) => (
+              <button
+                key={src}
+                type="button"
+                onClick={() => setIndex(i)}
+                className={cn(
+                  "h-1.5 rounded-full transition-all",
+                  i === index ? "w-4 bg-white" : "w-1.5 bg-white/60 hover:bg-white/80"
                 )}
-              </div>
-            </div>
-          )}
-
-          {/* Content Section with Image (if sidebar) or Full Content (if full-width) */}
-          <div className={`relative flex ${imagePlacement === 'full-width' ? 'flex-col' : (isHero ? 'flex-col lg:flex-row items-start' : 'flex-col md:flex-row items-start')}`}>
-            {/* Image Section (sidebar placement) */}
-            {images.length > 0 && imagePlacement === 'sidebar' && renderImageCarousel(false)}
-
-            {/* Content Section */}
-            <div className={`flex-1 flex flex-col ${isHero ? 'p-6 md:p-10 lg:p-12 pt-4 md:pt-6 max-w-full' : 'p-6 md:p-8 pt-4 md:pt-6'} ${hasFullContent ? 'justify-start' : 'justify-center'}`}>
-              {/* Subheadline (for hero/full content) */}
-              {fullContent?.subheadline && (
-                <p className={`font-serif text-foreground/75 leading-relaxed ${
-                  isHero ? 'text-base md:text-xl mb-4 md:mb-6' : 'text-base mb-6'
-                }`}>
-                  {fullContent.subheadline}
-                </p>
-              )}
-
-            {/* Full Content */}
-            {hasFullContent ? (
-              <div className={`${isHero ? 'space-y-4 md:space-y-6' : 'space-y-6'}`}>
-                {/* Paragraphs - exclude last one when hideClosingByDefault is true */}
-                {fullContent.paragraphs?.map((paragraph, index) => {
-                  const isLastParagraph = index === (fullContent.paragraphs?.length ?? 0) - 1;
-                  // Skip last paragraph if it should be hidden (it will be in expandable section)
-                  if (hideClosingByDefault && isLastParagraph) {
-                    return null;
-                  }
-                  
-                  return (
-                    <p 
-                      key={index}
-                      className={`text-foreground/70 leading-relaxed ${
-                        isHero ? 'text-sm md:text-lg' : 'text-[0.9375rem]'
-                      }`}
-                    >
-                      {paragraph}
-                    </p>
-                  );
-                })}
-                
-                {/* Button and expandable section for last paragraph + closing (non-list, non-sidebar) */}
-                {hideClosingByDefault && fullContent.paragraphs && fullContent.paragraphs.length > 0 && 
-                 !fullContent.list && !(imagePlacement === 'sidebar' && images.length > 0) && (
-                  <>
-                    {/* Read Entire Story / Show Less button */}
-                    {fullContent.closing && fullContent.closing.length > 0 && (
-                      <div className={`flex justify-end ${isHero ? 'mt-4 md:mt-6 mb-2 md:mb-3' : 'mt-6 mb-3'}`}>
-                        <Button
-                          size={isHero ? "lg" : "default"}
-                          className="group/btn text-white hover:opacity-90"
-                          style={{ backgroundColor: '#55111c' }}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            setIsClosingExpanded(!isClosingExpanded);
-                            if (!isClosingExpanded) {
-                              setTimeout(() => {
-                                const card = e.currentTarget.closest('article');
-                                if (card) {
-                                  const expandableSection = card.querySelector('[data-expandable-last-paragraph]');
-                                  if (expandableSection) {
-                                    expandableSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                                  }
-                                }
-                              }, 300);
-                            }
-                          }}
-                        >
-                          <span>{isClosingExpanded ? 'Show Less' : 'Read Entire Story'}</span>
-                          {!isClosingExpanded && (
-                            <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover/btn:translate-x-1" />
-                          )}
-                        </Button>
-                      </div>
-                    )}
-                    {/* Last paragraph and closing section - expandable together */}
-              <div 
-                data-expandable-last-paragraph
-                className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                  !isClosingExpanded 
-                    ? 'max-h-0 opacity-0' 
-                    : 'max-h-[2000px] opacity-100'
-                }`}
-              >
-                <div className={`${isHero ? 'space-y-4 md:space-y-6' : 'space-y-6'}`}>
-                        {/* Last paragraph */}
-                        {fullContent.paragraphs[fullContent.paragraphs.length - 1] && (
-                          <p 
-                            className={`text-foreground/70 leading-relaxed ${
-                              isHero ? 'text-sm md:text-lg' : 'text-[0.9375rem]'
-                            }`}
-                          >
-                            {fullContent.paragraphs[fullContent.paragraphs.length - 1]}
-                          </p>
-                        )}
-                        {/* Closing section for non-list, non-sidebar layouts */}
-                        {fullContent.closing?.map((paragraph, index) => (
-                          <p 
-                            key={index}
-                            className={`text-foreground/70 leading-relaxed ${
-                              isHero ? 'text-sm md:text-lg' : 'text-[0.9375rem]'
-                            }`}
-                          >
-                            {paragraph}
-                          </p>
-                        ))}
-                      </div>
-                    </div>
-                  </>
-                )}
-                
-                {/* Last paragraph - expandable (for list or sidebar layouts, button is in closing section) */}
-                {hideClosingByDefault && fullContent.paragraphs && fullContent.paragraphs.length > 0 && 
-                 (fullContent.list || (imagePlacement === 'sidebar' && images.length > 0)) && (
-                  <div 
-                    data-expandable-last-paragraph
-                    className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                      !isClosingExpanded 
-                        ? 'max-h-0 opacity-0' 
-                        : 'max-h-[2000px] opacity-100'
-                    }`}
-                  >
-                    <div className={`${isHero ? 'space-y-4 md:space-y-6' : 'space-y-6'}`}>
-                      {/* Last paragraph */}
-                      {fullContent.paragraphs[fullContent.paragraphs.length - 1] && (
-                        <p 
-                          className={`text-foreground/70 leading-relaxed ${
-                            isHero ? 'text-sm md:text-lg' : 'text-[0.9375rem]'
-                          }`}
-                        >
-                          {fullContent.paragraphs[fullContent.paragraphs.length - 1]}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                )}
-
-                {/* List */}
-                {fullContent.list && (
-                  <div className={imagePlacement === 'full-width' && images.length > 0 ? `flex flex-col md:flex-row ${isHero ? 'gap-4 md:gap-8' : 'gap-6 md:gap-8'} items-start` : `${isHero ? 'space-y-2 md:space-y-3' : 'space-y-3'}`}>
-                    <div className={`flex-1 ${isHero ? 'space-y-2 md:space-y-3' : 'space-y-3'}`}>
-                      {fullContent.list.intro && (
-                        <p className={`text-foreground/70 font-medium text-left ${
-                          isHero ? 'text-sm md:text-lg' : 'text-[0.9375rem]'
-                        }`}>
-                          {fullContent.list.intro}
-                        </p>
-                      )}
-                      <ul className={`${isHero ? 'space-y-1.5 md:space-y-2' : 'space-y-2'} text-left ${isHero ? 'pl-6 md:pl-8' : 'pl-5'}`}>
-                        {displayedListItems.map((item, index) => (
-                          <li 
-                            key={index}
-                            className={`text-foreground/70 leading-relaxed ${
-                              isHero ? 'text-sm md:text-lg' : 'text-[0.9375rem]'
-                            }`}
-                            style={{ listStyleType: 'disc' }}
-                          >
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                      {/* All closing paragraphs in left column when images are present */}
-                      {!shouldShowTruncated && imagePlacement === 'full-width' && images.length > 0 && (
-                        <>
-                          {/* Read Entire Story / Show Less button for full-width layouts */}
-                          {hideClosingByDefault && fullContent.closing && fullContent.closing.length > 0 && (
-                            <div className={`flex justify-end ${isHero ? 'mt-4 md:mt-6 mb-2 md:mb-3' : 'mt-6 mb-3'}`}>
-                              <Button
-                                size={isHero ? "lg" : "default"}
-                                className="group/btn text-white hover:opacity-90"
-                                style={{ backgroundColor: '#55111c' }}
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  e.stopPropagation();
-                                  setIsClosingExpanded(!isClosingExpanded);
-                                  // Smooth scroll to show expanded content
-                                  if (!isClosingExpanded) {
-                                    setTimeout(() => {
-                                      const card = e.currentTarget.closest('article');
-                                      if (card) {
-                                        const closingSection = card.querySelector('[data-closing-section-fullwidth]');
-                                        if (closingSection) {
-                                          closingSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                                        }
-                                      }
-                                    }, 300);
-                                  }
-                                }}
-                              >
-                                <span>{isClosingExpanded ? 'Show Less' : 'Read Entire Story'}</span>
-                                {!isClosingExpanded && (
-                                  <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover/btn:translate-x-1" />
-                                )}
-                              </Button>
-                            </div>
-                          )}
-                          {hideClosingByDefault && !isClosingExpanded ? null : (
-                            <div 
-                              data-closing-section-fullwidth
-                              className={`${isHero ? 'space-y-3 md:space-y-4' : 'space-y-4'} overflow-hidden transition-all duration-500 ease-in-out ${
-                                hideClosingByDefault && !isClosingExpanded 
-                                  ? 'max-h-0 opacity-0' 
-                                  : 'max-h-[2000px] opacity-100'
-                              }`}
-                            >
-                              {fullContent.closing?.map((paragraph, index) => (
-                                <p 
-                                  key={index}
-                                  className={`text-foreground/70 leading-relaxed text-left ${
-                                    isHero ? 'text-sm md:text-lg' : 'text-[0.9375rem]'
-                                  }`}
-                                >
-                                  {paragraph}
-                                </p>
-                              ))}
-                            </div>
-                          )}
-                        </>
-                      )}
-                    </div>
-                    {/* Images to the right of list when full-width placement */}
-                    {imagePlacement === 'full-width' && images.length > 0 && (
-                      <div className="flex-shrink-0 w-full md:w-80 lg:w-96">
-                        {renderImageCarousel(true, true)}
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {/* Full-width image when there's no list */}
-                {!fullContent.list && imagePlacement === 'full-width' && images.length > 0 && (
-                  <div className="w-full">
-                    {renderImageCarousel(true, false)}
-                  </div>
-                )}
-
-                {/* Closing paragraphs - only show when NOT in full-width mode with images, or when full-width but no list, AND NOT sidebar with images (those render full-width below) */}
-                {/* Exclude when hideClosingByDefault is true and there's no list and no sidebar (already in expandable section) */}
-                {!shouldShowTruncated && 
-                 !(imagePlacement === 'full-width' && images.length > 0 && fullContent.list) && 
-                 !(imagePlacement === 'sidebar' && images.length > 0) && 
-                 !(hideClosingByDefault && !fullContent.list && !(imagePlacement === 'sidebar' && images.length > 0)) && (
-                  <>
-                    {fullContent.closing?.map((paragraph, index) => (
-                      <p 
-                        key={index}
-                        className={`text-foreground/70 leading-relaxed ${
-                          isHero ? 'text-sm md:text-lg' : 'text-[0.9375rem]'
-                        }`}
-                      >
-                        {paragraph}
-                      </p>
-                    ))}
-                  </>
-                )}
-              </div>
-            ) : (
-              /* Supporting blurb (for regular cards) */
-              <p className={`text-foreground/60 leading-relaxed ${isHero ? 'mb-3 md:mb-4' : 'mb-4'} ${isHero ? 'text-base md:text-lg' : 'text-[0.9375rem] line-clamp-2'}`}>
-                {blurb}
-              </p>
-            )}
-
-            {/* Subtle arrow affordance */}
-            {href && !shouldShowTruncated && (
-              <div className={`flex items-center gap-2 text-primary/60 group-hover:text-primary transition-colors duration-200 ${isHero ? 'mt-3 md:mt-4' : 'mt-4'}`}>
-                <span className={`${isHero ? 'text-sm' : 'text-[0.8125rem]'} font-medium tracking-wide`}>Read more</span>
-                <ArrowRight 
-                  className={`${isHero ? 'w-5 h-5' : 'w-4 h-4'} transition-transform duration-200 group-hover:translate-x-1`} 
-                  strokeWidth={1.5}
-                />
-              </div>
-            )}
-            
-            {/* Read Entire Story button (when truncated) */}
-            {shouldShowTruncated && (
-              <div className={`flex justify-end ${isHero ? 'mt-4 md:mt-6' : 'mt-6'}`}>
-                <Button
-                  size={isHero ? "lg" : "default"}
-                  className="group/btn text-white hover:opacity-90"
-                  style={{ backgroundColor: '#55111c' }}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setIsExpanded(true);
-                    // Scroll to top of card to show full content
-                    const card = e.currentTarget.closest('article');
-                    if (card) {
-                      setTimeout(() => {
-                        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                      }, 100);
-                    }
-                  }}
-                >
-                  <span>Read Entire Story</span>
-                  <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover/btn:translate-x-1" />
-                </Button>
-              </div>
-            )}
-          </div>
-          </div>
-          
-          {/* Full-width closing section for sidebar image layouts */}
-          {!shouldShowTruncated && imagePlacement === 'sidebar' && images.length > 0 && fullContent?.closing && fullContent.closing.length > 0 && (
-            <div className={`w-full ${isHero ? 'px-6 md:px-10 lg:px-12 pt-4 md:pt-6 pb-4 md:pb-10 lg:pb-12' : 'px-6 md:px-8 pt-4 md:pt-6 pb-6 md:pb-8'}`}>
-              {/* Read Entire Story / Show Less button for sidebar layouts */}
-              {hideClosingByDefault && (
-                <div className={`flex justify-end ${isHero ? 'mt-4 md:mt-6 mb-2 md:mb-3' : 'mt-6 mb-3'}`}>
-                  <Button
-                    size={isHero ? "lg" : "default"}
-                    className="group/btn text-white hover:opacity-90"
-                    style={{ backgroundColor: '#55111c' }}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      setIsClosingExpanded(!isClosingExpanded);
-                      // Smooth scroll to show expanded content
-                      if (!isClosingExpanded) {
-                        setTimeout(() => {
-                          const card = e.currentTarget.closest('article');
-                          if (card) {
-                            const closingSection = card.querySelector('[data-closing-section]');
-                            if (closingSection) {
-                              closingSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                            }
-                          }
-                        }, 300);
-                      }
-                    }}
-                  >
-                    <span>{isClosingExpanded ? 'Show Less' : 'Read Entire Story'}</span>
-                    {!isClosingExpanded && (
-                      <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover/btn:translate-x-1" />
-                    )}
-                  </Button>
-                </div>
-              )}
-              <div 
-                data-closing-section
-                className={`${isHero ? 'space-y-3 md:space-y-4' : 'space-y-4'} overflow-hidden transition-all duration-500 ease-in-out ${
-                  hideClosingByDefault && !isClosingExpanded 
-                    ? 'max-h-0 opacity-0' 
-                    : 'max-h-[2000px] opacity-100'
-                }`}
-              >
-                {fullContent.closing.map((paragraph, index) => (
-                  <p 
-                    key={index}
-                    className={`text-foreground/70 leading-relaxed ${
-                      isHero ? 'text-sm md:text-lg' : 'text-[0.9375rem]'
-                    }`}
-                  >
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </WrapperComponent>
-
-      <Dialog open={isImageModalOpen} onOpenChange={setIsImageModalOpen}>
-        <DialogContent className="max-w-5xl w-[95vw] h-[90vh] p-0 border-none" style={{ backgroundColor: '#ded4d2' }}>
-          <div className="relative w-full h-full flex items-center justify-center">
-            {/* Carousel Images */}
-            {images.map((img, index) => (
-              <div
-                key={index}
-                className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ease-in-out ${
-                  index === modalImageIndex ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                }`}
-              >
-                <img
-                  src={img}
-                  alt={`${imageAlt || headline} - Image ${index + 1}`}
-                  className="max-w-full max-h-full object-contain"
-                />
-              </div>
+                aria-label={`Show image ${i + 1} of ${images.length}`}
+                aria-current={i === index}
+              />
             ))}
-
-            {/* Navigation Arrows - only show if multiple images */}
-            {images.length > 1 && (
-              <>
-                <button
-                  onClick={goToPreviousModal}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm border border-white/50 flex items-center justify-center text-foreground/70 hover:bg-white hover:text-foreground transition-all shadow-lg z-20"
-                  aria-label="Previous image"
-                >
-                  <ChevronLeft className="w-6 h-6" strokeWidth={2} />
-                </button>
-                <button
-                  onClick={goToNextModal}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm border border-white/50 flex items-center justify-center text-foreground/70 hover:bg-white hover:text-foreground transition-all shadow-lg z-20"
-                  aria-label="Next image"
-                >
-                  <ChevronRight className="w-6 h-6" strokeWidth={2} />
-                </button>
-
-                {/* Dots Indicator */}
-                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
-                  {images.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => goToSlideModal(index)}
-                      className={`transition-all rounded-full ${
-                        index === modalImageIndex
-                          ? 'bg-white/90 w-3 h-3'
-                          : 'bg-white/50 hover:bg-white/70 w-2.5 h-2.5'
-                      }`}
-                      aria-label={`Go to slide ${index + 1}`}
-                    />
-                  ))}
-                </div>
-              </>
-            )}
-
-            {/* Image Counter (if multiple images) */}
-            {images.length > 1 && (
-              <div className="absolute top-6 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-white/90 backdrop-blur-sm border border-white/50 text-foreground/70 text-sm font-medium z-20">
-                {modalImageIndex + 1} / {images.length}
-              </div>
-            )}
           </div>
-        </DialogContent>
-      </Dialog>
-    </Fragment>
+        </>
+      )}
+    </div>
   );
 };
 
+/** Full story in a scrollable reading dialog. */
+const StoryDialog = ({
+  open,
+  onOpenChange,
+  date,
+  headline,
+  images,
+  fullContent,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  date: string;
+  headline: string;
+  images: string[];
+  fullContent: UpdateContent;
+}) => (
+  <Dialog open={open} onOpenChange={onOpenChange}>
+    <DialogContent className="max-h-[92vh] w-[95vw] max-w-3xl overflow-y-auto rounded-3xl border-[#f0d9dc] bg-[#fffcfa] p-0">
+      {images.length > 0 && (
+        <ImageCarousel
+          images={images}
+          alt={headline}
+          className="h-[45vh] min-h-[260px] w-full bg-[#f3e4e4]"
+          imageClassName="object-contain"
+        />
+      )}
+
+      <div className="px-6 pb-8 pt-6 sm:px-10 sm:pb-10">
+        <p className="font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.22em] text-[#a2465a]">
+          {formatDate(date)}
+        </p>
+        <DialogTitle className="mt-3 text-[28px] sm:text-[34px] leading-tight text-[#3a2420]">
+          {headline}
+        </DialogTitle>
+        {fullContent.subheadline ? (
+          <DialogDescription className="mt-3 font-sans text-lg leading-relaxed text-foreground/80">
+            {fullContent.subheadline}
+          </DialogDescription>
+        ) : (
+          <DialogDescription className="sr-only">Full update</DialogDescription>
+        )}
+
+        <div className="mt-6 space-y-4 font-sans text-base sm:text-[17px] leading-relaxed text-foreground/75">
+          {fullContent.paragraphs?.map((p) => <p key={p}>{p}</p>)}
+
+          {fullContent.list && (
+            <div>
+              {fullContent.list.intro && (
+                <p className="font-medium text-foreground/85">{fullContent.list.intro}</p>
+              )}
+              <ul className="mt-3 space-y-2">
+                {fullContent.list.items.map((item) => (
+                  <li key={item} className="flex gap-3">
+                    <span className="mt-[0.6em] h-1.5 w-1.5 shrink-0 rounded-full bg-[#a2465a]" aria-hidden="true" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {fullContent.closing?.map((p) => <p key={p}>{p}</p>)}
+        </div>
+      </div>
+    </DialogContent>
+  </Dialog>
+);
+
 /**
- * Format a date string into a friendly, human-readable format
+ * UpdateCard
+ *
+ * Featured: large image beside the headline, highlight pills and a solid button.
+ * Default: compact image + text row with an underlined "Read Update" link.
+ * Both open the full story in a reading dialog.
  */
-function formatDate(dateString: string): string {
-  // Parse date string (YYYY-MM-DD) to avoid timezone issues
-  const [year, month, day] = dateString.split('-').map(Number);
-  const date = new Date(year, month - 1, day);
-  return date.toLocaleDateString('en-US', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-  });
-}
+export const UpdateCard = ({
+  date,
+  headline,
+  summary,
+  tags,
+  images,
+  fullContent,
+  featured = false,
+}: UpdateCardProps) => {
+  const [isStoryOpen, setIsStoryOpen] = useState(false);
+
+  return (
+    <article
+      className={cn(
+        "grid gap-6 border border-[#efdcdc] bg-[#fffcfa]/90 shadow-[0_16px_40px_-24px_rgba(110,20,40,0.3)]",
+        featured
+          ? "rounded-[28px] p-5 sm:p-7 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] md:items-center md:gap-8 lg:gap-10"
+          : "rounded-3xl p-5 sm:grid-cols-[minmax(0,240px)_1fr] sm:items-center sm:p-6 md:grid-cols-[minmax(0,290px)_1fr] md:gap-9"
+      )}
+    >
+      {images.length > 0 && (
+        <ImageCarousel
+          images={images}
+          alt={headline}
+          className={cn(
+            "w-full rounded-2xl bg-[#f3e4e4]",
+            featured ? "aspect-[5/7]" : "aspect-[16/11] sm:aspect-[11/10]"
+          )}
+          imageClassName={featured ? "object-cover" : "object-cover object-top"}
+        />
+      )}
+
+      <div className={cn(featured ? "md:py-2" : "")}>
+        <p className="font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.22em] text-[#a2465a]">
+          {formatDate(date)}
+        </p>
+        <h3
+          className={cn(
+            "mt-3 font-serif leading-[1.1] tracking-tight text-[#3a2420]",
+            featured ? "" : "text-2xl sm:text-[28px] md:text-[30px]"
+          )}
+          style={featured ? { fontSize: "clamp(1.875rem, 3.2vw, 2.75rem)" } : undefined}
+        >
+          {headline}
+        </h3>
+        <p
+          className={cn(
+            "mt-4 font-sans leading-relaxed text-foreground/80",
+            featured ? "text-base sm:text-lg lg:text-xl" : "text-base sm:text-lg"
+          )}
+        >
+          {summary}
+        </p>
+
+        {featured && tags && tags.length > 0 && (
+          <ul className="mt-6 flex flex-wrap gap-2.5" aria-label="Highlights">
+            {tags.map((tag) => (
+              <li
+                key={tag}
+                className="rounded-full bg-[#f8e4e6] px-4 py-1.5 font-sans text-sm text-[#6e1428]"
+              >
+                {tag}
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {featured ? (
+          <button
+            type="button"
+            onClick={() => setIsStoryOpen(true)}
+            className="mt-8 inline-flex items-center gap-3 rounded-xl px-8 py-4 font-sans text-base sm:text-lg font-medium text-white shadow-[0_10px_24px_-10px_rgba(110,20,40,0.6)] transition-[filter] hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c98a96] focus-visible:ring-offset-2"
+            style={{ background: `linear-gradient(180deg, #7a1a30 0%, ${CRIMSON} 100%)` }}
+          >
+            Read Entire Story
+            <ArrowRight className="h-5 w-5" />
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={() => setIsStoryOpen(true)}
+            className="mt-5 inline-flex items-center gap-2.5 border-b-2 border-current pb-1 font-sans text-base sm:text-lg font-semibold transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c98a96] focus-visible:ring-offset-2"
+            style={{ color: CRIMSON }}
+          >
+            Read Update
+            <ArrowRight className="h-4 w-4" />
+          </button>
+        )}
+      </div>
+
+      <StoryDialog
+        open={isStoryOpen}
+        onOpenChange={setIsStoryOpen}
+        date={date}
+        headline={headline}
+        images={images}
+        fullContent={fullContent}
+      />
+    </article>
+  );
+};

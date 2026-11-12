@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 import { FAQAccordion } from "@/components/sections/faq";
 import { ROUTES } from "@/constants";
 
@@ -35,50 +35,70 @@ const FAQ = () => {
       />
 
       {/* Content Container - pt accounts for fixed header */}
-      <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 md:pb-28">
-        {/* Header Section */}
-        <header className="text-center mb-12 sm:mb-16">
-          {/* Main Headline */}
-          <h1 className="font-serif text-[32px] sm:text-[40px] md:text-[48px] text-foreground leading-tight tracking-tight mb-6">
-            Frequently Asked Questions
-          </h1>
-
-          {/* Supporting Copy */}
-          <p className="text-foreground/70 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-            We know you might have questions about how Joy Drop works.
-            <br className="hidden sm:block" />
-            Here are answers to some of the things people ask us most. 💗
-          </p>
-        </header>
-
-        {/* FAQ Panel */}
-        <section
-          className="relative rounded-3xl p-4 sm:p-6 md:p-8"
-          style={{
-            background: "rgba(255, 255, 255, 0.45)",
-            backdropFilter: "blur(12px)",
-            WebkitBackdropFilter: "blur(12px)",
-            border: "1px solid rgba(139, 74, 92, 0.08)",
-            boxShadow: "0 4px 24px rgba(139, 74, 92, 0.06)",
-          }}
-        >
-          <FAQAccordion />
-        </section>
-
-        {/* CTA Section */}
-        <footer className="text-center mt-12 sm:mt-16">
-          <p className="text-foreground/70 text-base sm:text-lg mb-6">
-            If you don't see your question here, we'd love to hear from you.
-          </p>
-          <Link to={`${ROUTES.HOME}#contact`}>
-            <Button
-              size="lg"
-              className="px-8 py-3 font-medium transition-transform duration-200 hover:scale-[1.02]"
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 md:pb-28">
+        <div className="mx-auto max-w-5xl">
+          {/* Header Section */}
+          <header className="mb-10 sm:mb-14">
+            <h1
+              className="font-serif text-[#3a2420] leading-[1.05] tracking-tight"
+              style={{ fontSize: "clamp(2.25rem, 4.6vw, 3.75rem)" }}
             >
-              Contact Us
-            </Button>
+              Frequently Asked Questions
+            </h1>
+            <p className="mt-5 max-w-3xl font-sans text-lg sm:text-xl leading-relaxed text-foreground/65">
+              We know you might have questions about how Joy Drop works.
+              <br className="hidden sm:block" /> Here are answers to some of the things people ask us most.
+            </p>
+          </header>
+
+          {/* FAQ list */}
+          <section aria-label="Questions and answers">
+            <FAQAccordion />
+          </section>
+        </div>
+
+        {/* CTA Banner */}
+        <aside
+          aria-labelledby="faq-cta-heading"
+          className="relative mx-auto mt-12 max-w-5xl overflow-hidden rounded-3xl px-6 py-8 text-white shadow-[0_18px_40px_-22px_rgba(80,10,25,0.7)] sm:mt-16 sm:px-10 md:flex md:items-center md:gap-8 md:py-7 lg:pl-[170px]"
+          style={{ background: "linear-gradient(100deg, #5e1222 0%, #6a1a2c 55%, #7d3347 100%)" }}
+        >
+          {/* Faint speech bubbles tucked into the left edge */}
+          <svg
+            className="pointer-events-none absolute -left-4 top-1 hidden h-[110%] w-auto text-white/15 lg:block"
+            viewBox="0 0 130 100"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M42 8 C 70 8, 92 22, 92 40 C 92 58, 70 72, 42 72 C 34 72, 27 71, 20 68 L 10 78 L 12 64 C 4 58, -6 50, -6 40 C -6 22, 14 8, 42 8 Z" />
+            <path d="M98 44 C 112 48, 120 58, 120 68 C 120 76, 115 83, 108 87 L 110 98 L 98 91 C 94 92, 90 92, 86 92 C 70 92, 56 86, 50 77" />
+          </svg>
+
+          <div className="relative flex-1">
+            <h2
+              id="faq-cta-heading"
+              className="font-serif text-white leading-tight tracking-tight"
+              style={{ fontSize: "clamp(1.875rem, 3vw, 2.5rem)" }}
+            >
+              Still have a question?
+            </h2>
+            <p className="mt-1 font-sans text-base sm:text-lg text-white/90">
+              If you don&rsquo;t see your question here, we&rsquo;d love to hear from you.
+            </p>
+          </div>
+
+          <Link
+            to={`${ROUTES.HOME}#contact`}
+            className="relative mt-6 inline-flex shrink-0 items-center justify-center gap-3 rounded-xl bg-[#fdf8f4] px-8 py-3.5 font-sans text-lg font-medium text-[#6e1428] shadow-md transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#6a1a2c] md:mt-0 lg:px-10 lg:text-xl"
+          >
+            Contact Us
+            <ArrowRight className="h-5 w-5" />
           </Link>
-        </footer>
+        </aside>
       </div>
     </main>
   );
