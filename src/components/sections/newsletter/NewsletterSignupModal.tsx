@@ -23,6 +23,8 @@ import { cn } from "@/lib/utils";
 interface NewsletterSignupModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  /** Prefills the email field each time the modal opens. */
+  initialEmail?: string;
 }
 
 type NotificationPreference = "email" | "text" | "both";
@@ -54,6 +56,7 @@ const HEARD_ABOUT_OPTIONS = [
 export const NewsletterSignupModal = ({
   open,
   onOpenChange,
+  initialEmail,
 }: NewsletterSignupModalProps) => {
   const [isSubmitted, setIsSubmitted] = React.useState(false);
   const [formData, setFormData] = React.useState<FormData>({
@@ -65,6 +68,13 @@ export const NewsletterSignupModal = ({
   });
   const [errors, setErrors] = React.useState<FormErrors>({});
   const [touched, setTouched] = React.useState<Record<string, boolean>>({});
+
+  // Prefill the email when the modal opens with one
+  React.useEffect(() => {
+    if (open && initialEmail) {
+      setFormData((prev) => ({ ...prev, email: initialEmail }));
+    }
+  }, [open, initialEmail]);
 
   // Reset form when modal closes
   React.useEffect(() => {

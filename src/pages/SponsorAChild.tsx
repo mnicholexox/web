@@ -1,37 +1,24 @@
 import { useState } from "react";
-import { ArrowLeft, ArrowRight, Gift, Heart, Sparkles, Star, Clock, ClipboardList, ShoppingBag } from "lucide-react";
+import { ArrowLeft, ArrowRight, Gift, Heart, Sparkles, Star, Clock } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants";
 import { cn } from "@/lib/utils";
 import { NewsletterSignupModal } from "@/components/sections/newsletter";
+import { FulfillWishSteps } from "@/components/sections/how-it-works";
 
 const SponsorAChild = () => {
   // TODO: This would come from your data source (API, context, etc.)
   const wishlistsAvailable = false;
   const [isNewsletterModalOpen, setIsNewsletterModalOpen] = useState(false);
+  const [notifyEmail, setNotifyEmail] = useState("");
+
+  // The inline email field hands off to the full signup modal, prefilled
+  const handleNotifySubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsNewsletterModalOpen(true);
+  };
   const navigate = useNavigate();
-  const step01 = {
-    number: "01",
-    icon: <ClipboardList className="w-6 h-6 text-primary/70" strokeWidth={1.5} />,
-    title: "Choose a Wishlist",
-    description: "After receiving an invite to the Joy Drop app, browse children's wishlists and select the one(s) you're ready to fulfill.",
-  };
-
-  const step02 = {
-    number: "02",
-    icon: <ShoppingBag className="w-6 h-6 text-primary/70" strokeWidth={1.5} />,
-    title: "Fulfill",
-    description: "Easily find wishlist items in the app, shop online if you prefer, and mark each item as purchased.",
-  };
-
-  const step03 = {
-    number: "03",
-    icon: <Gift className="w-6 h-6 text-primary/70" strokeWidth={1.5} />,
-    title: "Drop",
-    description: "Don't have time to wrap? Simply drop off your items, and our volunteers will wrap, prepare, and deliver each gift with care.",
-  };
-
   const giftCategories = [
     {
       icon: <Gift className="w-5 h-5 text-primary/50" strokeWidth={1.5} />,
@@ -96,149 +83,72 @@ const SponsorAChild = () => {
 
       {/* Coming Soon Notice */}
       {!wishlistsAvailable && (
-        <div 
-          className="relative overflow-hidden border-y border-primary/10"
-          style={{
-            background: 'linear-gradient(135deg, hsl(38 67% 97%) 0%, hsl(344 35% 95%) 50%, hsl(38 65% 95%) 100%)',
-          }}
-        >
-          {/* Subtle radial glow behind content */}
-          <div 
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background: 'radial-gradient(ellipse 80% 60% at 50% 50%, hsl(344 35% 90% / 0.4) 0%, transparent 70%)',
-            }}
-          />
-          
-          {/* Decorative ribbon - entering from right, shortened and elegant */}
-          <img 
-            src="/ribbon.png" 
-            alt=""
-            aria-hidden="true"
-            className="absolute pointer-events-none hidden sm:block"
-            style={{
-              width: '320px',
-              height: 'auto',
-              opacity: 0.25,
-              top: '50%',
-              right: '-40px',
-              transform: 'translateY(-50%) rotate(-8deg)',
-              objectFit: 'contain',
-            }}
-          />
-          
-          <div className="relative z-10 max-w-[1200px] mx-auto px-6 md:px-8">
-            <div className="text-center py-12 sm:py-16 md:py-20 pb-14 sm:pb-20 md:pb-24">
-              <span className="inline-block text-xs md:text-sm font-sans uppercase tracking-[0.2em] text-primary/60 mb-4">
-                Opening November 2026
-              </span>
-              <h2 className="font-serif text-[24px] sm:text-[28px] md:text-[32px] text-foreground leading-tight tracking-tight mb-4">
-                Wishlist sponsorship will be available soon.
-              </h2>
-              <Button 
-                onClick={() => setIsNewsletterModalOpen(true)}
-                className="bg-primary text-primary-foreground rounded-full px-6 sm:px-8 py-3 min-h-[44px] font-medium text-sm sm:text-[0.9375rem] transition-all duration-200 hover:scale-[1.03] hover:bg-primary/90 shadow-sm hover:shadow-md hover:shadow-primary/20"
+        <section aria-labelledby="wishlists-opening-heading" className="px-4 sm:px-6 md:px-8 pb-4">
+          <div className="relative mx-auto max-w-6xl overflow-hidden rounded-3xl border border-[#efe1de] bg-[#fdf7f5] px-6 py-10 shadow-[0_18px_50px_-24px_rgba(110,20,40,0.25)] sm:px-12 sm:py-14 lg:px-20">
+            <div className="flex items-center justify-between gap-10">
+              <div className="w-full max-w-[720px]">
+                <span className="inline-block rounded-full bg-[#f6dfe2] px-5 py-2 font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-[#8a1f38]">
+                  Opening November 2026
+                </span>
+                <h2
+                  id="wishlists-opening-heading"
+                  className="mt-5 font-serif text-foreground leading-[1.05] tracking-tight"
+                  style={{ fontSize: "clamp(2rem, 4.5vw, 3.75rem)" }}
+                >
+                  Wish lists are opening soon.
+                </h2>
+                <p className="mt-4 max-w-[480px] font-sans text-base sm:text-lg leading-relaxed text-foreground/75">
+                  Join the notification list and we&rsquo;ll let you know when children&rsquo;s wish lists
+                  are ready to fulfill.
+                </p>
+
+                <form onSubmit={handleNotifySubmit} className="mt-7 flex flex-col gap-3 sm:flex-row sm:gap-4">
+                  <label htmlFor="wishlist-notify-email" className="sr-only">
+                    Email address
+                  </label>
+                  <input
+                    id="wishlist-notify-email"
+                    type="email"
+                    autoComplete="email"
+                    placeholder="Your email address"
+                    value={notifyEmail}
+                    onChange={(e) => setNotifyEmail(e.target.value)}
+                    className="h-14 w-full rounded-xl border border-[#cfc2bf] bg-white px-5 font-sans text-base text-foreground placeholder:text-[#8f817f] transition-colors focus-visible:border-[#b8556b] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b8556b]/25 sm:max-w-[360px]"
+                  />
+                  <button
+                    type="submit"
+                    className="inline-flex h-14 flex-shrink-0 items-center justify-center gap-3 rounded-full bg-[#7e2139] px-9 font-sans text-sm sm:text-base font-semibold uppercase tracking-[0.18em] text-white shadow-md transition-colors hover:bg-[#6e1830] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b8556b] focus-visible:ring-offset-2"
+                  >
+                    Notify me
+                    <ArrowRight className="h-5 w-5" />
+                  </button>
+                </form>
+              </div>
+
+              {/* Checklist with heart illustration */}
+              <svg
+                className="hidden md:block h-auto w-40 lg:w-52 flex-shrink-0 text-[#c4687c]"
+                viewBox="0 0 120 120"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
               >
-                Get notified when wishlists open
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
+                <path d="M72 108 H 18 a4 4 0 0 1 -4 -4 V 10 a4 4 0 0 1 4 -4 H 80 a4 4 0 0 1 4 4 V 64" />
+                <path d="M26 28 l5 6 l9 -12 M48 30 H 72" />
+                <path d="M26 52 l5 6 l9 -12 M48 54 H 72" />
+                <path d="M26 76 l5 6 l9 -12 M48 78 H 58" />
+                <path d="M94 118 C 76 104 66 95 66 84 C 66 76.5 71.5 71 78 71 C 83 71 87 73.6 94 80 C 101 73.6 105 71 110 71 C 116.5 71 122 76.5 122 84 C 122 95 112 104 94 118 Z" transform="translate(-6 -6)" />
+              </svg>
             </div>
           </div>
-        </div>
+        </section>
       )}
 
-      {/* How It Works Section */}
-      <section className="pt-12 sm:pt-16 md:pt-20 pb-16 sm:pb-20">
-        <div className="max-w-[1200px] mx-auto px-6 md:px-8">
-          {/* Section Header */}
-          <div className="text-center mb-10 sm:mb-14">
-            <span className="inline-block text-xs md:text-sm font-sans uppercase tracking-[0.2em] text-primary/60 mb-3">
-              Simple Steps
-            </span>
-            <h2 className="font-serif text-[24px] sm:text-[28px] md:text-[32px] text-foreground leading-tight tracking-tight">
-              How Sponsorship Works
-            </h2>
-          </div>
-
-          {/* Steps Grid */}
-          <div className="grid sm:grid-cols-3 gap-6">
-            {/* Step 01 - Standard icon card */}
-            <div
-              className={cn(
-                "relative p-6 sm:p-8",
-                "bg-card/60 rounded-2xl",
-                "border border-border/20",
-                "transition-all duration-300",
-                "hover:shadow-lg hover:shadow-primary/5",
-                "hover:border-primary/20"
-              )}
-            >
-              <span className="absolute top-4 right-4 font-serif text-[0.8125rem] text-primary/30 tracking-wide">
-                {step01.number}
-              </span>
-              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary/8 mb-4">
-                {step01.icon}
-              </div>
-              <h3 className="font-serif text-lg sm:text-xl text-foreground mb-2">
-                {step01.title}
-              </h3>
-              <p className="text-sm text-foreground/70 leading-relaxed">
-                {step01.description}
-              </p>
-            </div>
-
-            {/* Step 02 */}
-            <div
-              className={cn(
-                "relative p-6 sm:p-8",
-                "bg-card/60 rounded-2xl",
-                "border border-border/20",
-                "transition-all duration-300",
-                "hover:shadow-lg hover:shadow-primary/5",
-                "hover:border-primary/20"
-              )}
-            >
-              <span className="absolute top-4 right-4 font-serif text-[0.8125rem] text-primary/30 tracking-wide">
-                {step02.number}
-              </span>
-              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary/8 mb-4">
-                {step02.icon}
-              </div>
-              <h3 className="font-serif text-lg sm:text-xl text-foreground mb-2">
-                {step02.title}
-              </h3>
-              <p className="text-sm text-foreground/70 leading-relaxed">
-                {step02.description}
-              </p>
-            </div>
-
-            {/* Step 03 */}
-            <div
-              className={cn(
-                "relative p-6 sm:p-8",
-                "bg-card/60 rounded-2xl",
-                "border border-border/20",
-                "transition-all duration-300",
-                "hover:shadow-lg hover:shadow-primary/5",
-                "hover:border-primary/20"
-              )}
-            >
-              <span className="absolute top-4 right-4 font-serif text-[0.8125rem] text-primary/30 tracking-wide">
-                {step03.number}
-              </span>
-              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary/8 mb-4">
-                {step03.icon}
-              </div>
-              <h3 className="font-serif text-lg sm:text-xl text-foreground mb-2">
-                {step03.title}
-              </h3>
-              <p className="text-sm text-foreground/70 leading-relaxed">
-                {step03.description}
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* How Fulfilling a Wish Works */}
+      <FulfillWishSteps />
 
       {/* Available Children Preview Section - Only shown when wishlists are available */}
       {wishlistsAvailable && (
@@ -500,6 +410,7 @@ const SponsorAChild = () => {
       <NewsletterSignupModal
         open={isNewsletterModalOpen}
         onOpenChange={setIsNewsletterModalOpen}
+        initialEmail={notifyEmail.trim()}
       />
     </main>
   );

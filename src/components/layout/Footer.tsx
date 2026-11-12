@@ -1,11 +1,54 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Facebook, Mail, Heart } from "lucide-react";
+import { ArrowRight, Facebook, Mail } from "lucide-react";
 import { ROUTES } from "@/constants";
+
+const FACEBOOK_URL = "https://facebook.com/profile.php?id=61586823822277";
+const EMAIL = "hello@joydrop.app";
+
+const linkClasses =
+  "font-sans text-base sm:text-lg text-white/90 transition-colors hover:text-white focus-visible:outline-none focus-visible:underline text-left";
+
+const headingClasses =
+  "font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#e8a3ae]";
+
+/** Satin ribbon curling down the right edge of the footer. */
+const FooterRibbon = () => (
+  <svg
+    className="absolute right-0 top-0 hidden h-full w-[38%] max-w-[560px] pointer-events-none md:block"
+    viewBox="0 0 560 520"
+    preserveAspectRatio="xMaxYMin meet"
+    aria-hidden="true"
+  >
+    <defs>
+      <linearGradient id="footer-ribbon" x1="0" x2="1" y1="1" y2="0">
+        <stop offset="0%" stopColor="#a8344f" stopOpacity="0.15" />
+        <stop offset="45%" stopColor="#b8435c" stopOpacity="0.7" />
+        <stop offset="100%" stopColor="#c9566f" stopOpacity="0.85" />
+      </linearGradient>
+    </defs>
+    {/* Ribbon sweeps in from the bottom, loops at the right edge and exits at the top */}
+    <path
+      d="M40 520 C 160 430, 300 360, 450 330 C 530 314, 590 300, 560 250
+         C 520 190, 440 150, 470 80 C 490 35, 530 15, 580 0
+         L 580 22 C 545 35, 508 55, 492 92 C 466 150, 545 190, 580 250
+         C 612 310, 540 340, 455 355 C 310 382, 180 445, 80 520 Z"
+      fill="url(#footer-ribbon)"
+    />
+    {/* Highlight along the outer edge for a satin sheen */}
+    <path
+      d="M40 520 C 160 430, 300 360, 450 330"
+      fill="none"
+      stroke="#e48a9e"
+      strokeOpacity="0.35"
+      strokeWidth="1.5"
+    />
+  </svg>
+);
 
 /**
  * Footer component
- * 
- * Site footer with links, social media, copyright, etc.
+ *
+ * Site footer with brand statement, call to action, links, social links and legal row.
  */
 export const Footer = () => {
   const location = useLocation();
@@ -29,141 +72,137 @@ export const Footer = () => {
     }
   };
 
-  const scrollToContact = () => {
-    scrollToSection("contact");
-  };
-
   return (
-    <footer className="w-full bg-muted/30 py-12 md:py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Main Footer Content */}
-        <div className="bg-card rounded-2xl shadow-sm p-8 md:p-12 mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-            {/* Column 1: Joy Drop */}
-            <div className="space-y-4">
-              <h2 className="font-serif text-2xl text-foreground">Joy Drop</h2>
-              <p className="text-sm text-foreground/80 leading-relaxed">
-                A community-led holiday program created to help children feel supported, confident, and cared for — not just on Christmas, but all year long. Every gift is delivered with dignity, love, and intention.
-              </p>
-            </div>
+    <footer
+      className="relative w-full overflow-hidden text-white"
+      style={{ background: "linear-gradient(180deg, #5e0d1f 0%, #560b1c 100%)" }}
+    >
+      <FooterRibbon />
 
-            {/* Column 2: Get Involved */}
-            <div className="space-y-4">
-              <h3 className="font-sans font-bold text-foreground">Get Involved</h3>
-              <nav className="flex flex-col space-y-2">
-                <Link
-                  to={ROUTES.SPONSOR_A_CHILD}
-                  className="text-sm text-foreground/80 hover:text-primary transition-colors"
-                >
-                  Sponsor a Child
-                </Link>
-                <Link
-                  to={ROUTES.MAKE_A_DONATION}
-                  className="text-sm text-foreground/80 hover:text-primary transition-colors"
-                >
-                  Make a Donation
-                </Link>
-                <button
-                  onClick={scrollToContact}
-                  className="text-sm text-foreground/80 hover:text-primary transition-colors text-left"
-                >
-                  Volunteer
-                </button>
-                <button
-                  onClick={() => scrollToSection("how-you-can-help")}
-                  className="text-sm text-foreground/80 hover:text-primary transition-colors text-left"
-                >
-                  Ways to Help
-                </button>
-              </nav>
-            </div>
-
-            {/* Column 3: Learn More */}
-            <div className="space-y-4">
-              <h3 className="font-sans font-bold text-foreground">Learn More</h3>
-              <nav className="flex flex-col space-y-2">
-                <button
-                  onClick={() => scrollToSection("what-this-is-about")}
-                  className="text-sm text-foreground/80 hover:text-primary transition-colors text-left"
-                >
-                  About Joy Drop
-                </button>
-                <Link
-                  to={ROUTES.FAQ}
-                  className="text-sm text-foreground/80 hover:text-primary transition-colors"
-                >
-                  FAQ
-                </Link>
-                <Link
-                  to={ROUTES.UPDATES}
-                  className="text-sm text-foreground/80 hover:text-primary transition-colors"
-                >
-                  News & Updates
-                </Link>
-                <button
-                  onClick={scrollToContact}
-                  className="text-sm text-foreground/80 hover:text-primary transition-colors text-left"
-                >
-                  Contact
-                </button>
-              </nav>
-            </div>
-
-            {/* Column 4: Connect With Us */}
-            <div className="space-y-4">
-              <h3 className="font-sans font-bold text-foreground">Connect With Us</h3>
-              <p className="text-sm text-foreground/80 leading-relaxed">
-                Follow along as we share stories, milestones, and moments of joy from our community.
-              </p>
-              <div className="flex items-center gap-3 pt-2">
-                <a
-                  href="https://facebook.com/profile.php?id=61586823822277"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-foreground hover:bg-primary/20 hover:text-primary transition-colors"
-                  aria-label="Follow us on Facebook"
-                >
-                  <Facebook className="w-5 h-5" />
-                </a>
-                <a
-                  href="mailto:hello@joydrop.app"
-                  className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-foreground hover:bg-primary/20 hover:text-primary transition-colors"
-                  aria-label="Send us an email"
-                >
-                  <Mail className="w-5 h-5" />
-                </a>
-              </div>
-            </div>
-          </div>
-          
-          {/* Thank You Message */}
-          <div className="mt-8 pt-8 border-t border-border/50">
-            <p className="text-center text-sm text-foreground/80 font-medium">
-              Support that carries children forward, long after the season passes.
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Brand + call to action */}
+        <div className="flex flex-col gap-10 pt-14 pb-10 md:pt-16 lg:flex-row lg:items-start lg:justify-between">
+          <div className="max-w-2xl">
+            <p
+              className="font-serif text-white leading-none tracking-tight"
+              style={{ fontSize: "clamp(3rem, 6vw, 4.75rem)" }}
+            >
+              Joy Drop
+            </p>
+            <p className="mt-5 font-sans text-lg sm:text-[22px] leading-relaxed text-white/85">
+              A community-powered Christmas drive helping children feel remembered&mdash;during the
+              holidays and beyond.
             </p>
           </div>
+
+          <div className="lg:mt-8 lg:pr-[8%]">
+            <p className={headingClasses}>Ready to make a little joy?</p>
+            <Link
+              to={ROUTES.SPONSOR_A_CHILD}
+              className="mt-4 inline-flex items-center gap-4 rounded-md bg-[#fbf3ec] px-8 py-4 font-sans text-sm sm:text-base font-semibold uppercase tracking-[0.2em] text-[#5e0d1f] shadow-lg transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#5e0d1f]"
+            >
+              Choose a wish list
+              <ArrowRight className="h-5 w-5" />
+            </Link>
+          </div>
         </div>
 
-        {/* Separator with Heart */}
-        <div className="relative flex items-center justify-center py-6">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-primary/20"></div>
-          </div>
-          <div className="relative flex items-center justify-center">
-            <Heart className="w-5 h-5 text-primary/40 fill-primary/20" />
-            <div className="absolute -left-2 w-2 h-2 rounded-full bg-primary/20"></div>
-            <div className="absolute -right-2 w-2 h-2 rounded-full bg-primary/20"></div>
+        <div className="h-px bg-[#e8a3ae]/30" aria-hidden="true" />
+
+        {/* Link columns */}
+        <div className="grid gap-10 py-10 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr] lg:py-12">
+          <nav aria-label="Get involved">
+            <h3 className={headingClasses}>Get involved</h3>
+            <ul className="mt-5 space-y-2.5">
+              <li>
+                <Link to={ROUTES.SPONSOR_A_CHILD} className={linkClasses}>
+                  Fulfill a Wish
+                </Link>
+              </li>
+              <li>
+                <Link to={ROUTES.MAKE_A_DONATION} className={linkClasses}>
+                  Make a Donation
+                </Link>
+              </li>
+              <li>
+                <Link to={ROUTES.VOLUNTEER} className={linkClasses}>
+                  Volunteer
+                </Link>
+              </li>
+              <li>
+                <button onClick={() => scrollToSection("how-you-can-help")} className={linkClasses}>
+                  Ways to Help
+                </button>
+              </li>
+            </ul>
+          </nav>
+
+          <nav aria-label="Learn more">
+            <h3 className={headingClasses}>Learn more</h3>
+            <ul className="mt-5 space-y-2.5">
+              <li>
+                <button onClick={() => scrollToSection("what-this-is-about")} className={linkClasses}>
+                  About Joy Drop
+                </button>
+              </li>
+              <li>
+                <Link to={ROUTES.FAQ} className={linkClasses}>
+                  FAQ
+                </Link>
+              </li>
+              <li>
+                <Link to={ROUTES.UPDATES} className={linkClasses}>
+                  News &amp; Updates
+                </Link>
+              </li>
+              <li>
+                <button onClick={() => scrollToSection("contact")} className={linkClasses}>
+                  Contact
+                </button>
+              </li>
+            </ul>
+          </nav>
+
+          <div>
+            <h3 className={headingClasses}>Connect</h3>
+            <ul className="mt-5 space-y-4">
+              <li>
+                <a
+                  href={FACEBOOK_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-5 font-sans text-base sm:text-lg text-white/90 transition-colors hover:text-white"
+                >
+                  <span className="flex h-12 w-12 items-center justify-center rounded-full border border-white/70 transition-colors group-hover:bg-white/10">
+                    <Facebook className="h-5 w-5" />
+                  </span>
+                  Facebook
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`mailto:${EMAIL}`}
+                  className="group inline-flex items-center gap-5 font-sans text-base sm:text-lg text-white/90 transition-colors hover:text-white"
+                >
+                  <span className="flex h-12 w-12 items-center justify-center rounded-full border border-white/70 transition-colors group-hover:bg-white/10">
+                    <Mail className="h-5 w-5" />
+                  </span>
+                  Email
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
+      </div>
 
-        {/* Copyright and Legal */}
-        <div className="text-center space-y-2">
-          <div className="text-sm text-foreground/70">
-            <span>©2028 Joy Drop</span>
-            <span className="mx-2">|</span>
+      {/* Legal row */}
+      <div className="relative border-t border-[#e8a3ae]/25 bg-[#4a0917]/70">
+        <div className="max-w-7xl mx-auto flex flex-col items-center gap-4 px-4 py-6 text-center font-sans text-sm sm:text-base text-white/80 sm:px-6 lg:flex-row lg:justify-between lg:px-8 lg:text-left">
+          <span>&copy; {new Date().getFullYear()} Joy Drop</span>
+          <div className="flex items-center gap-4">
             <a
               href="#"
-              className="hover:text-primary transition-colors"
+              className="transition-colors hover:text-white"
               onClick={(e) => {
                 e.preventDefault();
                 // TODO: Add privacy policy page/route
@@ -171,10 +210,10 @@ export const Footer = () => {
             >
               Privacy Policy
             </a>
-            <span className="mx-2">|</span>
+            <span aria-hidden="true">|</span>
             <a
               href="#"
-              className="hover:text-primary transition-colors"
+              className="transition-colors hover:text-white"
               onClick={(e) => {
                 e.preventDefault();
                 // TODO: Add terms of use page/route
@@ -183,12 +222,9 @@ export const Footer = () => {
               Terms of Use
             </a>
           </div>
-          <p className="text-xs text-muted-foreground">
-            A community initiative with a passion for serving underprivileged families.
-          </p>
+          <span>Every gift given with dignity, care, and intention.</span>
         </div>
       </div>
     </footer>
   );
 };
-
