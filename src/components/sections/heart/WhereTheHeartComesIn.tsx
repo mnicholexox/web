@@ -1,249 +1,251 @@
-// Import images for cards
-import meetingNeedsImage from "@/components/sections/meeting needs.png";
-import meetingNeeds2Image from "@/components/sections/meeting needs2.png";
+const CRIMSON = "#6e1428";
 
-/* Small heart icon for cards */
-const HeartAccent = () => (
-  <svg 
-    className="w-3 h-3 flex-shrink-0" 
-    viewBox="0 0 24 24" 
-    fill="currentColor"
-    aria-hidden="true"
-    style={{ color: '#B87B83' }}
-  >
-    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+const STEPS = [
+  {
+    number: "01",
+    title: "Gifts arrive",
+    description: "Our community provides toys and fulfills holiday wishes.",
+    offset: "",
+    connector: "w-7 lg:w-16",
+  },
+  {
+    number: "02",
+    title: "Resources stretch further",
+    description: "Donated gifts allow limited funds to support needs beyond Christmas.",
+    offset: "ml-7 lg:ml-16",
+    connector: "w-5 lg:w-10",
+  },
+  {
+    number: "03",
+    title: "Care continues",
+    description: "Children receive support that helps them feel comfortable, confident, and included.",
+    offset: "ml-12 lg:ml-[104px]",
+  },
+];
+
+/* ---------- Line icons for the year-round care list ---------- */
+
+const iconProps = {
+  viewBox: "0 0 48 48",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 1.75,
+  strokeLinecap: "round" as const,
+  strokeLinejoin: "round" as const,
+  className: "h-11 w-11",
+  "aria-hidden": true,
+};
+
+const ShirtIcon = () => (
+  <svg {...iconProps}>
+    <path d="M17 7 L8 12 L4 21 L11 24 L13 20 V41 H35 V20 L37 24 L44 21 L40 12 L31 7 C30 10 27.5 12 24 12 C20.5 12 18 10 17 7 Z" />
   </svg>
 );
 
-interface BulletPointProps {
-  children: React.ReactNode;
-  isSub?: boolean;
-  className?: string;
-}
-
-const BulletPoint = ({ children, isSub = false, className = '' }: BulletPointProps) => (
-  <li className={`flex items-start gap-3 mb-3 ${className}`}>
-    <div 
-      className="rounded-full flex-shrink-0 mt-1.5"
-      style={{ 
-        width: isSub ? '6px' : '8px',
-        height: isSub ? '6px' : '8px',
-        backgroundColor: isSub ? '#D4A5AB' : '#B87B83'
-      }}
-    />
-    <div 
-      className="text-base leading-relaxed flex-1"
-      style={{ color: '#4A3C39' }}
-    >
-      {children}
-    </div>
-  </li>
+const SoapIcon = () => (
+  <svg {...iconProps}>
+    <path d="M20 4 H30 M25 4 V9 M21 9 H29 V14 H21 Z" />
+    <rect x="15" y="14" width="20" height="30" rx="4" />
+    <path d="M25 34 C21 31 19.5 29 19.5 27 C19.5 25 21 24 22.5 24 C23.6 24 24.4 24.6 25 25.5 C25.6 24.6 26.4 24 27.5 24 C29 24 30.5 25 30.5 27 C30.5 29 29 31 25 34 Z" />
+  </svg>
 );
 
-interface SubBulletListProps {
-  children: React.ReactNode;
-}
-
-const SubBulletList = ({ children }: SubBulletListProps) => (
-  <ul className="list-none mt-2 ml-4 space-y-2">
-    {children}
-  </ul>
+const ShoeIcon = () => (
+  <svg {...iconProps}>
+    <path d="M4 34 C4 30 5 27 7 25 L15 24 C19 23 22 20 24 16 L28 17 C30 21 34 24 40 26 C43 27 45 29 45 32 V34 Z" />
+    <path d="M4 34 V37 C4 38 5 39 6 39 H43 C44 39 45 38 45 37 V34" />
+    <path d="M22 19 L25 21 M20 22 L23 24 M18 24 L21 26" />
+  </svg>
 );
 
-interface CardProps {
-  title: string;
-  mainTitle: string;
-  children: React.ReactNode;
-  imageUrl?: string;
-  imageAlt?: string;
-  imagePlaceholder?: 'worn' | 'new';
-}
+const PeopleIcon = () => (
+  <svg {...iconProps}>
+    <path d="M24 3 V7 M15 6 L17 9 M33 6 L31 9" />
+    <circle cx="24" cy="16" r="4" />
+    <circle cx="12" cy="20" r="3.5" />
+    <circle cx="36" cy="20" r="3.5" />
+    <path d="M16 40 V32 C16 27.5 19.5 24 24 24 C28.5 24 32 27.5 32 32 V40" />
+    <path d="M5 40 V33 C5 29.5 8 27 11.5 27 C13 27 14.3 27.4 15.4 28.2" />
+    <path d="M43 40 V33 C43 29.5 40 27 36.5 27 C35 27 33.7 27.4 32.6 28.2" />
+  </svg>
+);
 
-/* Card component with white background and shadow */
-const Card = ({ title, mainTitle, children, imageUrl, imageAlt, imagePlaceholder }: CardProps) => (
-  <article 
-    className="bg-white p-6 md:p-8 rounded-lg relative overflow-hidden"
-    style={{
-      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
-    }}
+const CARE_ITEMS = [
+  { icon: <ShirtIcon />, label: "Clothing that fits" },
+  { icon: <SoapIcon />, label: "Personal-care essentials" },
+  { icon: <ShoeIcon />, label: "Properly fitting shoes" },
+  { icon: <PeopleIcon />, label: "Confidence-building experiences" },
+];
+
+/* ---------- Decorative ribbon tied into a heart ---------- */
+
+const RibbonHeart = () => (
+  <svg
+    className="absolute inset-x-0 bottom-0 w-full h-auto pointer-events-none"
+    viewBox="0 0 400 200"
+    preserveAspectRatio="xMidYMax meet"
+    aria-hidden="true"
   >
-    {/* Text content - bottom bullets may need pr-[35%] md:pr-[42%] to clear the image */}
-    <div className="relative z-10">
-      <div className="flex items-start gap-3 mb-4">
-        <HeartAccent />
-        <h3 
-          className="font-sans font-bold text-lg md:text-xl"
-          style={{ color: '#B87B83' }}
-        >
-          {title}
-        </h3>
-      </div>
-      
-      <h4 
-        className="font-serif font-bold text-xl md:text-2xl mb-4"
-        style={{ color: '#4A3C39' }}
-      >
-        {mainTitle}
-      </h4>
-      
-      <ul className="list-none space-y-2">
-        {children}
-      </ul>
-    </div>
-    
-    {/* Image positioned at bottom-right, overlapping slightly */}
-    {imageUrl ? (
-      <div 
-        className="absolute right-0 bottom-0 w-1/3 md:w-2/5 h-2/5 md:h-1/2 pointer-events-none"
-        style={{ zIndex: 1 }}
-      >
-        <img 
-          src={imageUrl}
-          alt={imageAlt || ''}
-          className="w-full h-full object-cover object-center rounded-br-lg"
-        />
-      </div>
-    ) : imagePlaceholder === 'worn' ? (
-      <div 
-        className="absolute right-0 bottom-0 w-1/3 md:w-2/5 h-2/5 md:h-1/2 pointer-events-none flex items-center justify-center rounded-br-lg"
-        style={{ 
-          zIndex: 1,
-          background: 'linear-gradient(135deg, #D4C4B0 0%, #C4B5A0 50%, #B8A890 100%)',
-        }}
-      >
-        <div className="text-center p-4 opacity-60">
-          <div className="text-xs text-gray-700 font-sans">Image: Worn items</div>
-        </div>
-      </div>
-    ) : imagePlaceholder === 'new' ? (
-      <div 
-        className="absolute right-0 bottom-0 w-1/3 md:w-2/5 h-2/5 md:h-1/2 pointer-events-none flex items-center justify-center rounded-br-lg"
-        style={{ 
-          zIndex: 1,
-          background: 'linear-gradient(135deg, #E8F4F8 0%, #D0E8F0 50%, #B8DCE8 100%)',
-        }}
-      >
-        <div className="text-center p-4 opacity-60">
-          <div className="text-xs text-gray-700 font-sans">Image: New items</div>
-        </div>
-      </div>
-    ) : null}
-  </article>
+    <defs>
+      <linearGradient id="purpose-ribbon" x1="0" x2="1" y1="0" y2="0">
+        <stop offset="0%" stopColor="#c4455f" stopOpacity="0.55" />
+        <stop offset="60%" stopColor="#d9607a" stopOpacity="0.9" />
+        <stop offset="100%" stopColor="#c4455f" stopOpacity="0.6" />
+      </linearGradient>
+    </defs>
+    {/* Ribbon sweeping in from the left, looping into a heart, then out to the right */}
+    <path
+      d="M-10 20 C 80 40, 150 110, 230 150 C 280 175, 320 165, 330 130
+         C 345 90, 360 45, 345 30 C 330 15, 305 25, 300 50
+         C 290 25, 262 25, 258 50 C 252 85, 300 130, 330 160
+         C 350 180, 380 190, 410 196"
+      fill="none"
+      stroke="url(#purpose-ribbon)"
+      strokeWidth="9"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    {/* Soft highlight along the ribbon for a satin feel */}
+    <path
+      d="M-10 18 C 80 38, 150 108, 230 148"
+      fill="none"
+      stroke="#f3a9b8"
+      strokeOpacity="0.35"
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+  </svg>
 );
+
+/* ---------- Section ---------- */
 
 export const WhereTheHeartComesIn = () => {
   return (
-    <section 
+    <section
       id="where-the-heart-comes-in"
       data-section="where-the-heart-comes-in"
-      className="w-full pt-16 md:pt-24 pb-16 md:pb-20 bg-background"
+      className="w-full py-14 md:py-20 bg-background"
     >
-      <div className="max-w-6xl mx-auto px-6 md:px-8 lg:px-12">
-        <div className="space-y-8 md:space-y-10">
-          {/* Centered header section */}
-          <div className="text-center space-y-4 md:space-y-6">
-            {/* OUR PURPOSE subtitle */}
-            <span 
-              className="inline-block text-xs md:text-sm font-sans uppercase tracking-wider font-medium"
-              style={{ color: '#B87B83' }}
-            >
-              Our Purpose
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-12">
+          {/* Left: purpose statement card */}
+          <div
+            className="relative overflow-hidden rounded-3xl px-7 pt-12 pb-40 sm:px-10 sm:pt-16 sm:pb-48 lg:pb-52"
+            style={{ background: `linear-gradient(160deg, #7a1a30 0%, ${CRIMSON} 55%, #5e1022 100%)` }}
+          >
+            <span className="relative block font-sans text-xs sm:text-sm font-medium uppercase tracking-[0.2em] text-white/85">
+              Our purpose
             </span>
-            
-            {/* Main heading */}
-            <h2 
-              className="font-serif font-bold leading-tight"
-              style={{ 
-                fontSize: 'clamp(2rem, 5vw, 3rem)',
-                color: '#4A3C39'
-              }}
+            <h2
+              className="relative mt-6 font-serif text-white leading-[1.05] tracking-tight"
+              style={{ fontSize: "clamp(2.25rem, 4vw, 3.5rem)" }}
             >
-              Where the Heart Comes In
+              Christmas is one morning. Feeling cared for should last all year.
             </h2>
-            
-            {/* Sub-description */}
-            <p 
-              className="text-base md:text-lg font-sans leading-relaxed max-w-2xl mx-auto"
-              style={{ color: '#2A2A2A' }}
-            >
-              Care that shows up on Christmas — and stays for the other 364 days.
+            <p className="relative mt-6 font-sans text-base sm:text-lg leading-relaxed text-white/85">
+              Toy donations do more than fill a wish list. They help stretch limited funds so Joy Drop
+              can respond to the everyday needs that shape a child&rsquo;s confidence, comfort, and
+              well-being.
             </p>
-            
-            {/* Decorative divider with three dots */}
-            <div className="flex items-center justify-center pt-2 gap-2">
-              <div 
-                className="rounded-full"
-                style={{ 
-                  width: '6px',
-                  height: '6px',
-                  backgroundColor: '#B87B83'
-                }}
-              />
-              <div 
-                className="rounded-full"
-                style={{ 
-                  width: '6px',
-                  height: '6px',
-                  backgroundColor: '#B87B83'
-                }}
-              />
-              <div 
-                className="rounded-full"
-                style={{ 
-                  width: '6px',
-                  height: '6px',
-                  backgroundColor: '#B87B83'
-                }}
-              />
-            </div>
+            <RibbonHeart />
           </div>
-          
-          {/* Two cards side-by-side */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 pt-4">
-            <Card 
-              title="The Problem" 
-              mainTitle="The Need Doesn't End After Christmas"
-              imageUrl={meetingNeedsImage}
-              imageAlt="Worn backpack, notebook, and shoes showing the ongoing need for basic necessities"
+
+          {/* Right: ripple effect timeline + year-round care */}
+          <div className="flex flex-col lg:pt-10">
+            <span
+              className="font-sans text-xs sm:text-sm font-medium uppercase tracking-[0.2em]"
+              style={{ color: "#a2465a" }}
             >
-              <BulletPoint>
-                Christmas may be when some kids feel truly seen and included.
-              </BulletPoint>
-              <BulletPoint>
-                After the holidays, many face challenges:
-                <SubBulletList>
-                  <BulletPoint isSub>Outgrown clothes</BulletPoint>
-                  <BulletPoint isSub>Worn shoes</BulletPoint>
-                  <BulletPoint isSub>Feeling left out</BulletPoint>
-                </SubBulletList>
-              </BulletPoint>
-              <BulletPoint className="pr-[35%] md:pr-[42%]">
-                Without essentials or confidence-boosting experiences, it's hard for these kids to thrive at school and in friendships.
-              </BulletPoint>
-            </Card>
-            
-            <Card 
-              title="Solution" 
-              mainTitle="Meeting Real Needs"
-              imageUrl={meetingNeeds2Image}
-              imageAlt="Essential items including clothing, shoes, and hygiene products showing the real needs being met"
-            >
-              <BulletPoint>
-                Joy Drop makes sure <strong>children</strong> feel valued beyond just Christmas morning.
-              </BulletPoint>
-              <BulletPoint>
-                Toy donations let us redirect limited funds to provide year-round essentials like:
-                <SubBulletList>
-                  <BulletPoint isSub>Clothing</BulletPoint>
-                  <BulletPoint isSub>Hygiene items</BulletPoint>
-                  <BulletPoint isSub>Properly fitting shoes</BulletPoint>
-                </SubBulletList>
-              </BulletPoint>
-            </Card>
+              The ripple effect
+            </span>
+
+            <ol className="mt-6">
+              {STEPS.map((step, i) => {
+                const isLast = i === STEPS.length - 1;
+                return (
+                  <li key={step.number} className={`relative flex gap-4 sm:gap-6 pb-10 ${step.offset}`}>
+                    {/* Curved connector to the next step's circle */}
+                    {step.connector && (
+                      <svg
+                        className={`absolute left-8 top-16 h-[calc(100%-4rem)] overflow-visible ${step.connector}`}
+                        viewBox="0 0 100 100"
+                        preserveAspectRatio="none"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M0 0 C -30 55, 100 45, 100 100"
+                          fill="none"
+                          stroke={CRIMSON}
+                          strokeWidth="1.5"
+                          vectorEffect="non-scaling-stroke"
+                        />
+                      </svg>
+                    )}
+
+                    {/* Final step trails down to a heart */}
+                    {isLast && (
+                      <svg
+                        className="absolute left-8 top-16 h-12 w-6 overflow-visible"
+                        viewBox="0 0 24 48"
+                        aria-hidden="true"
+                      >
+                        <path d="M0 0 C 2 12, 10 18, 10 32" fill="none" stroke={CRIMSON} strokeWidth="1.5" />
+                        <path
+                          d="M10 46 C 4 41 1 38 1 35 C 1 32.5 3 31 5 31 C 7 31 8.5 32 10 34 C 11.5 32 13 31 15 31 C 17 31 19 32.5 19 35 C 19 38 16 41 10 46 Z"
+                          fill={CRIMSON}
+                        />
+                      </svg>
+                    )}
+
+                    <span
+                      className="relative z-10 flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full font-serif text-2xl"
+                      style={{ backgroundColor: "#f6dfe2", color: CRIMSON }}
+                    >
+                      {step.number}
+                    </span>
+                    <div className="pt-1">
+                      <h3
+                        className="font-serif leading-tight text-[28px] sm:text-[34px] lg:text-[38px]"
+                        style={{ color: CRIMSON }}
+                      >
+                        {step.title}
+                      </h3>
+                      <p className="mt-2 font-sans text-base sm:text-lg leading-relaxed text-foreground/85">
+                        {step.description}
+                      </p>
+                    </div>
+                  </li>
+                );
+              })}
+            </ol>
+
+            {/* Year-round care */}
+            <div className="mt-4 rounded-2xl px-6 py-7 sm:px-8" style={{ backgroundColor: "#f7e4e5" }}>
+              <span
+                className="block font-sans text-xs sm:text-sm font-medium uppercase tracking-[0.2em]"
+                style={{ color: "#a2465a" }}
+              >
+                Year-round care can include
+              </span>
+              <ul className="mt-6 grid grid-cols-2 gap-y-8 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
+                {CARE_ITEMS.map((item, i) => (
+                  <li
+                    key={item.label}
+                    className={`flex flex-col items-center gap-3 px-3 text-center border-[#d9a9b1] ${
+                      i % 2 === 1 ? "border-l" : ""
+                    } ${i === 2 ? "sm:border-l lg:border-l-0 xl:border-l" : ""}`}
+                  >
+                    <span style={{ color: CRIMSON }}>{item.icon}</span>
+                    <span className="font-sans text-sm sm:text-base leading-snug text-foreground/85">
+                      {item.label}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </div>
     </section>
   );
 };
-

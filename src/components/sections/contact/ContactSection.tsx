@@ -1,12 +1,72 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 
-// Image import for general inquiries
+// Envelope-with-heart illustration
 import generalInquiriesImage from "@/pages/general inquiries.png";
+
+const CRIMSON = "#6e1428";
+
+const fieldClasses = cn(
+  "bg-[#f8e9ea] border-[#e6c4c9] text-foreground placeholder:text-[#9b8a88]",
+  "focus-visible:bg-white focus-visible:border-[#b8556b] focus-visible:ring-[#b8556b]/25",
+  "rounded-xl px-4 text-base",
+  "transition-colors duration-200"
+);
+
+/** Satin ribbon flowing along the bottom of the inquiries card. */
+const CardRibbon = () => (
+  <svg
+    className="absolute bottom-0 left-0 w-full h-auto pointer-events-none"
+    viewBox="0 0 800 220"
+    preserveAspectRatio="xMidYMax meet"
+    aria-hidden="true"
+  >
+    <defs>
+      <linearGradient id="contact-ribbon" x1="0" x2="1" y1="0" y2="0">
+        <stop offset="0%" stopColor="#c86a7e" stopOpacity="0.85" />
+        <stop offset="55%" stopColor="#e39aaa" stopOpacity="0.9" />
+        <stop offset="100%" stopColor="#b8556b" stopOpacity="0.7" />
+      </linearGradient>
+    </defs>
+    <path
+      d="M0 205 C 60 160, 120 120, 200 150 C 270 176, 300 200, 360 160 C 410 125, 380 85, 340 105 C 300 125, 330 190, 420 170 C 520 148, 600 120, 820 140
+         L 820 152 C 600 132, 520 162, 422 184 C 322 206, 282 130, 336 96 C 392 62, 436 118, 372 172 C 310 222, 268 192, 196 164 C 124 136, 70 176, 0 220 Z"
+      fill="url(#contact-ribbon)"
+    />
+  </svg>
+);
+
+/** Small four-point sparkles. */
+const Sparkles = () => (
+  <svg
+    className="absolute right-[18%] top-[16%] hidden h-24 w-24 pointer-events-none text-[#f7d9de] lg:block"
+    viewBox="0 0 100 100"
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <path d="M40 20 C 42 38, 44 40, 62 42 C 44 44, 42 46, 40 64 C 38 46, 36 44, 18 42 C 36 40, 38 38, 40 20 Z" opacity="0.9" />
+    <path d="M78 4 C 79 11, 80 12, 87 13 C 80 14, 79 15, 78 22 C 77 15, 76 14, 69 13 C 76 12, 77 11, 78 4 Z" opacity="0.8" />
+    <circle cx="74" cy="56" r="1.6" opacity="0.7" />
+    <circle cx="12" cy="74" r="1.4" opacity="0.6" />
+  </svg>
+);
+
+/** Faint ribbon lines drifting across the section background. */
+const BackgroundRibbons = () => (
+  <svg
+    className="absolute inset-0 h-full w-full pointer-events-none"
+    viewBox="0 0 1440 900"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <path d="M-40 260 C 200 120, 380 40, 720 -20" fill="none" stroke="#d9a3ad" strokeOpacity="0.35" strokeWidth="1.5" />
+    <path d="M-40 300 C 220 150, 420 80, 760 0" fill="none" stroke="#d9a3ad" strokeOpacity="0.2" strokeWidth="1" />
+    <path d="M1000 920 C 1180 860, 1320 780, 1480 640" fill="none" stroke="#d9a3ad" strokeOpacity="0.35" strokeWidth="1.5" />
+  </svg>
+);
 
 export const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -15,9 +75,7 @@ export const ContactSection = () => {
     message: "",
   });
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -32,201 +90,97 @@ export const ContactSection = () => {
     <section
       id="contact"
       data-section="contact"
-      className="relative w-full pt-4 sm:pt-6 md:pt-8 pb-20 sm:pb-24 md:pb-32 overflow-hidden"
+      className="relative w-full overflow-hidden py-14 md:py-20"
       style={{
-        background: "linear-gradient(180deg, hsl(38 67% 97%) 0%, hsl(36 45% 94%) 100%)",
+        background:
+          "radial-gradient(ellipse at 85% 0%, rgba(232, 176, 186, 0.35) 0%, transparent 45%), linear-gradient(180deg, #f9efea 0%, #f5e4e0 100%)",
       }}
     >
-      {/* Divider */}
-      <div className="max-w-[200px] mx-auto mb-10 sm:mb-12 md:mb-16">
-        <div className="h-px bg-border/60" />
-      </div>
+      <BackgroundRibbons />
 
-      {/* Soft dreamy background decorations */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Warm burgundy glow - top left */}
-        <div 
-          className="absolute -top-20 -left-32 w-80 h-80 rounded-full blur-[100px] opacity-[0.08]"
-          style={{ background: "hsl(348 70% 21%)" }}
-        />
-        {/* Soft cream glow - center */}
-        <div 
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full blur-[120px] opacity-[0.15]"
-          style={{ background: "hsl(36 60% 90%)" }}
-        />
-        {/* Burgundy accent glow - bottom right */}
-        <div 
-          className="absolute -bottom-20 -right-32 w-80 h-80 rounded-full blur-[100px] opacity-[0.06]"
-          style={{ background: "hsl(348 70% 21%)" }}
-        />
-        {/* Subtle watercolor texture overlay */}
-        <div 
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `radial-gradient(ellipse at 20% 30%, hsl(348 50% 35%) 0%, transparent 50%),
-                              radial-gradient(ellipse at 80% 70%, hsl(348 50% 35%) 0%, transparent 50%)`,
-          }}
-        />
-      </div>
-
-      {/* Section Header */}
-      <div className="relative z-10 text-center mb-10 sm:mb-14 md:mb-16 px-6">
-        {/* Eyebrow label */}
-        <span 
-          className="inline-block text-xs md:text-sm font-sans uppercase tracking-[0.25em] mb-4"
-          style={{ color: "hsl(348 45% 35%)" }}
+      {/* Header */}
+      <div className="relative z-10 px-4 text-center">
+        <div className="flex items-center justify-center gap-5">
+          <span className="h-px w-12 sm:w-20 bg-[#b8556b]/50" aria-hidden="true" />
+          <span
+            className="font-sans text-sm sm:text-base font-medium uppercase tracking-[0.3em]"
+            style={{ color: CRIMSON }}
+          >
+            Reach out
+          </span>
+          <span className="h-px w-12 sm:w-20 bg-[#b8556b]/50" aria-hidden="true" />
+        </div>
+        <h2
+          className="mt-4 font-serif leading-[1.05] tracking-tight"
+          style={{ color: CRIMSON, fontSize: "clamp(2.25rem, 5vw, 4rem)" }}
         >
-          Reach Out
-        </span>
-
-        {/* Main headline */}
-        <h2 
-          className="font-serif text-[28px] sm:text-[36px] md:text-[44px] leading-tight tracking-tight"
-          style={{ color: "hsl(348 55% 22%)" }}
-        >
-          Let's Get in Touch
+          Let&rsquo;s Get in Touch
         </h2>
       </div>
 
-      {/* Two-Card Asymmetrical Layout */}
-      <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-8">
-        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-stretch">
-          
-          {/* Left Card - General Inquiries (60-65% width, narrative & emotional) */}
-          <div 
-            className={cn(
-              "relative flex flex-col",
-              "lg:flex-[1.7]", // ~63% of container
-              "bg-gradient-to-br from-white/85 via-white/75 to-[hsl(36_60%_97%)/60]",
-              "backdrop-blur-sm",
-              "rounded-2xl lg:rounded-3xl",
-              "p-8 sm:p-10 lg:p-14",
-              "border border-white/60",
-              "shadow-[0_8px_40px_-8px_rgba(85,17,28,0.08)]",
-              "transition-all duration-500",
-              "hover:shadow-[0_16px_56px_-12px_rgba(85,17,28,0.12)]",
-            )}
+      {/* Cards */}
+      <div className="relative z-10 mx-auto mt-10 md:mt-14 max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-5">
+          {/* General inquiries */}
+          <div
+            className="relative overflow-hidden rounded-3xl px-7 pt-10 pb-64 sm:px-10 sm:pt-12 sm:pb-72 lg:pb-12 text-white shadow-xl"
+            style={{
+              background:
+                "radial-gradient(ellipse at 80% 20%, rgba(214, 120, 140, 0.35) 0%, transparent 50%), linear-gradient(160deg, #8a2e45 0%, #742038 50%, #651a30 100%)",
+            }}
           >
-            {/* Subtle inner glow */}
-            <div 
-              className="absolute inset-0 rounded-2xl lg:rounded-3xl pointer-events-none"
-              style={{
-                background: "radial-gradient(ellipse at 30% 20%, hsl(36 60% 95% / 0.7) 0%, transparent 55%), radial-gradient(ellipse at 80% 80%, hsl(348 40% 92% / 0.3) 0%, transparent 50%)",
-              }}
+            <Sparkles />
+
+            <h3 className="relative font-serif text-xl sm:text-2xl uppercase tracking-[0.2em] text-white">
+              General inquiries
+            </h3>
+            <span className="relative mt-4 block h-0.5 w-14 bg-[#e8a3ae]" aria-hidden="true" />
+
+            <p className="relative mt-6 font-sans text-xl sm:text-2xl leading-snug text-white lg:max-w-[68%]">
+              Have a question, want to volunteer, or just curious about Joy Drop?
+              <span className="block mt-1 font-normal text-white/85">We&rsquo;d love to hear from you.</span>
+            </p>
+
+            <blockquote className="relative mt-8 rounded-2xl border border-white/20 bg-white/10 px-6 py-5 font-sans text-base sm:text-lg italic leading-relaxed text-white/90 backdrop-blur-[2px] lg:max-w-[60%]">
+              &ldquo;Connection is at the heart of everything we do. Drop us a message and let&rsquo;s
+              start a conversation.&rdquo;
+            </blockquote>
+
+            {/* Ribbon + envelope */}
+            <CardRibbon />
+            <img
+              src={generalInquiriesImage}
+              alt=""
+              aria-hidden="true"
+              className="absolute bottom-6 right-4 w-56 sm:w-64 lg:w-[44%] lg:max-w-[300px] drop-shadow-2xl"
             />
-
-            {/* Content wrapper for horizontal layout on larger screens */}
-            <div className="relative flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-12">
-              {/* Image */}
-              <div className="relative flex-shrink-0 mx-auto lg:mx-0">
-                <div 
-                  className="absolute inset-0 rounded-full blur-3xl opacity-15 scale-125"
-                  style={{ background: "hsl(348 60% 30%)" }}
-                />
-                <img
-                  src={generalInquiriesImage}
-                  alt="General Inquiries"
-                  className="relative w-36 h-36 sm:w-44 sm:h-44 lg:w-52 lg:h-52 object-contain drop-shadow-xl"
-                />
-              </div>
-
-              {/* Text content - more narrative and editorial */}
-              <div className="flex flex-col text-center lg:text-left">
-                {/* Eyebrow */}
-                <span 
-                  className="text-xs font-sans uppercase tracking-[0.2em] mb-3 lg:mb-4"
-                  style={{ color: "hsl(348 45% 45%)" }}
-                >
-                  REACH OUT
-                </span>
-
-                {/* Headline */}
-                <h3 
-                  className="font-serif text-[24px] sm:text-[28px] lg:text-[32px] tracking-tight mb-4 lg:mb-5 leading-tight"
-                  style={{ color: "hsl(348 55% 22%)" }}
-                >
-                  General Inquiries
-                </h3>
-
-                {/* Body Text - more narrative, emotional */}
-                <p 
-                  className="text-base sm:text-[17px] lg:text-[18px] leading-relaxed mb-6 lg:mb-8"
-                  style={{ color: "hsl(24 15% 35%)" }}
-                >
-                  Have a question, want to volunteer, or just curious about Joy Drop? 
-                  We'd love to hear from you.
-                </p>
-
-                {/* Additional narrative element */}
-                <p 
-                  className="text-sm sm:text-[15px] leading-relaxed italic"
-                  style={{ color: "hsl(24 12% 50%)" }}
-                >
-                  "Connection is at the heart of everything we do. 
-                  Drop us a message and let's start a conversation."
-                </p>
-
-                {/* Decorative flourish */}
-                <div className="mt-8 lg:mt-10 flex items-center gap-3 opacity-40 justify-center lg:justify-start">
-                  <div className="w-10 h-px" style={{ background: "hsl(348 45% 40%)" }} />
-                  <div 
-                    className="w-1.5 h-1.5 rounded-full" 
-                    style={{ background: "hsl(348 45% 40%)" }} 
-                  />
-                  <div className="w-10 h-px" style={{ background: "hsl(348 45% 40%)" }} />
-                </div>
-              </div>
-            </div>
           </div>
 
-          {/* Right Card - Contact Form (35-40% width, functional & compact) */}
-          <div 
-            className={cn(
-              "relative",
-              "lg:flex-1", // ~37% of container
-              "bg-gradient-to-b from-white/90 to-white/75",
-              "backdrop-blur-sm",
-              "rounded-2xl lg:rounded-3xl",
-              "p-6 sm:p-8 lg:p-8",
-              "border border-white/60",
-              "shadow-[0_8px_32px_-8px_rgba(85,17,28,0.08)]",
-              "transition-all duration-500",
-              "hover:shadow-[0_12px_48px_-12px_rgba(85,17,28,0.12)]",
-            )}
-          >
-            {/* Subtle inner glow */}
-            <div 
-              className="absolute inset-0 rounded-2xl lg:rounded-3xl pointer-events-none"
-              style={{
-                background: "radial-gradient(ellipse at 50% 0%, hsl(36 60% 95% / 0.5) 0%, transparent 60%)",
-              }}
-            />
-
-            {/* Form Header - compact */}
-            <div className="relative text-center mb-6">
-              <h3 
-                className="font-serif text-[20px] sm:text-[22px] lg:text-[24px] tracking-tight mb-1.5"
-                style={{ color: "hsl(348 55% 22%)" }}
-              >
-                Send a Message
-              </h3>
-              <p 
-                className="text-sm"
-                style={{ color: "hsl(24 12% 50%)" }}
-              >
-                We'll get back to you soon
-              </p>
+          {/* Send a message */}
+          <div className="relative rounded-3xl border border-[#e9cdd1] bg-[#fdf8f6] p-6 sm:p-9 shadow-[0_12px_40px_-16px_rgba(110,20,40,0.25)]">
+            <div className="flex items-start gap-4">
+              <img
+                src={generalInquiriesImage}
+                alt=""
+                aria-hidden="true"
+                className="mt-1 h-12 w-14 object-contain"
+              />
+              <div>
+                <h3
+                  className="font-serif text-2xl sm:text-[32px] uppercase leading-tight tracking-wide"
+                  style={{ color: CRIMSON }}
+                >
+                  Send a message
+                </h3>
+                <p className="mt-1 font-sans text-base sm:text-lg text-foreground/70">
+                  We&rsquo;ll get back to you soon.
+                </p>
+              </div>
             </div>
 
-            {/* Contact Form - compact spacing */}
-            <form onSubmit={handleSubmit} className="relative space-y-4">
-              {/* Name Field */}
-              <div className="space-y-1.5">
-                <Label 
-                  htmlFor="name" 
-                  className="text-sm font-medium"
-                  style={{ color: "hsl(348 40% 28%)" }}
-                >
+            <form onSubmit={handleSubmit} className="mt-7 space-y-5">
+              <div className="space-y-2">
+                <Label htmlFor="name" className="text-base font-semibold text-foreground">
                   Name
                 </Label>
                 <Input
@@ -237,22 +191,12 @@ export const ContactSection = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className={cn(
-                    "bg-white/70 border-[hsl(348_20%_85%)] placeholder:text-[hsl(24_10%_60%)]",
-                    "focus-visible:bg-white focus-visible:border-[hsl(348_40%_60%)] focus-visible:ring-[hsl(348_40%_60%)/20]",
-                    "rounded-xl h-11 px-4 text-sm",
-                    "transition-all duration-300"
-                  )}
+                  className={cn(fieldClasses, "h-12")}
                 />
               </div>
 
-              {/* Email Field */}
-              <div className="space-y-1.5">
-                <Label 
-                  htmlFor="email" 
-                  className="text-sm font-medium"
-                  style={{ color: "hsl(348 40% 28%)" }}
-                >
+              <div className="space-y-2">
+                <Label htmlFor="email" className="text-base font-semibold text-foreground">
                   Email
                 </Label>
                 <Input
@@ -263,22 +207,12 @@ export const ContactSection = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className={cn(
-                    "bg-white/70 border-[hsl(348_20%_85%)] placeholder:text-[hsl(24_10%_60%)]",
-                    "focus-visible:bg-white focus-visible:border-[hsl(348_40%_60%)] focus-visible:ring-[hsl(348_40%_60%)/20]",
-                    "rounded-xl h-11 px-4 text-sm",
-                    "transition-all duration-300"
-                  )}
+                  className={cn(fieldClasses, "h-12")}
                 />
               </div>
 
-              {/* Message Field */}
-              <div className="space-y-1.5">
-                <Label 
-                  htmlFor="message" 
-                  className="text-sm font-medium"
-                  style={{ color: "hsl(348 40% 28%)" }}
-                >
+              <div className="space-y-2">
+                <Label htmlFor="message" className="text-base font-semibold text-foreground">
                   Message
                 </Label>
                 <Textarea
@@ -288,40 +222,18 @@ export const ContactSection = () => {
                   value={formData.message}
                   onChange={handleChange}
                   required
-                  rows={3}
-                  className={cn(
-                    "bg-white/70 border-[hsl(348_20%_85%)] placeholder:text-[hsl(24_10%_60%)]",
-                    "focus-visible:bg-white focus-visible:border-[hsl(348_40%_60%)] focus-visible:ring-[hsl(348_40%_60%)/20]",
-                    "rounded-xl px-4 py-2.5 resize-none text-sm",
-                    "transition-all duration-300"
-                  )}
+                  rows={4}
+                  className={cn(fieldClasses, "py-3 resize-none")}
                 />
               </div>
 
-              {/* Submit Button */}
-              <div className="pt-2">
-                <Button
-                  type="submit"
-                  size="lg"
-                  className={cn(
-                    "w-full",
-                    "h-11 sm:h-12",
-                    "rounded-xl",
-                    "font-serif text-base font-normal tracking-wide",
-                    "shadow-[0_4px_16px_-4px_rgba(85,17,28,0.25)]",
-                    "transition-all duration-300",
-                    "hover:shadow-[0_8px_24px_-6px_rgba(85,17,28,0.35)]",
-                    "hover:scale-[1.02]",
-                    "active:scale-[0.98]"
-                  )}
-                  style={{
-                    background: "linear-gradient(180deg, hsl(348 55% 32%) 0%, hsl(348 60% 25%) 100%)",
-                    color: "hsl(36 50% 95%)",
-                  }}
-                >
-                  Send Message
-                </Button>
-              </div>
+              <button
+                type="submit"
+                className="mt-2 w-full rounded-xl py-4 font-sans text-lg font-medium text-white shadow-[0_8px_20px_-8px_rgba(110,20,40,0.6)] transition-[filter,transform] hover:brightness-110 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b8556b] focus-visible:ring-offset-2"
+                style={{ background: "linear-gradient(180deg, #8a1f38 0%, #6a1228 100%)" }}
+              >
+                Send Message
+              </button>
             </form>
           </div>
         </div>
