@@ -204,18 +204,28 @@ export const UpdatesSection = () => {
   const [featured, ...rest] = SAMPLE_UPDATES;
 
   return (
-    <section id="updates-list" data-section="updates-list" className="w-full">
+    <section id="updates-list" data-section="updates-list" className="relative w-full">
       <UpdateCard key={featured.id} {...featured} featured />
 
       {rest.length > 0 && (
         <>
+          {/* Ribbon trailing off to the right (phones) */}
+          <svg
+            className="pointer-events-none absolute right-0 mt-6 h-16 w-[55%] sm:hidden"
+            viewBox="0 0 220 60"
+            preserveAspectRatio="none"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path d="M0 52 C 60 58, 120 30, 170 18 C 195 12, 210 14, 230 20" stroke="#efb9c3" strokeWidth="7" strokeLinecap="round" strokeOpacity="0.7" />
+          </svg>
           <h2
-            className="mt-14 sm:mt-16 font-serif leading-tight tracking-tight text-[#3a2420]"
+            className="relative mt-10 sm:mt-16 font-serif leading-tight tracking-tight text-[#3a2420]"
             style={{ fontSize: "clamp(1.875rem, 3.4vw, 2.75rem)" }}
           >
             More from Joy Drop
           </h2>
-          <div className="mt-6 space-y-6">
+          <div className="mt-4 space-y-3 sm:mt-6 sm:space-y-6">
             {rest.map(({ id, ...update }) => (
               <UpdateCard key={id} {...update} />
             ))}

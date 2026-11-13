@@ -6,21 +6,25 @@ const FACEBOOK_URL = "https://facebook.com/profile.php?id=61586823822277";
 const EMAIL = "hello@joydrop.app";
 
 const linkClasses =
-  "font-sans text-base sm:text-lg text-white/90 transition-colors hover:text-white focus-visible:outline-none focus-visible:underline text-left";
+  "font-sans text-lg text-white/90 transition-colors hover:text-white focus-visible:outline-none focus-visible:underline text-left";
 
 const headingClasses =
   "font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#e8a3ae]";
 
 /** Satin ribbon curling down the right edge of the footer. */
-const FooterRibbon = () => (
+const FooterRibbon = ({ mobile = false }: { mobile?: boolean }) => (
   <svg
-    className="absolute right-0 top-0 hidden h-full w-[38%] max-w-[560px] pointer-events-none md:block"
+    className={
+      mobile
+        ? "absolute right-0 top-[26%] h-[calc(74%-126px)] w-[78%] pointer-events-none md:hidden"
+        : "absolute right-0 top-0 hidden h-full w-[38%] max-w-[560px] pointer-events-none md:block"
+    }
     viewBox="0 0 560 520"
-    preserveAspectRatio="xMaxYMin meet"
+    preserveAspectRatio={mobile ? "none" : "xMaxYMin meet"}
     aria-hidden="true"
   >
     <defs>
-      <linearGradient id="footer-ribbon" x1="0" x2="1" y1="1" y2="0">
+      <linearGradient id={mobile ? "footer-ribbon-m" : "footer-ribbon"} x1="0" x2="1" y1="1" y2="0">
         <stop offset="0%" stopColor="#a8344f" stopOpacity="0.15" />
         <stop offset="45%" stopColor="#b8435c" stopOpacity="0.7" />
         <stop offset="100%" stopColor="#c9566f" stopOpacity="0.85" />
@@ -32,7 +36,7 @@ const FooterRibbon = () => (
          C 520 190, 440 150, 470 80 C 490 35, 530 15, 580 0
          L 580 22 C 545 35, 508 55, 492 92 C 466 150, 545 190, 580 250
          C 612 310, 540 340, 455 355 C 310 382, 180 445, 80 520 Z"
-      fill="url(#footer-ribbon)"
+      fill={mobile ? "url(#footer-ribbon-m)" : "url(#footer-ribbon)"}
     />
     {/* Highlight along the outer edge for a satin sheen */}
     <path
@@ -78,10 +82,11 @@ export const Footer = () => {
       style={{ background: "linear-gradient(180deg, #5e0d1f 0%, #560b1c 100%)" }}
     >
       <FooterRibbon />
+      <FooterRibbon mobile />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Brand + call to action */}
-        <div className="flex flex-col gap-10 pt-14 pb-10 md:pt-16 lg:flex-row lg:items-start lg:justify-between">
+        <div className="flex flex-col gap-5 pt-10 pb-7 sm:gap-10 sm:pt-14 sm:pb-10 md:pt-16 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-2xl">
             <p
               className="font-serif text-white leading-none tracking-tight"
@@ -89,7 +94,7 @@ export const Footer = () => {
             >
               Joy Drop
             </p>
-            <p className="mt-5 font-sans text-lg sm:text-[22px] leading-relaxed text-white/85">
+            <p className="mt-3 font-sans text-lg sm:mt-5 sm:text-[22px] leading-snug sm:leading-relaxed text-white/85">
               A community-powered Christmas drive helping children feel remembered&mdash;during the
               holidays and beyond.
             </p>
@@ -99,7 +104,7 @@ export const Footer = () => {
             <p className={headingClasses}>Ready to make a little joy?</p>
             <Link
               to={ROUTES.SPONSOR_A_CHILD}
-              className="mt-4 inline-flex items-center gap-4 rounded-md bg-[#fbf3ec] px-8 py-4 font-sans text-sm sm:text-base font-semibold uppercase tracking-[0.2em] text-[#5e0d1f] shadow-lg transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#5e0d1f]"
+              className="mt-3 inline-flex items-center gap-4 rounded-md bg-[#fbf3ec] px-7 py-3.5 sm:mt-4 sm:px-8 sm:py-4 font-sans text-sm sm:text-base font-semibold uppercase tracking-[0.2em] text-[#5e0d1f] shadow-lg transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#5e0d1f]"
             >
               Choose a wish list
               <ArrowRight className="h-5 w-5" />
@@ -110,10 +115,10 @@ export const Footer = () => {
         <div className="h-px bg-[#e8a3ae]/30" aria-hidden="true" />
 
         {/* Link columns */}
-        <div className="grid gap-10 py-10 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr] lg:py-12">
+        <div className="grid gap-6 py-6 sm:gap-10 sm:py-10 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr] lg:py-12">
           <nav aria-label="Get involved">
             <h3 className={headingClasses}>Get involved</h3>
-            <ul className="mt-5 space-y-2.5">
+            <ul className="mt-2 space-y-0.5 sm:mt-5 sm:space-y-2.5">
               <li>
                 <Link to={ROUTES.SPONSOR_A_CHILD} className={linkClasses}>
                   Fulfill a Wish
@@ -139,7 +144,7 @@ export const Footer = () => {
 
           <nav aria-label="Learn more">
             <h3 className={headingClasses}>Learn more</h3>
-            <ul className="mt-5 space-y-2.5">
+            <ul className="mt-2 space-y-0.5 sm:mt-5 sm:space-y-2.5">
               <li>
                 <button onClick={() => scrollToSection("what-this-is-about")} className={linkClasses}>
                   About Joy Drop
@@ -165,7 +170,7 @@ export const Footer = () => {
 
           <div>
             <h3 className={headingClasses}>Connect</h3>
-            <ul className="mt-5 space-y-4">
+            <ul className="mt-3 space-y-3 sm:mt-5 sm:space-y-4">
               <li>
                 <a
                   href={FACEBOOK_URL}
@@ -197,7 +202,7 @@ export const Footer = () => {
 
       {/* Legal row */}
       <div className="relative border-t border-[#e8a3ae]/25 bg-[#4a0917]/70">
-        <div className="max-w-7xl mx-auto flex flex-col items-center gap-4 px-4 py-6 text-center font-sans text-sm sm:text-base text-white/80 sm:px-6 lg:flex-row lg:justify-between lg:px-8 lg:text-left">
+        <div className="max-w-7xl mx-auto flex flex-col items-center gap-3 px-4 py-6 text-center font-sans text-sm sm:text-base text-white/80 sm:px-6 lg:flex-row lg:justify-between lg:px-8 lg:text-left">
           <span>&copy; {new Date().getFullYear()} Joy Drop</span>
           <div className="flex items-center gap-4">
             <a

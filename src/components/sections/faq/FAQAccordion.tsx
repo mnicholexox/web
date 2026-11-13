@@ -70,7 +70,7 @@ export const FAQAccordion = () => {
   };
 
   return (
-    <div className="space-y-4 sm:space-y-5">
+    <div className="space-y-3 sm:space-y-5">
       {faqItems.map((item) => {
         const isOpen = openId === item.id;
 
@@ -89,7 +89,7 @@ export const FAQAccordion = () => {
             <button
               type="button"
               onClick={() => toggleItem(item.id)}
-              className="flex w-full items-center gap-4 rounded-2xl px-4 py-3.5 text-left sm:gap-6 sm:px-7 sm:py-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c98a96] focus-visible:ring-offset-2"
+              className="flex w-full items-center gap-4 rounded-2xl px-4 py-3 text-left sm:gap-6 sm:px-7 sm:py-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c98a96] focus-visible:ring-offset-2"
               aria-expanded={isOpen}
               aria-controls={`faq-answer-${item.id}`}
             >
@@ -104,7 +104,7 @@ export const FAQAccordion = () => {
               </span>
 
               {/* Question Text */}
-              <span className="flex-1 font-sans text-base font-medium leading-snug text-[#3a2420] sm:text-xl md:text-2xl">
+              <span className="flex-1 font-sans text-[17px] font-medium leading-snug text-[#3a2420] sm:text-xl md:text-2xl">
                 {item.question}
               </span>
 

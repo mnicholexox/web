@@ -20,11 +20,26 @@ import { CategoryThumbnailCarousel, CarouselSlide } from "./CategoryThumbnailCar
 
 /* Decorative divider with sparkles */
 const SparklesDivider = () => (
-  <div className="flex items-center justify-center gap-3 py-4 md:py-6">
-    <div className="w-12 h-px bg-primary/20" />
-    <Sparkles className="w-4 h-4 text-primary/40" strokeWidth={1.5} />
-    <div className="w-12 h-px bg-primary/20" />
+  <div className="flex items-center justify-center gap-3 py-4 md:py-5">
+    <div className="w-14 h-px bg-[#a2283f]/50" />
+    <Sparkles className="w-4 h-4 text-[#a2283f]" strokeWidth={1.5} />
+    <div className="w-14 h-px bg-[#a2283f]/50" />
   </div>
+);
+
+/* Little burst lines either side of the needed items */
+const Rays = ({ side }: { side: "left" | "right" }) => (
+  <svg
+    className={`block h-10 w-5 shrink-0 text-[#6e1428] sm:h-14 sm:w-8 ${side === "right" ? "-scale-x-100" : ""}`}
+    viewBox="0 0 32 56"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    aria-hidden="true"
+  >
+    <path d="M18 10 L 28 16 M6 28 H 24 M18 46 L 28 40" />
+  </svg>
 );
 
 /* Admin Pill Component */
@@ -104,7 +119,7 @@ const CategoryThumbnailImage = ({
   return (
     <div className="relative">
       <div
-        className="h-[100px] md:h-[110px] rounded-lg overflow-hidden border border-border/20 flex items-center justify-center relative group"
+        className="h-[78px] min-[400px]:h-[88px] sm:h-[110px] md:h-[130px] rounded-xl overflow-hidden border border-border/20 flex items-center justify-center relative group"
         style={{
           background: uploadedImage ? undefined : thumbnail.bgColor,
           boxShadow: "0 2px 8px hsl(344 35% 50% / 0.08)",
@@ -190,22 +205,22 @@ const StatColumn = ({
   value,
   label,
 }: StatColumnProps) => (
-  <div className="flex flex-col items-center text-center">
+  <div className="flex flex-col items-center px-2 text-center md:px-6">
     {/* Column Header with Icon */}
-    <div className="flex items-center gap-2 mb-4">
-      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+    <div className="flex items-center gap-2 mb-2 text-left sm:gap-3 sm:mb-3">
+      <div className="flex-shrink-0 w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#f8e4e6] text-[#8a1f38] flex items-center justify-center">
         {icon}
       </div>
-      <span className="text-sm font-medium text-foreground/80">{title}</span>
+      <span className="font-sans text-[13px] leading-tight sm:text-base font-semibold text-[#3a2420]">{title}</span>
     </div>
 
     {/* Large Number */}
-    <div className="font-serif text-[42px] sm:text-[52px] md:text-[60px] text-foreground leading-none tracking-tight mb-2">
+    <div className="font-serif text-[52px] sm:text-[60px] md:text-[68px] text-[#5e1022] leading-none tracking-tight mb-2">
       {value}
     </div>
 
     {/* Label Under Number */}
-    <p className="text-sm text-muted-foreground font-medium">{label}</p>
+    <p className="font-sans text-[13px] leading-snug sm:text-sm text-foreground/70">{label}</p>
   </div>
 );
 
@@ -250,7 +265,7 @@ export const PreLovedImpact = () => {
 
   const statsData = [
     {
-      icon: <Package className="w-4 h-4 text-primary/70" strokeWidth={1.5} />,
+      icon: <Package className="w-5 h-5" strokeWidth={1.6} />,
       title: "Pre-Loved Items Collected",
       value: "6",
       label: "Items donated this season",
@@ -263,7 +278,7 @@ export const PreLovedImpact = () => {
     //   label: "Clean, wrapped & matched",
     // },
     {
-      icon: <Clock className="w-4 h-4 text-primary/70" strokeWidth={1.5} />,
+      icon: <Clock className="w-5 h-5" strokeWidth={1.6} />,
       title: "Still In Progress",
       value: "4",
       label: "Being cleaned, refurbished, & wrapped with care",
@@ -350,7 +365,7 @@ export const PreLovedImpact = () => {
     <section
       id="pre-loved-impact"
       data-section="pre-loved-impact"
-      className="relative w-full pt-28 sm:pt-36 pb-20 sm:pb-28 overflow-hidden"
+      className="relative w-full pt-6 sm:pt-8 pb-16 sm:pb-20 overflow-hidden"
     >
       {/* Admin Pill */}
       {isAdmin && <AdminPill onLogout={disableAdmin} />}
@@ -391,13 +406,16 @@ export const PreLovedImpact = () => {
 
       <div className="relative z-10 max-w-[1200px] mx-auto px-6 md:px-8">
         {/* Section Header - Centered */}
-        <div className="text-center mb-8 sm:mb-10">
-          <h2 className="font-serif text-xl sm:text-2xl md:text-[28px] lg:text-[32px] text-foreground leading-tight tracking-tight mb-4">
+        <div className="text-center">
+          <h2
+            className="font-serif text-[#5e1022] leading-[1.08] tracking-tight"
+            style={{ fontSize: "clamp(1.875rem, 3.6vw, 2.75rem)" }}
+          >
             Your Pre-Loved Items Making an Impact
           </h2>
 
           {/* Subheadline */}
-          <p className="text-foreground/60 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-2 font-sans text-foreground/80 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
             Every donated item is restored, matched, and delivered with care.
           </p>
         </div>
@@ -409,18 +427,10 @@ export const PreLovedImpact = () => {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
           {/* Frosted Glass Card Container - spans 3 columns */}
           <div
-            className="lg:col-span-3 rounded-2xl border border-white/40 px-6 pt-6 sm:px-8 sm:pt-8 md:px-10 md:pt-10 pb-[11px]"
-            style={{
-              background:
-                "linear-gradient(135deg, hsl(0 0% 100% / 0.7) 0%, hsl(0 0% 100% / 0.5) 100%)",
-              backdropFilter: "blur(16px)",
-              WebkitBackdropFilter: "blur(16px)",
-              boxShadow:
-                "0 8px 32px hsl(344 35% 50% / 0.08), 0 2px 8px hsl(0 0% 0% / 0.04)",
-            }}
+            className="lg:col-span-3 rounded-3xl border border-[#f0dcdc] bg-[#fffcfa]/95 px-3 pt-6 pb-7 sm:px-8 sm:pt-7 sm:pb-8 md:px-10 shadow-[0_18px_44px_-26px_rgba(110,20,40,0.35)]"
           >
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6 lg:gap-10 mb-8">
+            <div className="grid grid-cols-2 divide-x divide-[#ecd3d7] mb-7 sm:mb-8">
               {statsData.map((item, index) => (
                 <StatColumn
                   key={index}
@@ -433,13 +443,13 @@ export const PreLovedImpact = () => {
             </div>
 
             {/* Thumbnails Grid - First row: centered */}
-            <div className="flex flex-wrap justify-center gap-3">
+            <div className="grid grid-cols-3 gap-2 sm:gap-4">
               {/* Doll Houses Carousel - 1st item */}
-              <div className="w-[calc(50%-6px)] sm:w-[calc(25%-9px)]">
+              <div>
                 <CategoryThumbnailCarousel slides={dollHousesCarouselSlides} />
               </div>
               {regularThumbnailsData.map((thumbnail) => (
-                <div key={thumbnail.id} className="flex flex-col w-[calc(50%-6px)] sm:w-[calc(25%-9px)]">
+                <div key={thumbnail.id} className="flex flex-col">
                   <CategoryThumbnailImage
                     thumbnail={thumbnail}
                     isAdmin={isAdmin}
@@ -447,41 +457,35 @@ export const PreLovedImpact = () => {
                     onUpload={handleThumbnailUpload}
                     onRemove={handleThumbnailRemove}
                   />
-                  {/* Category Label - Small Caps Serif Style */}
-                  <span
-                    className="mt-2 text-[10px] md:text-[11px] font-serif tracking-[0.08em] text-foreground/60 uppercase text-center"
-                    style={{ fontVariant: "small-caps" }}
-                  >
+                  {/* Category label pill */}
+                  <span className="relative z-10 -mt-4 mx-auto rounded-full bg-white whitespace-nowrap px-2 py-1 sm:px-4 sm:py-1.5 font-sans text-[9px] sm:text-xs font-semibold uppercase tracking-[0.04em] sm:tracking-[0.12em] text-[#6e1428] shadow-[0_6px_14px_-8px_rgba(110,20,40,0.5)] text-center">
                     {thumbnail.label}
                   </span>
                 </div>
               ))}
               {/* MISC Carousel - 3rd item */}
-              <div className="w-[calc(50%-6px)] sm:w-[calc(25%-9px)]">
+              <div>
                 <CategoryThumbnailCarousel slides={miscCarouselSlides} />
               </div>
             </div>
 
             {/* "These items are needed" Header */}
-            <div className="mt-6 mb-3 text-center">
-              <span className="text-xs sm:text-sm font-medium text-primary/80 tracking-wide">
-                These items are needed.
+            <div className="mt-8 mb-4 flex items-center gap-4">
+              <span className="h-px flex-1 bg-[#e3b9c0]" aria-hidden="true" />
+              <span className="rounded-full bg-[#f8e1e4] px-5 py-1.5 font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.14em] text-[#8a1f38]">
+                These items are needed
               </span>
+              <span className="h-px flex-1 bg-[#e3b9c0]" aria-hidden="true" />
             </div>
 
             {/* Thumbnails Grid - Second row: Needed items with special styling */}
-            <div className="flex flex-wrap justify-center gap-3">
+            <div className="flex items-center justify-center gap-3 sm:gap-5">
+              <Rays side="left" />
+              <div className="grid flex-1 grid-cols-2 gap-3 max-w-[300px] sm:max-w-[420px] sm:gap-5">
               {neededThumbnailsData.map((thumbnail) => (
-                <div key={thumbnail.id} className="flex flex-col w-[calc(50%-6px)] sm:w-[calc(25%-9px)]">
-                  {/* Wrapper with dashed border and glow */}
-                  <div
-                    className="rounded-xl p-1"
-                    style={{
-                      border: "2px dashed hsl(344 35% 65% / 0.5)",
-                      boxShadow:
-                        "0 0 12px hsl(344 35% 70% / 0.25), 0 0 4px hsl(344 35% 60% / 0.15)",
-                    }}
-                  >
+                <div key={thumbnail.id} className="flex flex-col">
+                  {/* Wrapper with dashed border and soft pink fill */}
+                  <div className="rounded-2xl border-2 border-dashed border-[#e3a9b4] bg-[#fbe9eb] p-2 pb-1.5">
                     <CategoryThumbnailImage
                       thumbnail={thumbnail}
                       isAdmin={isAdmin}
@@ -489,16 +493,14 @@ export const PreLovedImpact = () => {
                       onUpload={handleThumbnailUpload}
                       onRemove={handleThumbnailRemove}
                     />
+                    <span className="relative z-10 -mt-3.5 mx-auto rounded-full bg-white whitespace-nowrap px-2 py-1 sm:px-4 sm:py-1.5 font-sans text-[9px] sm:text-xs font-semibold uppercase tracking-[0.04em] sm:tracking-[0.12em] text-[#6e1428] shadow-[0_6px_14px_-8px_rgba(110,20,40,0.5)] text-center block w-fit">
+                      {thumbnail.label}
+                    </span>
                   </div>
-                  {/* Category Label - Small Caps Serif Style */}
-                  <span
-                    className="mt-2 text-[10px] md:text-[11px] font-serif tracking-[0.08em] text-foreground/60 uppercase text-center"
-                    style={{ fontVariant: "small-caps" }}
-                  >
-                    {thumbnail.label}
-                  </span>
                 </div>
               ))}
+              </div>
+              <Rays side="right" />
             </div>
           </div>
 

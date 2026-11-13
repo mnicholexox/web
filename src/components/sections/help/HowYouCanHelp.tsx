@@ -112,7 +112,7 @@ const VARIANT_STYLES: Record<
 /** Little burst lines on either side of the icon circle. */
 const Rays = ({ side }: { side: "left" | "right" }) => (
   <svg
-    className={`h-10 w-6 ${side === "right" ? "-scale-x-100" : ""}`}
+    className={`h-8 w-5 sm:h-10 sm:w-6 ${side === "right" ? "-scale-x-100" : ""}`}
     viewBox="0 0 24 40"
     fill="none"
     stroke="currentColor"
@@ -150,7 +150,7 @@ const HelpCard = ({ option }: { option: HelpOption }) => {
 
   return (
     <article
-      className={`relative flex flex-col items-center overflow-hidden rounded-3xl px-6 pt-16 pb-8 text-center sm:px-8 lg:px-6 xl:px-8 ${styles.card}`}
+      className={`relative flex flex-col items-center overflow-hidden rounded-3xl px-4 pt-4 pb-5 text-center sm:px-8 sm:pt-16 sm:pb-8 lg:px-6 xl:px-8 ${styles.card}`}
       style={
         option.variant === "crimson"
           ? { background: `linear-gradient(160deg, #7a1a30 0%, ${CRIMSON} 60%, #5e1022 100%)` }
@@ -160,16 +160,16 @@ const HelpCard = ({ option }: { option: HelpOption }) => {
       {option.variant === "crimson" && <CornerRibbon />}
 
       <span
-        className={`absolute right-6 top-6 rounded-full px-4 py-1.5 font-sans text-[11px] font-semibold uppercase tracking-[0.2em] ${styles.badge}`}
+        className={`absolute right-3 top-3 rounded-full px-2.5 py-1 font-sans text-[9px] max-sm:!tracking-[0.14em] sm:right-6 sm:top-6 sm:px-4 sm:py-1.5 sm:text-[11px] font-semibold uppercase tracking-[0.2em] ${styles.badge}`}
       >
         {option.badge}
       </span>
 
-      <div className="relative mt-4 flex items-center gap-2">
+      <div className="relative flex items-center gap-1 sm:mt-4 sm:gap-2">
         <span className={styles.rays}>
           <Rays side="left" />
         </span>
-        <span className={`flex h-24 w-24 items-center justify-center rounded-full ${styles.iconCircle}`}>
+        <span className={`flex h-16 w-16 items-center justify-center rounded-full max-sm:[&>svg]:h-9 max-sm:[&>svg]:w-9 sm:h-24 sm:w-24 ${styles.iconCircle}`}>
           {option.icon}
         </span>
         <span className={styles.rays}>
@@ -177,19 +177,19 @@ const HelpCard = ({ option }: { option: HelpOption }) => {
         </span>
       </div>
 
-      <h3 className={`relative mt-6 font-serif text-[30px] leading-tight sm:text-[34px] ${styles.title}`}>
+      <h3 className={`relative mt-2 font-serif text-[28px] leading-tight sm:mt-6 sm:text-[34px] ${styles.title}`}>
         {option.title}
       </h3>
-      <p className={`relative mt-3 max-w-[300px] font-sans text-base leading-relaxed sm:text-lg ${styles.body}`}>
+      <p className={`relative mt-1 max-w-[330px] max-sm:max-w-none font-sans text-[14px] leading-snug sm:mt-3 sm:max-w-[300px] sm:text-lg sm:leading-relaxed ${styles.body}`}>
         {option.description}
       </p>
 
       {/* Spacer keeps buttons aligned along the bottom when cards share a row */}
-      <div className="min-h-8 flex-1" aria-hidden="true" />
+      <div className="min-h-4 flex-1 sm:min-h-8" aria-hidden="true" />
 
       <Link
         to={option.to}
-        className={`relative inline-flex w-full max-w-[340px] items-center justify-center gap-3 rounded-full px-6 py-4 whitespace-nowrap font-sans text-sm font-semibold uppercase tracking-[0.14em] lg:px-4 lg:text-[13px] lg:tracking-[0.1em] xl:px-6 xl:text-base xl:tracking-[0.14em] shadow-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c98a96] focus-visible:ring-offset-2 sm:text-base lg:text-[13px] xl:text-base ${styles.button}`}
+        className={`relative inline-flex w-full max-w-[270px] items-center justify-center gap-3 rounded-full px-6 py-3 sm:max-w-[340px] sm:py-4 whitespace-nowrap font-sans text-sm font-semibold uppercase tracking-[0.14em] lg:px-4 lg:text-[13px] lg:tracking-[0.1em] xl:px-6 xl:text-base xl:tracking-[0.14em] shadow-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c98a96] focus-visible:ring-offset-2 sm:text-base lg:text-[13px] xl:text-base ${styles.button}`}
       >
         {option.ctaText}
         <ArrowRight className="h-4 w-4" />
@@ -211,7 +211,7 @@ export const HowYouCanHelp = () => {
     <section
       id="how-you-can-help"
       data-section="how-you-can-help"
-      className="w-full py-14 md:py-20 bg-background"
+      className="w-full pt-8 pb-14 md:py-20 bg-background"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
@@ -223,26 +223,25 @@ export const HowYouCanHelp = () => {
             Make a difference
           </span>
           <h2
-            className="mt-4 font-serif text-foreground leading-[1.05] tracking-tight"
-            style={{ fontSize: "clamp(2.25rem, 5vw, 4rem)" }}
+            className="mt-3 sm:mt-4 font-serif text-foreground leading-[1.02] sm:leading-[1.05] tracking-tight text-[40px] sm:text-[clamp(2.25rem,5vw,4rem)]"
           >
             Choose how you&rsquo;ll show up.
           </h2>
-          <p className="mt-4 mx-auto max-w-2xl font-sans text-base sm:text-lg leading-relaxed text-foreground/70">
+          <p className="mt-3 sm:mt-4 mx-auto max-w-2xl font-sans text-base sm:text-lg leading-snug sm:leading-relaxed text-foreground/75 sm:text-foreground/70">
             Whether you shop, give, or volunteer, every contribution helps a child feel remembered.
           </p>
         </div>
 
         {/* Cards */}
-        <div className="mt-10 md:mt-14 grid gap-6 mx-auto max-w-xl lg:max-w-none lg:grid-cols-3 lg:gap-6 xl:gap-7">
+        <div className="mt-6 md:mt-14 grid gap-3 sm:gap-6 mx-auto max-w-xl lg:max-w-none lg:grid-cols-3 lg:gap-6 xl:gap-7">
           {OPTIONS.map((option) => (
             <HelpCard key={option.title} option={option} />
           ))}
         </div>
 
         {/* Closing note */}
-        <div className="mt-10 md:mt-12 text-center">
-          <p className="font-sans text-sm sm:text-base text-foreground/65">
+        <div className="mt-6 sm:mt-10 md:mt-12 text-center">
+          <p className="font-sans text-[13px] min-[400px]:text-sm sm:text-base text-foreground/75 sm:text-foreground/65">
             Not sure where to begin? We&rsquo;ll help you find the right fit.
           </p>
           <a

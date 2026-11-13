@@ -105,24 +105,25 @@ export const LadiesCraftCrewCard = ({ isAdmin = false }: LadiesCraftCrewCardProp
   };
 
   return (
-    <div
-      className="rounded-2xl border border-white/40 p-6 sm:p-8 h-full flex flex-col"
-      style={{
-        background:
-          "linear-gradient(135deg, hsl(0 0% 100% / 0.7) 0%, hsl(0 0% 100% / 0.5) 100%)",
-        backdropFilter: "blur(16px)",
-        WebkitBackdropFilter: "blur(16px)",
-        boxShadow:
-          "0 8px 32px hsl(344 35% 50% / 0.08), 0 2px 8px hsl(0 0% 0% / 0.04)",
-      }}
-    >
+    <div className="relative h-full overflow-hidden rounded-3xl border border-[#f0d6d9] bg-gradient-to-b from-[#fdf4f4] to-[#f9e6e8] px-5 pt-6 pb-7 sm:px-12 sm:pb-8 shadow-[0_18px_44px_-26px_rgba(110,20,40,0.35)] lg:flex lg:flex-col lg:px-8 lg:pt-7">
+      {/* Ribbon curling along the bottom edge */}
+      <svg
+        className="pointer-events-none absolute bottom-0 right-0 hidden h-20 w-[85%] lg:block"
+        viewBox="0 0 300 80"
+        preserveAspectRatio="none"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path d="M0 78 C 80 60, 140 76, 200 50 C 240 32, 270 20, 300 6" stroke="#e48a9e" strokeOpacity="0.7" strokeWidth="4" strokeLinecap="round" />
+      </svg>
+
       {/* Location Tag */}
-      <span className="inline-block self-start text-[10px] md:text-[11px] font-sans uppercase tracking-[0.15em] text-primary/50 mb-2">
+      <span className="relative block font-sans text-[11px] sm:text-xs lg:text-[10px] xl:text-[11px] font-medium uppercase tracking-[0.2em] lg:tracking-[0.1em] text-[#8a1f38]">
         Twin Lakes, Hoschton, GA
       </span>
 
       {/* Title */}
-      <h3 className="font-serif text-lg md:text-xl text-foreground leading-tight tracking-tight mb-4">
+      <h3 className="relative mt-2 mb-4 font-serif text-[26px] sm:text-[30px] text-[#5e1022] leading-[1.08] tracking-tight">
         Meet the Ladies Craft Crew
       </h3>
 
@@ -156,8 +157,10 @@ export const LadiesCraftCrewCard = ({ isAdmin = false }: LadiesCraftCrewCardProp
         </div>
       )}
 
+      {/* Photos beside the story on smaller screens, stacked in the narrow desktop column */}
+      <div className="relative grid grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] items-center gap-5 sm:gap-8 lg:flex lg:flex-1 lg:flex-col lg:items-stretch lg:gap-0">
       {/* Image Carousel */}
-      <div className="mb-4 overflow-visible">
+      <div className="overflow-visible lg:mb-4">
         <ImageCarousel
           images={allImages}
           className=""
@@ -167,11 +170,12 @@ export const LadiesCraftCrewCard = ({ isAdmin = false }: LadiesCraftCrewCardProp
       </div>
 
       {/* Description */}
-      <p className="text-sm text-foreground/70 leading-relaxed mt-auto">
+      <p className="font-sans text-sm sm:text-base text-foreground/80 leading-snug sm:leading-relaxed lg:mt-auto lg:pb-6">
         Once a month, our crew gathers to restore and upcycle high-ticket
         donations — like dollhouses and play kitchens — so they feel brand new
         for the children who receive them.
       </p>
+      </div>
     </div>
   );
 };

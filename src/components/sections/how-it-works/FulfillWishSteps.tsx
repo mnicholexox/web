@@ -7,7 +7,7 @@ const iconProps = {
   strokeWidth: 2,
   strokeLinecap: "round" as const,
   strokeLinejoin: "round" as const,
-  className: "relative h-14 w-14",
+  className: "relative h-12 w-12 md:h-14 md:w-14",
   "aria-hidden": true,
 };
 
@@ -89,9 +89,9 @@ const PanelRibbons = () => (
 
 export const FulfillWishSteps = () => {
   return (
-    <section aria-labelledby="fulfill-wish-heading" className="pt-12 sm:pt-16 md:pt-20 pb-16 sm:pb-20">
+    <section aria-labelledby="fulfill-wish-heading" className="pt-0 md:pt-20 pb-16 sm:pb-20">
       <div
-        className="relative overflow-hidden px-4 py-14 sm:px-6 md:py-20 lg:px-8"
+        className="relative overflow-hidden px-4 pt-0 pb-14 sm:px-6 md:py-20 lg:px-8"
         style={{
           background:
             "radial-gradient(ellipse at 30% 0%, rgba(160, 40, 70, 0.55) 0%, transparent 55%), linear-gradient(180deg, #7a1a32 0%, #6a1429 55%, #5e1022 100%)",
@@ -100,25 +100,34 @@ export const FulfillWishSteps = () => {
         <PanelRibbons />
 
         <div className="relative mx-auto max-w-6xl">
-          {/* Header */}
-          <div className="text-center text-white">
-            <span className="block font-sans text-xs sm:text-sm font-medium uppercase tracking-[0.3em] text-white/85">
+          {/* Header - sits on cream above a wavy edge on phones, inside the crimson panel from md up */}
+          <div className="relative z-10 -mx-4 bg-background px-4 pb-6 pt-8 text-center sm:-mx-6 sm:px-6 md:mx-0 md:bg-transparent md:p-0 md:text-white">
+            <span className="block font-sans text-xs sm:text-sm font-medium uppercase tracking-[0.3em] text-[#a2283f] md:text-white/85">
               Three simple steps
             </span>
             <h2
               id="fulfill-wish-heading"
-              className="mt-4 font-serif text-white leading-[1.05] tracking-tight"
-              style={{ fontSize: "clamp(2.25rem, 4.5vw, 3.75rem)" }}
+              className="mt-3 md:mt-4 font-serif text-[#2e1a17] md:text-white leading-[1.02] md:leading-[1.05] tracking-tight text-[44px] md:text-[clamp(2.25rem,4.5vw,3.75rem)]"
             >
               How Fulfilling a Wish Works
             </h2>
-            <p className="mt-3 font-sans text-base sm:text-lg md:text-xl text-white/90">
+            <p className="mx-auto mt-3 max-w-[340px] font-sans text-base sm:text-lg md:max-w-none md:text-xl text-foreground/80 md:text-white/90">
               Choose a wish. Shop with ease. We&rsquo;ll take care of the final handoff.
             </p>
+
+            {/* Wavy cream edge dipping into the crimson panel (phones only) */}
+            <svg
+              className="absolute inset-x-0 top-full h-10 w-full text-background md:hidden"
+              viewBox="0 0 400 40"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+            >
+              <path d="M0 0 H400 V10 C 330 -6, 270 34, 200 30 C 130 26, 80 4, 0 18 Z" fill="currentColor" />
+            </svg>
           </div>
 
           {/* Steps */}
-          <ol className="relative mt-14 grid gap-12 md:mt-16 md:grid-cols-3 md:gap-6 lg:gap-8">
+          <ol className="relative mt-16 grid gap-10 md:mt-16 md:grid-cols-3 md:gap-6 lg:gap-8">
             {/* Thin line linking the number badges across the cards */}
             <span
               className="absolute left-[16%] right-[16%] top-0 hidden h-px bg-[#f3c9d0]/60 md:block"
@@ -128,29 +137,31 @@ export const FulfillWishSteps = () => {
             {STEPS.map((step) => (
               <li
                 key={step.number}
-                className="relative flex flex-col items-center rounded-2xl bg-gradient-to-b from-[#fdf6f5] to-[#f9e8ea] px-6 pt-12 pb-10 text-center shadow-[0_20px_40px_-20px_rgba(30,0,10,0.6)] sm:px-8"
+                className="relative flex flex-row items-center gap-3.5 rounded-2xl bg-gradient-to-b from-[#fdf6f5] to-[#f9e8ea] px-4 pt-9 pb-6 text-left shadow-[0_20px_40px_-20px_rgba(30,0,10,0.6)] sm:px-6 md:flex-col md:gap-0 md:px-8 md:pt-12 md:pb-10 md:text-center"
               >
                 <span
-                  className="absolute -top-8 flex h-16 w-16 items-center justify-center rounded-full border-4 border-[#f3c9d0]/70 bg-[#fbe6e9] font-serif text-2xl"
+                  className="absolute -top-6 left-1/2 flex h-12 w-12 -translate-x-1/2 items-center justify-center rounded-full border-4 border-[#f3c9d0]/70 bg-[#fbe6e9] font-serif text-xl md:-top-8 md:h-16 md:w-16 md:text-2xl"
                   style={{ color: CRIMSON }}
                 >
                   {step.number}
                 </span>
 
                 {/* Icon with soft blush halo */}
-                <span className="relative mt-2 flex h-20 w-20 items-center justify-center" style={{ color: CRIMSON }}>
-                  <span className="absolute inset-2 rounded-full bg-[#f6dfe2]" aria-hidden="true" />
+                <span className="relative flex h-20 w-20 shrink-0 items-center justify-center md:mt-2" style={{ color: CRIMSON }}>
+                  <span className="absolute inset-0 rounded-full bg-[#f6dfe2] md:inset-2" aria-hidden="true" />
                   {step.icon}
                 </span>
 
-                <h3
-                  className="mt-4 font-serif text-[26px] leading-tight text-foreground sm:text-[30px] md:text-[24px] lg:text-[27px] xl:text-[30px]"
-                >
-                  {step.title}
-                </h3>
-                <p className="mt-3 max-w-[340px] font-sans text-base sm:text-lg leading-relaxed text-foreground/75 md:text-base lg:text-lg">
-                  {step.description}
-                </p>
+                <div className="min-w-0 md:contents">
+                  <h3
+                    className="font-serif text-[22px] min-[400px]:text-[24px] leading-tight text-foreground sm:text-[28px] md:mt-4 md:text-[24px] lg:text-[27px] xl:text-[30px]"
+                  >
+                    {step.title}
+                  </h3>
+                  <p className="mt-1 max-w-[340px] font-sans text-[15px] sm:text-base leading-snug text-foreground/75 md:mt-3 md:leading-relaxed lg:text-lg">
+                    {step.description}
+                  </p>
+                </div>
               </li>
             ))}
           </ol>

@@ -58,7 +58,7 @@ export const ImageCarousel = ({
     <div className={`${className} overflow-visible`}>
       <div className="relative overflow-visible">
         {/* Image Container */}
-        <div className="relative h-[180px] md:h-[200px] rounded-lg overflow-hidden group">
+        <div className="relative h-[110px] min-[400px]:h-[130px] sm:h-[180px] md:h-[200px] rounded-xl overflow-hidden group">
           {images.map((image, index) => (
             <div
               key={image.id || index}
@@ -92,14 +92,14 @@ export const ImageCarousel = ({
           <>
             <button
               onClick={goToPrevious}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-10 md:-translate-x-12 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm border border-white/40 flex items-center justify-center text-foreground/70 hover:bg-white hover:text-foreground transition-all shadow-sm z-10"
+              className="absolute left-0 top-1/2 -translate-y-1/2 translate-x-1 sm:-translate-x-10 md:-translate-x-12 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/80 backdrop-blur-sm border border-white/40 flex items-center justify-center text-foreground/70 hover:bg-white hover:text-foreground transition-all shadow-sm z-10"
               aria-label="Previous image"
             >
               <ChevronLeft className="w-4 h-4" strokeWidth={2} />
             </button>
             <button
               onClick={goToNext}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-10 md:translate-x-12 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm border border-white/40 flex items-center justify-center text-foreground/70 hover:bg-white hover:text-foreground transition-all shadow-sm z-10"
+              className="absolute right-0 top-1/2 -translate-y-1/2 -translate-x-1 sm:translate-x-10 md:translate-x-12 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/80 backdrop-blur-sm border border-white/40 flex items-center justify-center text-foreground/70 hover:bg-white hover:text-foreground transition-all shadow-sm z-10"
               aria-label="Next image"
             >
               <ChevronRight className="w-4 h-4" strokeWidth={2} />

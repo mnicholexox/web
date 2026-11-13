@@ -6,20 +6,20 @@ const STEPS = [
     title: "Gifts arrive",
     description: "Our community provides toys and fulfills holiday wishes.",
     offset: "",
-    connector: "w-7 lg:w-16",
+    connector: "w-3 sm:w-7 lg:w-16",
   },
   {
     number: "02",
     title: "Resources stretch further",
     description: "Donated gifts allow limited funds to support needs beyond Christmas.",
-    offset: "ml-7 lg:ml-16",
-    connector: "w-5 lg:w-10",
+    offset: "ml-0 sm:ml-7 lg:ml-16",
+    connector: "w-2 sm:w-5 lg:w-10",
   },
   {
     number: "03",
     title: "Care continues",
     description: "Children receive support that helps them feel comfortable, confident, and included.",
-    offset: "ml-12 lg:ml-[104px]",
+    offset: "ml-0 sm:ml-12 lg:ml-[104px]",
   },
 ];
 
@@ -32,7 +32,7 @@ const iconProps = {
   strokeWidth: 1.75,
   strokeLinecap: "round" as const,
   strokeLinejoin: "round" as const,
-  className: "h-11 w-11",
+  className: "h-9 w-9 sm:h-11 sm:w-11",
   "aria-hidden": true,
 };
 
@@ -81,7 +81,7 @@ const CARE_ITEMS = [
 
 const RibbonHeart = () => (
   <svg
-    className="absolute inset-x-0 bottom-0 w-full h-auto pointer-events-none"
+    className="absolute inset-x-0 bottom-0 w-full h-auto pointer-events-none sm:left-auto sm:w-[60%] md:w-[44%] lg:inset-x-0 lg:w-full"
     viewBox="0 0 400 200"
     preserveAspectRatio="xMidYMax meet"
     aria-hidden="true"
@@ -124,25 +124,24 @@ export const WhereTheHeartComesIn = () => {
     <section
       id="where-the-heart-comes-in"
       data-section="where-the-heart-comes-in"
-      className="w-full py-14 md:py-20 bg-background"
+      className="w-full pt-4 pb-14 md:py-20 bg-background"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-12">
+        <div className="grid gap-6 sm:gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-12">
           {/* Left: purpose statement card */}
           <div
-            className="relative overflow-hidden rounded-3xl px-7 pt-12 pb-40 sm:px-10 sm:pt-16 sm:pb-48 lg:pb-52"
+            className="relative overflow-hidden rounded-3xl px-7 pt-7 pb-44 sm:px-10 sm:pt-16 sm:pb-56 lg:pb-52"
             style={{ background: `linear-gradient(160deg, #7a1a30 0%, ${CRIMSON} 55%, #5e1022 100%)` }}
           >
             <span className="relative block font-sans text-xs sm:text-sm font-medium uppercase tracking-[0.2em] text-white/85">
               Our purpose
             </span>
             <h2
-              className="relative mt-6 font-serif text-white leading-[1.05] tracking-tight"
-              style={{ fontSize: "clamp(2.25rem, 4vw, 3.5rem)" }}
+              className="relative mt-3 sm:mt-6 font-serif text-white leading-[1.05] tracking-tight text-[36px] min-[400px]:text-[40px] sm:text-[clamp(2.25rem,4vw,3.5rem)]"
             >
               Christmas is one morning. Feeling cared for should last all year.
             </h2>
-            <p className="relative mt-6 font-sans text-base sm:text-lg leading-relaxed text-white/85">
+            <p className="relative mt-4 sm:mt-6 font-sans text-[15px] sm:text-lg leading-snug sm:leading-relaxed text-white/85">
               Toy donations do more than fill a wish list. They help stretch limited funds so Joy Drop
               can respond to the everyday needs that shape a child&rsquo;s confidence, comfort, and
               well-being.
@@ -159,15 +158,15 @@ export const WhereTheHeartComesIn = () => {
               The ripple effect
             </span>
 
-            <ol className="mt-6">
+            <ol className="mt-4 sm:mt-6">
               {STEPS.map((step, i) => {
                 const isLast = i === STEPS.length - 1;
                 return (
-                  <li key={step.number} className={`relative flex gap-4 sm:gap-6 pb-10 ${step.offset}`}>
+                  <li key={step.number} className={`relative flex gap-4 sm:gap-6 pb-6 sm:pb-10 ${step.offset}`}>
                     {/* Curved connector to the next step's circle */}
                     {step.connector && (
                       <svg
-                        className={`absolute left-8 top-16 h-[calc(100%-4rem)] overflow-visible ${step.connector}`}
+                        className={`absolute left-6 top-12 h-[calc(100%-3rem)] sm:left-8 sm:top-16 sm:h-[calc(100%-4rem)] overflow-visible ${step.connector}`}
                         viewBox="0 0 100 100"
                         preserveAspectRatio="none"
                         aria-hidden="true"
@@ -185,7 +184,7 @@ export const WhereTheHeartComesIn = () => {
                     {/* Final step trails down to a heart */}
                     {isLast && (
                       <svg
-                        className="absolute left-8 top-16 h-12 w-6 overflow-visible"
+                        className="absolute left-[19px] top-12 h-10 w-6 sm:left-8 sm:top-16 sm:h-12 overflow-visible"
                         viewBox="0 0 24 48"
                         aria-hidden="true"
                       >
@@ -198,19 +197,19 @@ export const WhereTheHeartComesIn = () => {
                     )}
 
                     <span
-                      className="relative z-10 flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full font-serif text-2xl"
+                      className="relative z-10 flex h-12 w-12 sm:h-16 sm:w-16 flex-shrink-0 items-center justify-center rounded-full font-serif text-xl sm:text-2xl"
                       style={{ backgroundColor: "#f6dfe2", color: CRIMSON }}
                     >
                       {step.number}
                     </span>
-                    <div className="pt-1">
+                    <div className="sm:pt-1">
                       <h3
-                        className="font-serif leading-tight text-[28px] sm:text-[34px] lg:text-[38px]"
+                        className="font-serif leading-tight text-[23px] min-[400px]:text-[26px] sm:text-[34px] lg:text-[38px]"
                         style={{ color: CRIMSON }}
                       >
                         {step.title}
                       </h3>
-                      <p className="mt-2 font-sans text-base sm:text-lg leading-relaxed text-foreground/85">
+                      <p className="mt-1 sm:mt-2 font-sans text-base sm:text-lg leading-snug sm:leading-relaxed text-foreground/85">
                         {step.description}
                       </p>
                     </div>
@@ -220,23 +219,23 @@ export const WhereTheHeartComesIn = () => {
             </ol>
 
             {/* Year-round care */}
-            <div className="mt-4 rounded-2xl px-6 py-7 sm:px-8" style={{ backgroundColor: "#f7e4e5" }}>
+            <div className="mt-2 sm:mt-4 rounded-2xl px-4 py-6 sm:px-8 sm:py-7" style={{ backgroundColor: "#f7e4e5" }}>
               <span
                 className="block font-sans text-xs sm:text-sm font-medium uppercase tracking-[0.2em]"
                 style={{ color: "#a2465a" }}
               >
                 Year-round care can include
               </span>
-              <ul className="mt-6 grid grid-cols-2 gap-y-8 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
+              <ul className="mt-5 sm:mt-6 grid grid-cols-4 gap-y-8 lg:grid-cols-2 xl:grid-cols-4">
                 {CARE_ITEMS.map((item, i) => (
                   <li
                     key={item.label}
-                    className={`flex flex-col items-center gap-3 px-3 text-center border-[#d9a9b1] ${
-                      i % 2 === 1 ? "border-l" : ""
-                    } ${i === 2 ? "sm:border-l lg:border-l-0 xl:border-l" : ""}`}
+                    className={`flex flex-col items-center gap-3 px-1 sm:px-3 text-center border-[#d9a9b1] ${
+                      i > 0 ? "border-l" : ""
+                    } ${i === 2 ? "lg:border-l-0 xl:border-l" : ""}`}
                   >
                     <span style={{ color: CRIMSON }}>{item.icon}</span>
-                    <span className="font-sans text-sm sm:text-base leading-snug text-foreground/85">
+                    <span className="font-sans text-[13px] min-[400px]:text-sm sm:text-base leading-snug text-foreground/85 max-sm:[hyphens:auto]" lang="en">
                       {item.label}
                     </span>
                   </li>

@@ -36,7 +36,7 @@ export const CategoryThumbnailCarousel = ({
     <div className="flex flex-col">
       {/* Image Container */}
       <div
-        className="h-[100px] md:h-[110px] rounded-lg overflow-hidden border border-border/20 flex items-center justify-center relative group"
+        className="h-[78px] min-[400px]:h-[88px] sm:h-[110px] md:h-[130px] rounded-xl overflow-hidden border border-border/20 flex items-center justify-center relative group"
         style={{
           background: currentSlide.image ? undefined : currentSlide.bgColor,
           boxShadow: "0 2px 8px hsl(344 35% 50% / 0.08)",
@@ -110,10 +110,7 @@ export const CategoryThumbnailCarousel = ({
       </div>
 
       {/* Category Label - Changes based on current slide */}
-      <span
-        className="mt-2 text-[10px] md:text-[11px] font-serif tracking-[0.08em] text-foreground/60 uppercase text-center"
-        style={{ fontVariant: "small-caps" }}
-      >
+      <span className="relative z-10 -mt-4 mx-auto rounded-full bg-white whitespace-nowrap px-2 py-1 sm:px-4 sm:py-1.5 font-sans text-[9px] sm:text-xs font-semibold uppercase tracking-[0.04em] sm:tracking-[0.12em] text-[#6e1428] shadow-[0_6px_14px_-8px_rgba(110,20,40,0.5)] text-center">
         {currentSlide.label}
       </span>
     </div>

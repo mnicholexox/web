@@ -71,15 +71,15 @@ const Login = () => {
 
   return (
     <main
-      className="min-h-screen px-4 pt-24 pb-16 sm:px-6 sm:pt-28 md:pb-20"
+      className="min-h-screen px-5 pt-20 pb-12 sm:px-6 sm:pt-28 sm:pb-16 md:pb-20"
       style={{
         background:
           "radial-gradient(ellipse at 0% 100%, rgba(243, 211, 216, 0.5) 0%, transparent 45%), radial-gradient(ellipse at 100% 0%, rgba(246, 223, 226, 0.45) 0%, transparent 40%), #fbf4f1",
       }}
     >
-      <div className="mx-auto grid max-w-6xl overflow-hidden rounded-[28px] border border-[#efd6d8] bg-[#fffbf8] shadow-[0_24px_60px_-30px_rgba(110,20,40,0.35)] lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1fr)]">
+      <div className="mx-auto grid max-w-6xl gap-4 sm:gap-0 sm:overflow-hidden sm:rounded-[28px] sm:border sm:border-[#efd6d8] sm:bg-[#fffbf8] sm:shadow-[0_24px_60px_-30px_rgba(110,20,40,0.35)] lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1fr)]">
         {/* Image panel */}
-        <div className="relative min-h-[260px] overflow-hidden sm:min-h-[320px] lg:min-h-[640px]">
+        <div className="relative min-h-[300px] overflow-hidden rounded-3xl shadow-[0_18px_40px_-24px_rgba(110,20,40,0.45)] sm:min-h-[320px] sm:rounded-none sm:shadow-none lg:min-h-[640px]">
           <img
             src={heroBannerImage}
             alt=""
@@ -94,7 +94,7 @@ const Login = () => {
             }}
             aria-hidden="true"
           />
-          <div className="absolute inset-x-0 bottom-0 px-7 pb-8 text-white sm:px-10 sm:pb-10 lg:pb-12">
+          <div className="absolute inset-x-0 bottom-0 px-6 pb-7 text-white sm:px-10 sm:pb-10 lg:pb-12">
             <svg
               className="h-10 w-10 sm:h-12 sm:w-12"
               viewBox="0 0 48 48"
@@ -119,7 +119,7 @@ const Login = () => {
         </div>
 
         {/* Form panel */}
-        <div className="px-6 py-10 sm:px-12 sm:py-12 lg:px-16 lg:py-14">
+        <div className="rounded-3xl border border-[#efd6d8] bg-[#fffbf8] px-6 py-7 shadow-[0_18px_40px_-26px_rgba(110,20,40,0.35)] sm:rounded-none sm:border-0 sm:bg-transparent sm:px-12 sm:py-12 sm:shadow-none lg:px-16 lg:py-14">
           <p
             className="font-sans text-sm sm:text-base font-semibold uppercase tracking-[0.25em]"
             style={{ color: "#a2465a" }}
@@ -132,14 +132,14 @@ const Login = () => {
           >
             {isSignIn ? "Login" : "Sign Up"}
           </h1>
-          <p className="mt-4 font-sans text-base sm:text-lg text-foreground/80">
+          <p className="mt-2 font-sans text-base sm:mt-4 sm:text-lg text-foreground/80">
             {isSignIn
               ? "Welcome back. Sign in to manage the Angel Tree program."
               : "Create a coordinator account to help manage the Angel Tree program."}
           </p>
 
           {/* Sign In / Sign Up tabs */}
-          <div className="mt-8 grid grid-cols-2 gap-2" role="tablist" aria-label="Account">
+          <div className="mt-6 grid grid-cols-2 gap-2 sm:mt-8" role="tablist" aria-label="Account">
             {(["signin", "signup"] as const).map((tab) => {
               const active = activeTab === tab;
               return (
@@ -167,7 +167,7 @@ const Login = () => {
               e.preventDefault();
               // Static page - no actual submission
             }}
-            className="mt-7 space-y-5"
+            className="mt-6 space-y-5 sm:mt-7"
           >
             {!isSignIn && (
               <div className="space-y-2">
@@ -214,8 +214,8 @@ const Login = () => {
             </div>
 
             {isSignIn ? (
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <label className="flex cursor-pointer items-center gap-3 font-sans text-base text-foreground/85">
+              <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-3">
+                <label className="flex cursor-pointer items-center gap-2.5 font-sans text-[15px] text-foreground/85 sm:gap-3 sm:text-base">
                   <input
                     type="checkbox"
                     checked={rememberMe}
@@ -224,7 +224,7 @@ const Login = () => {
                   />
                   Remember me
                 </label>
-                <button type="button" className={linkClasses} style={{ color: "#a2465a" }}>
+                <button type="button" className={cn(linkClasses, "max-sm:text-[15px]")} style={{ color: "#a2465a" }}>
                   Forgot password?
                 </button>
               </div>

@@ -34,25 +34,35 @@ const Updates = () => {
       />
 
       {/* Content Container - pt accounts for fixed header */}
-      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 md:pb-28">
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-28 md:pt-32 pb-12 sm:pb-16 sm:pb-20 md:pb-28">
         {/* Page Header */}
-        <header className="mb-10 sm:mb-12">
+        <header className="relative mb-6 sm:mb-12">
+          {/* Ribbon sweeping in from the top-right (phones) */}
+          <svg
+            className="pointer-events-none absolute -right-4 -top-10 h-28 w-[60%] sm:hidden"
+            viewBox="0 0 240 110"
+            preserveAspectRatio="none"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path d="M20 4 C 70 10, 110 60, 160 82 C 195 98, 220 96, 250 84" stroke="#efb9c3" strokeWidth="12" strokeLinecap="round" strokeOpacity="0.6" />
+          </svg>
           <span className="block font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#a2465a]">
             JoyDrop Journal
           </span>
           <h1
-            className="mt-3 font-serif text-[#3a2420] leading-[1.05] tracking-tight"
-            style={{ fontSize: "clamp(3rem, 7vw, 5rem)" }}
+            className="relative mt-2 sm:mt-3 font-serif text-[#3a2420] leading-[1.05] tracking-tight"
+            style={{ fontSize: "clamp(3.25rem, 7vw, 5rem)" }}
           >
             Updates
           </h1>
-          <p className="mt-5 font-sans text-lg sm:text-xl leading-relaxed text-foreground/85">
+          <p className="relative mt-3 sm:mt-5 font-sans text-[15px] sm:text-xl leading-snug sm:leading-relaxed text-foreground/85">
             Milestones, announcements, and moments from Joy Drop.
           </p>
-          <p className="mt-1 font-sans text-base sm:text-lg leading-relaxed text-foreground/75">
+          <p className="relative mt-1 font-sans text-[15px] sm:text-lg leading-snug sm:leading-relaxed text-foreground/75">
             Thanks for following Joy Drop&rsquo;s journey. Here&rsquo;s what we&rsquo;ve been up to recently.
           </p>
-          <div className="mt-8 h-px bg-[#c98a96]/70" aria-hidden="true" />
+          <div className="mt-5 sm:mt-8 h-px bg-[#c98a96]/70" aria-hidden="true" />
         </header>
 
         {/* Updates List */}

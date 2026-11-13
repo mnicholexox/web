@@ -80,26 +80,25 @@ export const WhatThisIsAbout = () => {
     <section
       id="what-this-is-about"
       data-section="what-this-is-about"
-      className="w-full py-14 md:py-20 bg-background"
+      className="w-full pt-10 pb-14 md:py-20 bg-background"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Intro: headline + supporting copy */}
         <div className="xl:px-12">
-          <span className="block font-sans text-[11px] md:text-xs font-medium uppercase tracking-[0.3em] text-muted-foreground/80">
+          <span className="block font-sans text-xs font-medium uppercase tracking-[0.3em] text-foreground/70 md:text-muted-foreground/80">
             Why Joy Drop
           </span>
 
-          <div className="mt-5 md:mt-7 grid gap-6 lg:grid-cols-[minmax(0,1fr)_1px_minmax(0,320px)] lg:gap-10 lg:items-center">
+          <div className="mt-3 md:mt-7 grid gap-3 md:gap-6 lg:grid-cols-[minmax(0,1fr)_1px_minmax(0,320px)] lg:gap-10 lg:items-center">
             <h2
-              className="font-serif text-foreground leading-[1.08] tracking-tight"
-              style={{ fontSize: "clamp(2rem, 3.4vw, 3rem)" }}
+              className="font-serif text-foreground leading-[1.05] tracking-tight text-[38px] min-[400px]:text-[42px] md:leading-[1.08] md:text-[clamp(2rem,3.4vw,3rem)]"
             >
               A wish list is more than a list.{" "}
               <br className="hidden lg:block" />
               It&rsquo;s a child feeling remembered.
             </h2>
             <div className="hidden lg:block w-px self-stretch bg-foreground/15" aria-hidden="true" />
-            <p className="font-sans text-base md:text-lg leading-relaxed text-muted-foreground">
+            <p className="font-sans text-base md:text-lg leading-snug md:leading-relaxed text-foreground/75 md:text-muted-foreground">
               Since 2022, our community has come together to fulfill real wishes for children who
               deserve to feel celebrated, supported, and cared for.
             </p>
@@ -107,30 +106,32 @@ export const WhatThisIsAbout = () => {
         </div>
 
         {/* Impact panel */}
-        <div className="relative mt-10 md:mt-14 xl:mb-8">
+        <div className="relative mt-6 md:mt-14 xl:mb-8">
           <div
-            className="relative overflow-hidden rounded-3xl px-6 pt-10 pb-24 sm:px-10 md:pb-28 xl:pr-[24%]"
+            className="relative overflow-hidden rounded-3xl px-6 pt-6 pb-24 sm:px-10 md:pt-10 md:pb-28 xl:pr-[24%]"
             style={{ background: "linear-gradient(135deg, #7a2335 0%, #6a1a2b 55%, #5e1626 100%)" }}
           >
             <RibbonWaves />
 
-            <div className="relative z-10 grid gap-10 md:grid-cols-3 md:gap-0 text-center">
+            <div className="relative z-10 grid gap-0 md:grid-cols-3 text-center">
               {STATS.map((stat, i) => (
                 <div
                   key={stat.label}
                   className={`flex flex-col items-center justify-end md:px-6 ${
-                    i > 0 ? "md:border-l md:border-white/20" : ""
+                    i > 0
+                      ? "mx-auto mt-4 w-[85%] border-t border-white/25 pt-4 md:mx-0 md:mt-0 md:w-auto md:border-t-0 md:border-l md:border-white/20 md:pt-0"
+                      : ""
                   }`}
                 >
                   {stat.eyebrow && (
-                    <span className="font-sans text-xs md:text-sm uppercase tracking-[0.35em] text-white/80">
+                    <span className="font-sans text-sm uppercase tracking-[0.35em] text-white/80">
                       {stat.eyebrow}
                     </span>
                   )}
-                  <p className="mt-1 font-serif text-white leading-none text-[56px] sm:text-[60px] lg:text-[72px] xl:text-[76px] tracking-tight">
+                  <p className="mt-1 font-serif text-white leading-none text-[52px] sm:text-[60px] lg:text-[72px] xl:text-[76px] tracking-tight">
                     {stat.value}
                   </p>
-                  <p className="mt-3 font-sans text-base md:text-lg text-white/90 xl:whitespace-nowrap">{stat.label}</p>
+                  <p className="mt-2 md:mt-3 font-sans text-base md:text-lg text-white/90 xl:whitespace-nowrap">{stat.label}</p>
                 </div>
               ))}
             </div>
@@ -138,14 +139,14 @@ export const WhatThisIsAbout = () => {
 
           {/* Promise card - overlaps the panel's corner on extra-wide screens, sits below it otherwise */}
           <aside
-            className="relative -mt-12 mx-4 sm:mx-8 overflow-hidden rounded-2xl p-6 pr-24 shadow-xl md:mx-auto md:max-w-md xl:absolute xl:mx-0 xl:mt-0 xl:-right-6 xl:-bottom-8 xl:w-[340px] xl:max-w-none xl:p-7 xl:pr-24"
+            className="relative -mt-10 mx-3 sm:mx-8 overflow-hidden rounded-2xl p-6 pr-24 shadow-xl md:mx-auto md:max-w-md xl:absolute xl:mx-0 xl:mt-0 xl:-right-6 xl:-bottom-8 xl:w-[340px] xl:max-w-none xl:p-7 xl:pr-24"
             style={{ backgroundColor: "#f6dfe0" }}
           >
             <RibbonHeart />
-            <span className="relative block font-sans text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
+            <span className="relative block font-sans text-xs md:text-[11px] font-medium uppercase tracking-[0.25em] text-foreground/70 md:text-muted-foreground">
               Our promise
             </span>
-            <p className="relative mt-3 font-sans text-base md:text-lg leading-snug text-foreground">
+            <p className="relative mt-3 font-sans text-lg leading-snug text-[#7a1a30] md:text-foreground">
               Every contribution becomes a thoughtfully chosen gift, wrapped with care and
               hand-delivered.
             </p>

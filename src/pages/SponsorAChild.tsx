@@ -43,7 +43,7 @@ const FAQS = [
 /** Red envelope of wishlist tags tied with a satin bow. */
 const OpeningSoonIllustration = () => (
   <svg
-    className="mx-auto hidden w-full max-w-[320px] lg:block"
+    className="mx-auto block w-full max-w-[290px] lg:max-w-[320px]"
     viewBox="0 0 340 300"
     aria-hidden="true"
   >
@@ -217,25 +217,27 @@ const SponsorAChild = () => {
       {/* Coming Soon Notice */}
       {!wishlistsAvailable && (
         <section aria-labelledby="wishlists-opening-heading" className="px-4 sm:px-6 md:px-8 pb-4">
-          <div className="relative mx-auto max-w-6xl overflow-hidden rounded-3xl border border-[#efdcd9] bg-[#fdf4f2] px-6 py-10 shadow-[0_18px_50px_-24px_rgba(110,20,40,0.22)] sm:px-12 sm:py-12 lg:px-16">
-            <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,300px)] xl:grid-cols-[minmax(0,1fr)_minmax(0,340px)]">
-              <div>
+          <div className="relative mx-auto max-w-6xl overflow-hidden rounded-3xl border border-[#efdcd9] bg-[#fdf4f2] px-5 py-8 shadow-[0_18px_50px_-24px_rgba(110,20,40,0.22)] sm:px-12 sm:py-12 lg:px-16">
+            <div className="grid items-center gap-6 sm:gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,300px)] xl:grid-cols-[minmax(0,1fr)_minmax(0,340px)]">
+              {/* On phones the copy, illustration and form stack in that order */}
+              <div className="contents lg:block">
+                <div className="order-1 text-center sm:text-left lg:order-none">
                 <span className="inline-block rounded-full bg-[#f6d9de] px-5 py-2 font-sans text-xs sm:text-sm font-medium uppercase tracking-[0.2em] text-[#8a1f38]">
                   Opening November 2026
                 </span>
                 <h2
                   id="wishlists-opening-heading"
-                  className="mt-5 font-serif text-[#3a2420] leading-[1.02] tracking-tight"
-                  style={{ fontSize: "clamp(2.25rem, 4.6vw, 3.75rem)" }}
+                  className="mt-5 font-serif text-[#3a2420] leading-[1.02] tracking-tight text-[33px] min-[400px]:text-[36px] sm:text-[clamp(2.25rem,4.6vw,3.75rem)]"
                 >
-                  Angel Tree wishlists <br className="hidden sm:block" />
+                  Angel Tree wishlists <br />
                   are opening soon.
                 </h2>
-                <p className="mt-3 font-sans text-base sm:text-lg md:text-xl text-foreground/80">
+                <p className="mx-auto mt-3 max-w-[300px] font-sans text-lg sm:mx-0 sm:max-w-none md:text-xl text-foreground/75 sm:text-foreground/80">
                   Choose how you&rsquo;d like to be notified when they go live.
                 </p>
+                </div>
 
-                <form onSubmit={handleNotifySubmit} className="mt-6">
+                <form onSubmit={handleNotifySubmit} className="order-3 lg:order-none lg:mt-6">
                   <fieldset>
                     <legend className="font-sans text-base sm:text-lg text-foreground/85">Send updates by</legend>
                     <div className="mt-2 flex flex-wrap gap-x-12 gap-y-2">
@@ -322,7 +324,9 @@ const SponsorAChild = () => {
                 </form>
               </div>
 
-              <OpeningSoonIllustration />
+              <div className="order-2 sm:hidden lg:block lg:order-none">
+                <OpeningSoonIllustration />
+              </div>
             </div>
           </div>
         </section>
@@ -440,53 +444,57 @@ const SponsorAChild = () => {
       )}
 
       {/* The Gift of Giving */}
-      <section aria-labelledby="wish-list-contents-heading" className="py-16 sm:py-20 md:py-24">
+      <section aria-labelledby="wish-list-contents-heading" className="pt-10 pb-16 sm:py-20 md:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-12 items-start">
-            {/* Left column */}
-            <div>
-              <span className="block font-sans text-xs sm:text-sm font-medium uppercase tracking-[0.3em] text-[#a2465a]">
+          <div className="flex flex-col gap-6 sm:gap-10 lg:grid lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-12 lg:items-start">
+            {/* Left column (its pieces reorder around the basket below desktop width) */}
+            <div className="contents lg:block">
+              <div className="order-1 text-center sm:text-left lg:order-none">
+              <span className="block font-sans text-xs sm:text-sm font-semibold sm:font-medium uppercase tracking-[0.3em] text-[#a2465a]">
                 The Gift of Giving
               </span>
               <h2
                 id="wish-list-contents-heading"
-                className="mt-4 font-serif text-foreground leading-[1.05] tracking-tight"
-                style={{ fontSize: "clamp(2.5rem, 4.1vw, 3.75rem)" }}
+                className="mt-2 sm:mt-4 font-serif text-foreground leading-[1.02] sm:leading-[1.05] tracking-tight text-[44px] sm:text-[clamp(2.5rem,4.1vw,3.75rem)]"
               >
-                What&rsquo;s on a Wish List
+                What&rsquo;s on a <br className="sm:hidden" />
+                Wish List
               </h2>
-              <p className="mt-5 max-w-[560px] font-sans text-base sm:text-lg leading-relaxed text-foreground/70">
+              <p className="mx-auto mt-3 max-w-[560px] font-sans text-base sm:text-lg leading-snug sm:leading-relaxed text-foreground/75 sm:mx-0 sm:mt-5 sm:text-foreground/70">
                 Every wish list is thoughtfully created to balance delight with everyday support. By
                 fulfilling one, you&rsquo;re helping create a holiday that feels joyful, personal, and
                 complete.
               </p>
+              </div>
 
-              <ul className="mt-10 grid gap-5 sm:grid-cols-2">
+              <ul className="order-3 -mx-1 grid grid-cols-2 gap-2 sm:mx-0 sm:gap-5 lg:order-none lg:mt-10">
                 {giftCategories.map((category) => (
                   <li
                     key={category.title}
-                    className="rounded-2xl border border-[#f1e6e3] bg-white/80 p-6 xl:p-7 shadow-[0_10px_30px_-20px_rgba(110,20,40,0.25)]"
+                    className="flex items-start gap-2 rounded-2xl border border-[#f1e6e3] bg-white/80 py-3 pl-2.5 pr-2 sm:block sm:p-6 xl:p-7 shadow-[0_10px_30px_-20px_rgba(110,20,40,0.25)]"
                   >
-                    <span className="flex h-16 w-16 items-center justify-center rounded-full bg-[#f6dfe2] text-[#8a1f38]">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#f6dfe2] text-[#8a1f38] [&>svg]:h-[18px] [&>svg]:w-[18px] sm:h-16 sm:w-16 sm:[&>svg]:h-7 sm:[&>svg]:w-7">
                       {category.icon}
                     </span>
-                    <h3 className="mt-4 font-serif text-[22px] lg:text-[20px] xl:text-[21px] 2xl:text-2xl leading-tight text-foreground xl:whitespace-nowrap">
+                    <div>
+                    <h3 className="font-serif text-[17px] leading-[1.05] sm:mt-4 sm:text-[22px] lg:text-[20px] xl:text-[21px] 2xl:text-2xl leading-tight text-foreground xl:whitespace-nowrap">
                       {category.title}
                     </h3>
-                    <p className="mt-2 font-sans text-base leading-relaxed text-foreground/70">
+                    <p className="mt-1 font-sans text-[12.5px] leading-[1.35] text-foreground/75 sm:mt-2 sm:text-base sm:leading-relaxed sm:text-foreground/70">
                       {category.description}
                     </p>
+                    </div>
                   </li>
                 ))}
               </ul>
             </div>
 
             {/* Right column */}
-            <div className="flex flex-col">
+            <div className="contents lg:flex lg:flex-col">
               {/* Basket illustration with soft halo and hand-drawn accents */}
-              <div className="relative mx-auto w-full max-w-[560px]">
+              <div className="relative order-2 mx-auto w-full max-w-[400px] py-3 sm:py-0 sm:max-w-[560px] lg:order-none">
                 <div
-                  className="absolute left-1/2 top-1/2 aspect-square w-[85%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#fbe9eb]"
+                  className="absolute left-1/2 top-1/2 aspect-square w-[68%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#fbe9eb] sm:w-[85%]"
                   aria-hidden="true"
                 />
                 <svg
@@ -511,28 +519,34 @@ const SponsorAChild = () => {
               </div>
 
               {/* Key dates */}
-              <div className="mt-8 rounded-2xl border border-[#f1e6e3] bg-white/80 p-5 sm:p-7 shadow-[0_10px_30px_-20px_rgba(110,20,40,0.25)]">
-                <div className="flex items-center gap-4">
-                  <span className="flex h-14 w-14 items-center justify-center rounded-full bg-[#f6dfe2] text-[#8a1f38]">
-                    <CalendarHeart className="h-6 w-6" strokeWidth={1.6} />
+              <div className="order-4 rounded-2xl border border-[#f1e6e3] bg-white/80 p-3 sm:p-7 shadow-[0_10px_30px_-20px_rgba(110,20,40,0.25)] lg:order-none lg:mt-8">
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <span className="flex h-11 w-11 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-[#f6dfe2] text-[#8a1f38]">
+                    <CalendarHeart className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={1.6} />
                   </span>
                   <h3 className="font-sans text-sm sm:text-base font-semibold uppercase tracking-[0.3em] text-[#8a1f38]">
                     Key dates
                   </h3>
                 </div>
 
-                <dl className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+                <dl className="mt-3 grid grid-cols-2 rounded-xl bg-[#fbf1f0] sm:mt-5 sm:gap-4 sm:rounded-none sm:bg-transparent lg:grid-cols-1 xl:grid-cols-2">
                   {[
                     { date: "November 2026", label: "Wish lists open." },
                     { date: "December 10", label: "Gift drop-off deadline." },
-                  ].map((item) => (
-                    <div key={item.date} className="flex items-center gap-3 xl:gap-4 rounded-xl bg-[#fbf1f0] p-4 xl:p-5">
-                      <span className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-[#f6dfe2] text-[#8a1f38]">
-                        <CalendarDays className="h-5 w-5" strokeWidth={1.6} />
+                  ].map((item, i) => (
+                    <div
+                      key={item.date}
+                      className={cn(
+                        "flex items-center gap-1.5 px-2 py-3.5 sm:gap-3 sm:rounded-xl sm:bg-[#fbf1f0] sm:p-4 xl:gap-4 xl:p-5",
+                        i > 0 && "border-l border-[#ebd2d6] sm:border-l-0"
+                      )}
+                    >
+                      <span className="flex h-8 w-8 sm:h-12 sm:w-12 flex-shrink-0 items-center justify-center rounded-full bg-[#f6dfe2] text-[#8a1f38]">
+                        <CalendarDays className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={1.6} />
                       </span>
                       <div>
-                        <dt className="font-serif text-xl xl:text-2xl leading-tight text-foreground sm:whitespace-nowrap">{item.date}</dt>
-                        <dd className="mt-1 font-sans text-sm sm:text-base text-foreground/70">{item.label}</dd>
+                        <dt className="font-serif text-[15px] min-[400px]:text-[17px] sm:text-xl xl:text-2xl leading-tight text-foreground whitespace-nowrap">{item.date}</dt>
+                        <dd className="mt-0.5 sm:mt-1 font-sans text-[12.5px] sm:text-base leading-snug text-foreground/75 sm:text-foreground/70">{item.label}</dd>
                       </div>
                     </div>
                   ))}
@@ -540,7 +554,7 @@ const SponsorAChild = () => {
               </div>
 
               {/* Gentle note */}
-              <p className="mt-6 px-4 text-center font-sans text-base leading-relaxed text-foreground/70">
+              <p className="order-5 px-4 text-center font-sans text-base leading-snug sm:leading-relaxed text-foreground/80 sm:text-foreground/70 lg:order-none lg:mt-6">
                 Can&rsquo;t fulfill a complete wish list?{" "}
                 <button
                   onClick={() => {
@@ -561,38 +575,50 @@ const SponsorAChild = () => {
       {/* Need to Know (FAQ preview) */}
       <section
         aria-labelledby="need-to-know-heading"
-        className="relative overflow-hidden py-16 sm:py-20 lg:py-24"
+        className="relative overflow-hidden pt-10 pb-14 sm:py-20 lg:py-24"
         style={{
           background:
             "radial-gradient(ellipse at 100% 0%, rgba(243, 211, 216, 0.55) 0%, transparent 45%), radial-gradient(ellipse at 0% 100%, rgba(246, 223, 226, 0.6) 0%, transparent 40%), #fdf8f6",
         }}
       >
-        <div className="relative mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.25fr)] lg:items-center lg:gap-12 lg:px-8 xl:gap-16">
+        <div className="relative mx-auto grid max-w-7xl gap-4 px-4 sm:gap-10 sm:px-6 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.25fr)] lg:items-center lg:gap-12 lg:px-8 xl:gap-16">
           {/* Intro */}
-          <div className="relative">
-            <span className="block font-sans text-xs sm:text-sm font-medium uppercase tracking-[0.3em] text-[#a2465a]">
+          <div className="relative text-center sm:text-left">
+            <span className="block font-sans text-sm font-medium uppercase tracking-[0.25em] text-[#8a1f38] sm:tracking-[0.3em] sm:text-[#a2465a]">
               Need to know
             </span>
             <h2
               id="need-to-know-heading"
-              className="mt-4 font-serif text-foreground leading-[1.05] tracking-tight"
-              style={{ fontSize: "clamp(2.5rem, 4vw, 3.75rem)" }}
+              className="mt-3 font-serif text-foreground leading-[1.05] tracking-tight text-[42px] min-[400px]:text-[46px] sm:mt-4 sm:text-[clamp(2.5rem,4vw,3.75rem)]"
             >
-              Questions{" "}
+              Questions <br className="sm:hidden" />
               <span className="sm:whitespace-nowrap">Before You Begin?</span>
             </h2>
-            <p className="mt-5 max-w-md font-sans text-lg sm:text-xl leading-relaxed text-foreground/75">
+            <p className="mx-auto mt-3 max-w-[320px] font-sans text-lg leading-snug text-foreground/75 sm:mx-0 sm:mt-5 sm:max-w-md sm:text-xl sm:leading-relaxed">
               A few quick answers to help you fulfill a wish with confidence.
             </p>
             <Link
               to={ROUTES.FAQ}
-              className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#8a1f38] px-8 py-4 font-sans text-sm sm:text-base font-semibold tracking-[0.16em] text-white shadow-[0_10px_24px_-10px_rgba(110,20,40,0.6)] transition-colors hover:bg-[#7a1a30] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c98a96] focus-visible:ring-offset-2"
+              className="mt-6 inline-flex items-center gap-3 rounded-full bg-[#8a1f38] px-8 py-4 sm:mt-8 font-sans text-sm sm:text-base font-semibold tracking-[0.16em] text-white shadow-[0_10px_24px_-10px_rgba(110,20,40,0.6)] transition-colors hover:bg-[#7a1a30] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c98a96] focus-visible:ring-offset-2"
             >
               EXPLORE ALL FAQs
               <ArrowRight className="h-5 w-5" />
             </Link>
 
-            {/* Heart doodle */}
+            {/* Heart doodle - under the button on phones, beside the questions on wide screens */}
+            <svg
+              className="pointer-events-none mx-auto -mt-1 block h-[84px] w-[156px] text-[#e3aab4] sm:hidden"
+              viewBox="0 0 260 140"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M10 130 C 70 150, 140 135, 175 95 C 200 68, 205 45, 190 40 C 178 36, 172 50, 172 58 C 168 46, 155 40, 148 50 C 138 65, 160 85, 175 95" />
+              <path d="M200 12 L 196 28 M222 26 L 210 36 M226 54 H 212" />
+            </svg>
             <svg
               className="pointer-events-none absolute -bottom-24 right-[8%] hidden h-36 w-64 text-[#e3aab4] xl:block"
               viewBox="0 0 260 140"
@@ -609,7 +635,7 @@ const SponsorAChild = () => {
           </div>
 
           {/* Questions */}
-          <div className="space-y-5 sm:space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {FAQS.map((faq, index) => {
               const isOpen = openFaqs.includes(index);
               const panelId = `need-to-know-answer-${index}`;
@@ -624,12 +650,12 @@ const SponsorAChild = () => {
                       aria-expanded={isOpen}
                       aria-controls={panelId}
                       onClick={() => toggleFaq(index)}
-                      className="flex w-full items-center gap-4 py-5 text-left sm:gap-6 sm:py-7 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c98a96] focus-visible:ring-offset-2 rounded-2xl"
+                      className="flex w-full items-center gap-4 py-4 text-left sm:gap-6 sm:py-7 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c98a96] focus-visible:ring-offset-2 rounded-2xl"
                     >
-                      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#fbe9eb] text-[#8a1f38] sm:h-16 sm:w-16">
+                      <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#fbe9eb] text-[#8a1f38] sm:h-16 sm:w-16">
                         {faq.icon}
                       </span>
-                      <span className="flex-1 font-sans text-lg font-medium leading-snug text-foreground sm:text-2xl lg:text-xl xl:text-2xl">
+                      <span className="flex-1 font-serif text-[21px] leading-tight text-foreground sm:font-sans sm:text-2xl sm:font-medium sm:leading-snug lg:text-xl xl:text-2xl">
                         {faq.question}
                       </span>
                       <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#fbe9eb] text-[#8a1f38] sm:h-14 sm:w-14">
@@ -637,8 +663,8 @@ const SponsorAChild = () => {
                       </span>
                     </button>
                   </h3>
-                  <div id={panelId} hidden={!isOpen} className="border-t border-[#f3dfe2] py-5 sm:py-7">
-                    <p className="font-sans text-base sm:text-lg leading-relaxed text-foreground/70">
+                  <div id={panelId} hidden={!isOpen} className="border-t border-[#f3dfe2] pt-4 pb-5 sm:py-7">
+                    <p className="font-sans text-base sm:text-lg leading-snug sm:leading-relaxed text-foreground/75 sm:text-foreground/70">
                       {faq.answer}
                     </p>
                   </div>
