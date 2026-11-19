@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <meta name="referrer" content="no-referrer">
+  <title>Unsubscribe · Joy Drop</title>
+  <!--
+    Unsubscribe page for the waitlist emails (linked from the welcome email as
+    https://joydrop.app/unsubscribe?token=...). It POSTs the token to the
+    waitlist-unsubscribe Edge Function, which also handles mail clients'
+    one-click unsubscribe. Static on purpose: no app bundle needed.
+  -->
+  <style>
+    :root { color-scheme: light; }
+    body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+           background: #f2e1d8; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #1f1414; }
+    .card { box-sizing: border-box; width: calc(100% - 32px); max-width: 440px; margin: 16px; padding: 36px 28px;
+            background: #faf0ea; border-radius: 22px; text-align: center; box-shadow: 0 10px 30px rgba(110, 20, 40, 0.08); }
+    .brand { margin: 0 0 18px; font-family: Georgia, 'Times New Roman', serif; font-size: 24px; color: #4a0d12; }
+    h1 { margin: 0 0 12px; font-family: Georgia, 'Times New Roman', serif; font-size: 26px; line-height: 1.2; color: #4a0d12; }
+    p { margin: 0 0 22px; font-size: 15px; line-height: 1.5; }
+    button { border: 0; cursor: pointer; padding: 14px 32px; border-radius: 999px;
+             background: #7a0c20; background-image: linear-gradient(180deg, #a51f37 0%, #7a0c20 45%, #58030e 100%);
+             color: #fff; font: inherit; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; }
+    button[disabled] { opacity: 0.6; cursor: default; }
+    .muted { margin: 22px 0 0; font-size: 12px; color: #8a6f68; }
+    .muted a { color: #8a6f68; }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <p class="brand">Joy Drop</p>
+
+    <section id="confirm" hidden>
+      <h1>Unsubscribe from Joy Drop updates?</h1>
+      <p>You'll stop getting waitlist emails and texts from Joy Drop (Angel Tree).</p>
+      <form id="form" method="post" action="https://sitoxefxfphqivnnjmpg.supabase.co/functions/v1/waitlist-unsubscribe">
+        <input type="hidden" name="token" id="token">
+        <button type="submit" id="submit">Unsubscribe</button>
+      </form>
+    </section>
+
+    <section id="done" hidden>
+      <h1>You're unsubscribed</h1>
+      <p>You won't get any more Joy Drop waitlist updates. Changed your mind? You can sign up again any time at joydrop.app.</p>
+    </section>
+
+    <section id="invalid" hidden>
+      <h1>This link isn't valid</h1>
+      <p>Please use the unsubscribe link from your most recent Joy Drop email.</p>
+    </section>
+
+    <section id="error" hidden>
+      <h1>Something went wrong</h1>
+      <p>We couldn't process that just now. Please try again in a minute.</p>
+    </section>
+
+    <noscript><p>Please turn on JavaScript to unsubscribe, or use the unsubscribe option in your email app.</p></noscript>
+
+    <p class="muted"><a href="/">joydrop.app</a> · <a href="/privacy">Privacy</a></p>
+  </main>
+
+  <script>
+    (function () {
+      var UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+      var params = new URLSearchParams(location.search);
+      var token = params.get("token") || "";
+      var status = params.get("status");
+
+      function show(id) {
+        ["confirm", "done", "invalid", "error"].forEach(function (s) {
+          document.getElementById(s).hidden = s !== id;
+        });
+      }
+
+      if (status === "done" || status === "invalid" || status === "error") return show(status);
+      if (!UUID.test(token)) return show("invalid");
+
+      document.getElementById("token").value = token;
+      show("confirm");
+
+      document.getElementById("form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        var button = document.getElementById("submit");
+        button.disabled = true;
+        fetch(this.action + "?token=" + encodeURIComponent(token), {
+          method: "POST",
+          headers: { Accept: "application/json" },
+        })
+          .then(function (r) { show(r.ok ? "done" : r.status === 400 ? "invalid" : "error"); })
+          .catch(function () { show("error"); button.disabled = false; });
+      });
+    })();
+  </script>
+</body>
+</html>
