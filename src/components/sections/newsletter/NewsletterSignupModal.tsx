@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Loader2 } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -19,6 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+import { subscribeToUpdates, WaitlistError } from "@/lib/waitlist";
 
 type NotificationPreference = "email" | "text" | "both";
 
@@ -74,6 +75,10 @@ export const NewsletterSignupModal = ({
   initialPreference,
 }: NewsletterSignupModalProps) => {
   const [isSubmitted, setIsSubmitted] = React.useState(false);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [submitError, setSubmitError] = React.useState<string | null>(null);
+  // Honeypot: hidden from people, bots tend to fill it in.
+  const [website, setWebsite] = React.useState("");
   const [formData, setFormData] = React.useState<FormData>({
     fullName: "",
     email: "",
@@ -102,6 +107,9 @@ export const NewsletterSignupModal = ({
       // Delay reset to allow close animation
       const timeout = setTimeout(() => {
         setIsSubmitted(false);
+        setIsSubmitting(false);
+        setSubmitError(null);
+        setWebsite("");
         setFormData({
           fullName: "",
           email: "",
@@ -175,7 +183,7 @@ export const NewsletterSignupModal = ({
     setTimeout(() => validateForm(), 0);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Mark all fields as touched
@@ -186,10 +194,37 @@ export const NewsletterSignupModal = ({
       notificationPreference: true,
     });
 
-    if (validateForm()) {
-      // TODO: Send form data to backend
-      console.log("Newsletter signup:", formData);
+    if (!validateForm() || isSubmitting) return;
+
+    const wantsEmail =
+      formData.notificationPreference === "email" ||
+      formData.notificationPreference === "both";
+    const wantsText =
+      formData.notificationPreference === "text" ||
+      formData.notificationPreference === "both";
+
+    setIsSubmitting(true);
+    setSubmitError(null);
+    try {
+      await subscribeToUpdates({
+        fullName: formData.fullName.trim(),
+        // Only send the contact the person asked to be reached on.
+        email: wantsEmail ? formData.email.trim() : undefined,
+        phone: wantsText ? formData.phone : undefined,
+        notificationPreference: formData.notificationPreference,
+        heardAboutUs: formData.heardAboutUs || undefined,
+        source: window.location.pathname,
+        website,
+      });
       setIsSubmitted(true);
+    } catch (err) {
+      setSubmitError(
+        err instanceof WaitlistError
+          ? err.message
+          : "Something went wrong saving your signup. Please try again in a moment."
+      );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -254,7 +289,7 @@ export const NewsletterSignupModal = ({
               </DialogDescription>
             </DialogHeader>
 
-            <form onSubmit={handleSubmit} className="space-y-5 mt-2">
+            <form onSubmit={handleSubmit} className="relative space-y-5 mt-2">
               {/* Full Name */}
               <div className="space-y-2">
                 <Label htmlFor="fullName">
@@ -364,6 +399,15 @@ export const NewsletterSignupModal = ({
                 </RadioGroup>
               </div>
 
+              {(formData.notificationPreference === "text" ||
+                formData.notificationPreference === "both") && (
+                <p className="text-xs text-muted-foreground leading-relaxed -mt-2">
+                  By choosing text, you agree to receive occasional text messages
+                  from Joy Drop about wishlists and ways to help. Msg &amp; data
+                  rates may apply. Reply STOP to opt out, HELP for help.
+                </p>
+              )}
+
               {/* How Did You Hear About Us */}
               <div className="space-y-2">
                 <Label htmlFor="heardAboutUs">How did you hear about us?</Label>
@@ -386,20 +430,49 @@ export const NewsletterSignupModal = ({
                 </Select>
               </div>
 
+              {/* Honeypot (hidden from people and screen readers) */}
+              <div aria-hidden="true" className="absolute -left-[10000px] w-px h-px overflow-hidden">
+                <label htmlFor="website">Website</label>
+                <input
+                  id="website"
+                  name="website"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={website}
+                  onChange={(e) => setWebsite(e.target.value)}
+                />
+              </div>
+
+              {submitError && (
+                <p role="alert" className="text-destructive text-sm text-center">
+                  {submitError}
+                </p>
+              )}
+
               {/* Submit Button */}
               <Button
                 type="submit"
-                disabled={!isFormValid()}
+                disabled={!isFormValid() || isSubmitting}
                 className={cn(
                   "w-full rounded-full py-3 min-h-[48px] font-medium text-base",
                   "transition-all duration-200",
-                  isFormValid()
+                  isFormValid() && !isSubmitting
                     ? "bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-[1.01] shadow-sm hover:shadow-md hover:shadow-primary/20"
                     : "bg-primary/50 text-primary-foreground cursor-not-allowed"
                 )}
               >
-                Notify Me
-                <ArrowRight className="w-4 h-4 ml-2" />
+                {isSubmitting ? (
+                  <>
+                    Saving…
+                    <Loader2 className="w-4 h-4 ml-2 animate-spin" />
+                  </>
+                ) : (
+                  <>
+                    Notify Me
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </>
+                )}
               </Button>
             </form>
           </>
