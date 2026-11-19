@@ -4,10 +4,18 @@ import SponsorAChild from "./pages/SponsorAChild.tsx";
 import MakeADonation from "./pages/MakeADonation.tsx";
 import FAQ from "./pages/FAQ.tsx";
 import Updates from "./pages/Updates.tsx";
-import Login from "./pages/Login.tsx";
 import Volunteer from "./pages/Volunteer.tsx";
 import { Header, Footer, ScrollToTop } from "./components/layout";
-import { ROUTES } from "./constants";
+import { ROUTES, APP_URL } from "./constants";
+import { useEffect } from "react";
+
+/** Old /login links (bookmarks, shared posts) go to the app's sign-in. */
+const RedirectToApp = () => {
+  useEffect(() => {
+    window.location.replace(APP_URL);
+  }, []);
+  return null;
+};
 
 const App = () => (
   <BrowserRouter>
@@ -19,7 +27,7 @@ const App = () => (
       <Route path={ROUTES.MAKE_A_DONATION} element={<MakeADonation />} />
       <Route path={ROUTES.FAQ} element={<FAQ />} />
       <Route path={ROUTES.UPDATES} element={<Updates />} />
-      <Route path={ROUTES.LOGIN} element={<Login />} />
+      <Route path={ROUTES.LOGIN} element={<RedirectToApp />} />
       <Route path={ROUTES.VOLUNTEER} element={<Volunteer />} />
     </Routes>
     <Footer />
