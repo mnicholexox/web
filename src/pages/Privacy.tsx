@@ -91,8 +91,8 @@ const Privacy = () => (
       <h2>Text messages (SMS)</h2>
       <p>
         If you choose to receive text messages, we use your mobile number only to send Joy Drop (Angel Tree)
-        holiday wishlist updates and, if you are a sponsor, one-time sign-in codes. You can reply STOP at any time
-        to stop receiving texts, or reply HELP for help.
+        holiday wishlist updates. You can reply STOP at any time to stop receiving texts, or reply HELP for
+        help.
       </p>
       <p>
         No mobile information will be shared with third parties or affiliates for marketing or promotional

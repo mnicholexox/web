@@ -71,9 +71,10 @@ const Terms = () => (
 
       <h3>How to opt in</h3>
       <p>
-        You opt in by choosing &ldquo;Text&rdquo; or &ldquo;Both&rdquo; as your notification preference and
-        entering your mobile number on the signup form at{" "}
-        <a href="https://joydrop.app/sponsor-a-child">https://joydrop.app/sponsor-a-child</a>.
+        You opt in on{" "}
+        <a href="https://joydrop.app/sponsor-a-child">https://joydrop.app/sponsor-a-child</a> by selecting
+        &ldquo;Text message&rdquo;, entering your mobile number, and checking the box agreeing to receive text
+        updates from Joy Drop (or by choosing &ldquo;Text&rdquo; or &ldquo;Both&rdquo; on our signup form).
       </p>
 
       <h3>Message frequency and cost</h3>
