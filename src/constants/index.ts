@@ -18,6 +18,12 @@ export const ROUTES = {
   // CONTACT: '/contact',
 } as const;
 
+/**
+ * The Angel Tree app (sponsor portal + coordinator dashboard), hosted on Lovable.
+ * The site's Login button and /login both send people here.
+ */
+export const APP_URL = 'https://angel-tree-progress-hub.lovable.app';
+
 // Add more constants as needed
 // export const FEATURE_FLAGS = { ... } as const;
 // export const API_ENDPOINTS = { ... } as const;
