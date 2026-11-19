@@ -5,6 +5,8 @@ import MakeADonation from "./pages/MakeADonation.tsx";
 import FAQ from "./pages/FAQ.tsx";
 import Updates from "./pages/Updates.tsx";
 import Volunteer from "./pages/Volunteer.tsx";
+import Privacy from "./pages/Privacy.tsx";
+import Terms from "./pages/Terms.tsx";
 import { Header, Footer, ScrollToTop } from "./components/layout";
 import { ROUTES, APP_URL } from "./constants";
 import { useEffect } from "react";
@@ -29,6 +31,8 @@ const App = () => (
       <Route path={ROUTES.UPDATES} element={<Updates />} />
       <Route path={ROUTES.LOGIN} element={<RedirectToApp />} />
       <Route path={ROUTES.VOLUNTEER} element={<Volunteer />} />
+      <Route path={ROUTES.PRIVACY} element={<Privacy />} />
+      <Route path={ROUTES.TERMS} element={<Terms />} />
     </Routes>
     <Footer />
   </BrowserRouter>

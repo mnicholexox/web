@@ -205,27 +205,13 @@ export const Footer = () => {
         <div className="max-w-7xl mx-auto flex flex-col items-center gap-3 px-4 py-6 text-center font-sans text-sm sm:text-base text-white/80 sm:px-6 lg:flex-row lg:justify-between lg:px-8 lg:text-left">
           <span>&copy; {new Date().getFullYear()} Joy Drop</span>
           <div className="flex items-center gap-4">
-            <a
-              href="#"
-              className="transition-colors hover:text-white"
-              onClick={(e) => {
-                e.preventDefault();
-                // TODO: Add privacy policy page/route
-              }}
-            >
+            <Link to={ROUTES.PRIVACY} className="transition-colors hover:text-white">
               Privacy Policy
-            </a>
+            </Link>
             <span aria-hidden="true">|</span>
-            <a
-              href="#"
-              className="transition-colors hover:text-white"
-              onClick={(e) => {
-                e.preventDefault();
-                // TODO: Add terms of use page/route
-              }}
-            >
+            <Link to={ROUTES.TERMS} className="transition-colors hover:text-white">
               Terms of Use
-            </a>
+            </Link>
           </div>
           <span>Every gift given with dignity, care, and intention.</span>
         </div>

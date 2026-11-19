@@ -13,6 +13,8 @@ export const ROUTES = {
   UPDATES: '/updates',
   LOGIN: '/login',
   VOLUNTEER: '/volunteer',
+  PRIVACY: '/privacy',
+  TERMS: '/terms',
   // Add more routes as pages are created
   // ABOUT: '/about',
   // CONTACT: '/contact',
