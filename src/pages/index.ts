@@ -5,3 +5,5 @@ export { default as FAQPage } from './FAQ';
 export { default as UpdatesPage } from './Updates';
 export { default as VolunteerPage } from './Volunteer';
 
+export { default as PrivacyPage } from './Privacy';
+export { default as TermsPage } from './Terms';
