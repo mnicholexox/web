@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ArrowLeft, ArrowRight, Heart, Gift, Lock, Recycle, Sparkles, ShieldCheck, Users } from "lucide-react";
+import { ArrowLeft, ArrowRight, Heart, HeartHandshake, Gift, Recycle, Sparkles, ShieldCheck, UserRound, Users } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants";
@@ -101,11 +101,27 @@ const CardRibbon = () => (
   </svg>
 );
 
+const VENMO_URL = "https://venmo.com/u/Kaetlyn-Porter";
+const ZELLE_EMAIL = "m.nicholexox@gmail.com";
+const ORGANIZERS = [
+  { name: "Mary Peale", title: "Angel Tree Coordinator" },
+  { name: "Kaetlyn Porter", title: "Angel Tree Coordinator" },
+];
+
 const MakeADonation = () => {
   const location = useLocation();
   const [isNewsletterModalOpen, setIsNewsletterModalOpen] = useState(false);
-  const [selectedAmount, setSelectedAmount] = useState<number | null>(50);
-  const [customAmount, setCustomAmount] = useState("");
+  const [zelleCopied, setZelleCopied] = useState(false);
+
+  const copyZelleEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(ZELLE_EMAIL);
+      setZelleCopied(true);
+      setTimeout(() => setZelleCopied(false), 2000);
+    } catch {
+      window.prompt("Copy our Zelle email:", ZELLE_EMAIL);
+    }
+  };
 
   // Scroll to hash anchor on page load, accounting for fixed header
   useEffect(() => {
@@ -283,10 +299,9 @@ const MakeADonation = () => {
             >
               <CardRibbon />
 
-              <div className="relative">
-                <div className="text-center sm:text-left">
+              <div className="relative text-center">
                 <span className="block font-sans text-xs sm:text-sm font-medium uppercase tracking-[0.2em] sm:tracking-[0.25em] text-white/80">
-                  Every amount makes a difference
+                  Community Led &middot; Given With Love
                 </span>
                 <h3
                   className="mt-3 font-serif text-white leading-[1.05] tracking-tight"
@@ -294,82 +309,70 @@ const MakeADonation = () => {
                 >
                   Give What Feels Right
                 </h3>
-                <p className="mx-auto mt-3 max-w-md font-sans text-base sm:mx-0 sm:text-lg leading-snug text-white/85">
-                  There&rsquo;s no minimum, no pressure &mdash; just the chance to help where it&rsquo;s
-                  needed most.
+                <p className="mx-auto mt-3 max-w-md font-sans text-base sm:text-lg leading-snug text-white/85">
+                  Every contribution, big or small, helps bring a little more magic to a child&rsquo;s Christmas.
                 </p>
+
+                {/* Organizers */}
+                <ul className="mt-7 grid grid-cols-2 gap-4">
+                  {ORGANIZERS.map(({ name, title }) => (
+                    <li key={name} className="flex flex-col items-center">
+                      <span className="flex h-20 w-20 items-center justify-center rounded-full bg-white/25 sm:h-24 sm:w-24">
+                        <UserRound className="h-9 w-9 text-white/90 sm:h-10 sm:w-10" strokeWidth={1.75} />
+                      </span>
+                      <span className="mt-3 font-sans text-lg font-semibold text-white">{name}</span>
+                      <span className="font-sans text-sm text-white/75">{title}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <p className="mx-auto mt-6 max-w-md font-sans text-base sm:text-lg leading-snug text-white/85">
+                  Your contributions are collected directly by our local Angel Tree organizers.
+                </p>
+
+                {/* Payment options */}
+                <div className="mt-6 grid grid-cols-2 gap-3 sm:gap-4">
+                  <div className="flex flex-col items-center rounded-2xl bg-[#fdf8f5] p-3 sm:p-5">
+                    <span className="font-sans text-2xl font-bold text-[#008cff] sm:text-3xl">Venmo</span>
+                    <img
+                      src="/venmo-qr-kaetlyn.png"
+                      alt="Venmo QR code for @Kaetlyn-Porter"
+                      className="mt-3 aspect-square w-full max-w-[150px] rounded-xl bg-white object-contain"
+                    />
+                    <span className="mt-2 font-sans text-xs text-[#7d6d6b] sm:text-sm">@Kaetlyn-Porter</span>
+                    <a
+                      href={VENMO_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-3 flex min-h-12 w-full items-center justify-center rounded-xl bg-[#f6e1e5] px-2 py-2.5 font-sans text-sm font-medium text-[#6e1428] transition-colors hover:bg-[#fbe3e6] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c98a96] sm:text-base"
+                    >
+                      Open Venmo
+                    </a>
+                  </div>
+                  <div className="flex flex-col items-center rounded-2xl bg-[#fdf8f5] p-3 sm:p-5">
+                    <span className="font-sans text-2xl font-bold text-[#6d1ed4] sm:text-3xl">Zelle</span>
+                    <img
+                      src="/zelle-qr-mary.png"
+                      alt="Zelle QR code for Mary Peale"
+                      className="mt-3 aspect-square w-full max-w-[150px] rounded-xl bg-white object-contain"
+                    />
+                    <span className="mt-2 text-center font-sans text-xs text-[#7d6d6b] sm:text-sm">
+                      {ZELLE_EMAIL.split("@")[0]}
+                      <wbr />@{ZELLE_EMAIL.split("@")[1]}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={copyZelleEmail}
+                      className="mt-3 flex min-h-12 w-full items-center justify-center rounded-xl bg-[#f6e1e5] px-2 py-2.5 font-sans text-sm font-medium text-[#6e1428] transition-colors hover:bg-[#fbe3e6] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c98a96] sm:text-base"
+                    >
+                      {zelleCopied ? "Copied!" : "Copy Zelle Email"}
+                    </button>
+                  </div>
                 </div>
 
-                {/* Suggested Amounts */}
-                <div className="mt-6 grid grid-cols-3 gap-3 sm:mt-7 sm:gap-4" role="radiogroup" aria-label="Suggested amounts">
-                  {[25, 50, 100].map((amount) => {
-                    const active = selectedAmount === amount;
-                    return (
-                      <button
-                        key={amount}
-                        type="button"
-                        role="radio"
-                        aria-checked={active}
-                        onClick={() => {
-                          setSelectedAmount(amount);
-                          setCustomAmount("");
-                        }}
-                        className={cn(
-                          "rounded-2xl border py-3.5 font-sans text-lg sm:text-xl font-medium transition-colors",
-                          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70",
-                          active
-                            ? "border-[#fbe3e6] bg-[#fbe3e6] text-[#6e1428]"
-                            : "border-white/70 text-white hover:bg-white/10"
-                        )}
-                      >
-                        ${amount}
-                      </button>
-                    );
-                  })}
-                </div>
-
-                <div className="my-5 flex items-center gap-4" aria-hidden="true">
-                  <span className="h-px flex-1 bg-white/30" />
-                  <span className="font-sans text-xs uppercase tracking-[0.2em] text-white/75">or</span>
-                  <span className="h-px flex-1 bg-white/30" />
-                </div>
-
-                {/* Custom Amount */}
-                <label htmlFor="custom-amount" className="block font-sans text-base text-white/90">
-                  Enter a custom amount
-                </label>
-                <div className="relative mt-2">
-                  <span className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 font-sans text-lg font-semibold text-[#3a2420]">
-                    $
-                  </span>
-                  <input
-                    id="custom-amount"
-                    type="number"
-                    inputMode="decimal"
-                    min="1"
-                    placeholder="Any amount helps"
-                    value={customAmount}
-                    onChange={(e) => {
-                      setCustomAmount(e.target.value);
-                      setSelectedAmount(null);
-                    }}
-                    className="h-14 w-full rounded-xl border border-transparent bg-[#fdf8f5] pl-11 pr-4 font-sans text-base sm:text-lg text-foreground placeholder:text-[#9b8a88] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-                  />
-                </div>
-
-                {/* Primary CTA */}
-                <button
-                  type="button"
-                  className="mt-6 flex w-full items-center justify-center gap-3 rounded-2xl bg-[#fbe3e6] py-4 font-sans text-lg font-medium text-[#6e1428] shadow-md transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-                >
-                  <Heart className="h-5 w-5" strokeWidth={2} />
-                  Donate with Heart
-                  <ArrowRight className="h-5 w-5" />
-                </button>
-
-                <p className="mt-4 flex items-center justify-center gap-2 font-sans text-sm text-white/80">
-                  <Lock className="h-4 w-4" />
-                  Secure payment processing
+                <p className="mt-6 flex items-center justify-center gap-2 font-sans text-sm text-white/80 sm:text-base">
+                  <HeartHandshake className="h-5 w-5 shrink-0" strokeWidth={1.75} />
+                  Local hands. Local families. Meaningful impact.
                 </p>
               </div>
             </div>
