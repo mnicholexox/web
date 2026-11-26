@@ -104,8 +104,8 @@ const CardRibbon = () => (
 const VENMO_URL = "https://venmo.com/u/Kaetlyn-Porter";
 const ZELLE_EMAIL = "m.nicholexox@gmail.com";
 const ORGANIZERS = [
-  { name: "Mary Peale", title: "Angel Tree Coordinator" },
   { name: "Kaetlyn Porter", title: "Angel Tree Coordinator" },
+  { name: "Mary Peale", title: "Angel Tree Coordinator" },
 ];
 
 const MakeADonation = () => {
